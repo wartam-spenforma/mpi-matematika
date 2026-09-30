@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Bilangan Kelas 7</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@700;800;900&display=swap');
+    :root{
+      color-scheme:light dark;
+      --bg:#f4f8f7;--paper:#ffffff;--ink:#172b2a;--muted:#526866;--line:#cadbd8;
+      --teal:#087f78;--teal-2:#d9f3ef;--coral:#ef6a4d;--coral-2:#ffe4dc;
+      --yellow:#f1bd35;--yellow-2:#fff2bd;--blue:#2866b1;--blue-2:#dfeeff;
+      --good:#177245;--bad:#b43b36;--shadow:0 12px 34px rgba(30,68,64,.10);
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--bg:#0d1c1b;--paper:#152826;--ink:#eef8f6;--muted:#b2c9c5;--line:#36514e;
+      --teal:#49c8bd;--teal-2:#173d39;--coral:#ff8b6f;--coral-2:#4a2923;--yellow:#ffd05c;
+      --yellow-2:#473b18;--blue:#79b8ff;--blue-2:#1a3654;--good:#72d69c;--bad:#ff8d87;--shadow:0 16px 38px rgba(0,0,0,.28)}
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;line-height:1.5}
+    button,input,select{font:inherit;color:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--yellow),transparent 20%);outline-offset:2px}
+    .shell{width:min(1180px,calc(100% - 32px));margin:auto}.top{padding:40px 0 26px;display:grid;grid-template-columns:1.3fr .7fr;gap:32px;align-items:center}
+    .kicker{display:inline-flex;gap:8px;align-items:center;font-weight:800;color:var(--teal);margin-bottom:10px}.kicker svg{width:20px;height:20px}
+    h1,h2,h3{font-family:'Nunito',sans-serif;margin:0;line-height:1.08}h1{font-size:clamp(38px,6vw,72px);letter-spacing:-.045em;max-width:780px}h1 span{color:var(--coral)}
+    .lead{font-size:clamp(17px,2vw,21px);max-width:700px;color:var(--muted);margin:18px 0 0}.hero-math{position:relative;min-height:230px;border-radius:32px;background:var(--teal);overflow:hidden;color:white;box-shadow:var(--shadow)}
+    .hero-math .big{font-family:'Nunito';font-size:64px;font-weight:900;position:absolute;left:30px;top:24px;transform:rotate(-6deg)}.hero-math .frac{position:absolute;right:32px;top:28px;font:900 46px/1 'Nunito';text-align:center;transform:rotate(7deg)}.hero-math .frac i{display:block;height:4px;background:white;margin:5px 0;border-radius:3px}
+    .hero-line{position:absolute;left:28px;right:28px;bottom:54px;height:4px;background:white}.hero-line:after,.hero-line:before{content:"";position:absolute;top:-7px;width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent}.hero-line:before{left:-2px;border-right:14px solid white}.hero-line:after{right:-2px;border-left:14px solid white}.dot{position:absolute;bottom:46px;width:20px;height:20px;border-radius:50%;background:var(--yellow);left:54%;border:4px solid white}.hero-label{position:absolute;bottom:16px;left:28px;font-weight:800;letter-spacing:.02em}
+    .modebar{position:sticky;top:0;z-index:20;padding:10px 0;background:color-mix(in srgb,var(--bg),transparent 8%);backdrop-filter:blur(12px)}.modebar-inner{display:flex;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:7px;box-shadow:0 8px 24px rgba(20,50,47,.07)}
+    .mode-btn{flex:1;border:0;background:transparent;border-radius:12px;padding:12px 16px;font-weight:800;color:var(--muted)}.mode-btn.active{background:var(--ink);color:var(--paper)}
+    .view{display:none;padding:28px 0 70px}.view.active{display:block}.section-intro{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:24px}.section-intro h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.03em}.section-intro p{max-width:550px;margin:0;color:var(--muted)}
+    .sim-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.sim-btn{border:1px solid var(--line);background:var(--paper);padding:10px 15px;border-radius:999px;font-weight:800}.sim-btn.active{background:var(--teal);color:white;border-color:var(--teal)}
+    .sim-panel{display:none}.sim-panel.active{display:block}.card{background:var(--paper);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}.card-head{padding:24px 26px 0}.card-head h3{font-size:25px}.card-head p{margin:6px 0 0;color:var(--muted)}
+    .workgrid{display:grid;grid-template-columns:340px 1fr;gap:0}.controls{padding:26px;border-right:1px solid var(--line)}.visual{padding:26px;min-width:0}.field{display:grid;gap:7px;margin-bottom:16px}.field label{font-size:14px;font-weight:800}.input-row{display:grid;grid-template-columns:1fr 92px 1fr;gap:10px;align-items:end}
+    input[type=number],select{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 13px;font-weight:700;min-height:48px}.range-row{display:grid;grid-template-columns:48px 1fr 48px;gap:10px;align-items:center}.range-row output{text-align:center;font-weight:900;background:var(--teal-2);color:var(--teal);padding:8px 4px;border-radius:10px}input[type=range]{accent-color:var(--teal);width:100%}
+    .action{border:0;background:var(--coral);color:#fff;padding:13px 18px;border-radius:13px;font-weight:900;width:100%;box-shadow:0 5px 0 color-mix(in srgb,var(--coral),black 20%)}.action:active{transform:translateY(3px);box-shadow:0 2px 0 color-mix(in srgb,var(--coral),black 20%)}
+    .tip{font-size:13px;color:var(--muted);margin:16px 0 0}.result-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 18px;background:var(--teal-2);border-radius:16px;margin-bottom:18px}.result-banner strong{font:900 24px 'Nunito';color:var(--teal)}.result-banner span{color:var(--muted)}
+    #numberSvg{width:100%;height:250px;display:block}.jump-caption{text-align:center;color:var(--muted);font-size:14px;margin:8px 0 0}.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;margin-top:12px}.legend span{display:flex;align-items:center;gap:6px}.swatch{width:13px;height:13px;border-radius:50%}
+    .fraction-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.fraction-group{padding:14px;background:var(--bg);border-radius:16px}.fraction-group h4{margin:0 0 10px;font-family:'Nunito'}.frac-input{display:grid;grid-template-rows:1fr 2px 1fr;gap:5px;width:88px;margin:auto}.frac-input hr{border:0;background:var(--ink);margin:0}.frac-input input{text-align:center;padding:8px;min-height:42px}.diagram-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.tiny-btn{border:1px solid var(--line);background:var(--paper);padding:8px 12px;border-radius:10px;font-size:13px;font-weight:800}.tiny-btn.active{background:var(--blue);color:white;border-color:var(--blue)}
+    .fraction-diagrams{display:grid;gap:18px}.fraction-row{display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:center}.fraction-row>strong{font-family:'Nunito';font-size:16px}.bars{display:flex;gap:8px;flex-wrap:wrap}.bar{display:grid;height:48px;min-width:180px;max-width:280px;flex:1;border:2px solid var(--ink);border-radius:8px;overflow:hidden}.piece{border-right:1px solid color-mix(in srgb,var(--ink),transparent 40%);background:var(--paper)}.piece.fill-a{background:var(--teal)}.piece.fill-b{background:var(--coral)}.piece.fill-r{background:var(--yellow)}
+    .circles{display:flex;gap:10px;flex-wrap:wrap}.pie{width:86px;height:86px;border:2px solid var(--ink);border-radius:50%;position:relative}.pie:after{content:"";position:absolute;inset:25%;border-radius:50%;background:var(--paper);border:1px solid var(--line)}.math-note{background:var(--yellow-2);padding:14px 16px;border-radius:14px;margin-top:18px;color:var(--ink)}
+    .round-display{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:26px 10px}.digit{width:46px;height:58px;display:grid;place-items:center;background:var(--bg);border:2px solid var(--line);border-radius:12px;font:900 27px 'Nunito';position:relative}.digit.decimal{width:20px;background:transparent;border:0;align-items:end}.digit.keep{border-color:var(--teal);background:var(--teal-2);color:var(--teal)}.digit.check{border-color:var(--coral);background:var(--coral-2);color:var(--coral)}.digit small{position:absolute;top:-22px;font:700 11px 'DM Sans';white-space:nowrap}.round-rule{margin:8px auto 0;max-width:620px;padding:18px;border-left:5px solid var(--coral);background:var(--coral-2);border-radius:5px 14px 14px 5px}.round-rule strong{color:var(--coral)}
+    .quiz-shell{display:grid;grid-template-columns:250px 1fr;gap:22px}.quiz-side{align-self:start;position:sticky;top:86px}.score-card{padding:22px}.score-ring{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;margin:6px auto 18px;background:conic-gradient(var(--teal) var(--progress,0%),var(--teal-2) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:12px;background:var(--paper);border-radius:50%}.score-ring b{z-index:1;font:900 28px 'Nunito'}.score-card p{text-align:center;color:var(--muted);margin:4px 0}.q-dots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:18px}.q-dot{height:33px;border:1px solid var(--line);background:var(--bg);border-radius:8px;font-weight:800}.q-dot.current{border:2px solid var(--teal);color:var(--teal)}.q-dot.right{background:var(--teal);color:white;border-color:var(--teal)}.q-dot.wrong{background:var(--coral);color:white;border-color:var(--coral)}
+    .question-card{padding:clamp(22px,4vw,38px)}.q-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-weight:700;font-size:14px}.q-topic{color:var(--teal)}.question-card h3{font-size:clamp(24px,3.5vw,34px);margin:20px 0 24px;line-height:1.3}.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.option{border:2px solid var(--line);background:var(--bg);border-radius:16px;padding:15px;text-align:left;font-weight:800;min-height:58px}.option:hover{border-color:var(--teal)}.option.chosen.right{border-color:var(--good);background:color-mix(in srgb,var(--good),transparent 86%);color:var(--good)}.option.chosen.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad),transparent 88%);color:var(--bad)}.option.reveal{border-color:var(--good);color:var(--good)}.option:disabled{cursor:default}
+    .feedback{display:none;margin-top:20px;padding:17px 18px;border-radius:14px;background:var(--blue-2)}.feedback.show{display:block}.feedback b{font-family:'Nunito';font-size:18px;color:var(--blue)}.feedback p{margin:5px 0 0}.quiz-actions{display:flex;justify-content:flex-end;margin-top:18px}.next{border:0;background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:12px;font-weight:900}.next:disabled{opacity:.35;cursor:not-allowed}.finish{text-align:center;padding:20px 6px}.finish .trophy{width:95px;height:95px;margin:auto;color:var(--yellow)}.finish h3{font-size:34px;margin-top:12px}.finish p{color:var(--muted);font-size:18px}.retry{max-width:230px;margin:auto}
+    .footer-note{padding:26px 0 44px;text-align:center;color:var(--muted);font-size:13px}
+    @media(max-width:800px){.top{grid-template-columns:1fr}.hero-math{min-height:180px}.workgrid,.quiz-shell{grid-template-columns:1fr}.controls{border-right:0;border-bottom:1px solid var(--line)}.quiz-side{position:static}.score-card{display:grid;grid-template-columns:auto 1fr;align-items:center}.score-ring{width:90px;height:90px;margin:0}.q-dots{margin:0}.score-card p{display:none}.fraction-row{grid-template-columns:1fr}.visual{padding:20px}.card-head{padding:21px 20px 0}}
+    @media(max-width:560px){.shell{width:min(100% - 20px,1180px)}.top{padding-top:26px;gap:20px}.hero-math{display:none}.modebar-inner{border-radius:15px}.section-intro{display:block}.section-intro p{margin-top:9px}.input-row{grid-template-columns:1fr 76px 1fr}.fraction-fields{grid-template-columns:1fr}.options{grid-template-columns:1fr}.score-card{grid-template-columns:80px 1fr;padding:15px}.score-ring{width:72px;height:72px}.q-dots{grid-template-columns:repeat(5,1fr)}.q-dot{height:29px}.question-card{padding:20px}.card{border-radius:19px}.digit{width:38px;height:51px;font-size:23px}.fraction-row{gap:8px}.bar{min-width:145px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <header class="shell top">
+    <div>
+      <div class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg>Matematika Kelas 7</div>
+      <h1>Bilangan jadi lebih <span>terlihat.</span></h1>
+      <p class="lead">Gerakkan angka, amati pecahan, coba pembulatan, lalu uji pemahamanmu. Bukan sekadar menghitung—kamu akan melihat alasan di balik jawabannya.</p>
+    </div>
+    <div class="hero-math" aria-hidden="true"><div class="big">−3 + 7</div><div class="frac">3<i></i>4</div><div class="hero-line"></div><div class="dot"></div><div class="hero-label">melompat menuju jawaban →</div></div>
+  </header>
+
+  <nav class="modebar" aria-label="Bagian utama"><div class="shell modebar-inner">
+    <button class="mode-btn active" data-view="simulasi">Simulasi</button>
+    <button class="mode-btn" data-view="kuis">Kuis 10 soal</button>
+  </div></nav>
+
+  <main class="shell">
+    <section id="simulasi" class="view active">
+      <div class="section-intro"><div><h2>Coba, ubah, amati.</h2></div><p>Pilih alat, masukkan bilangan, dan perhatikan bagaimana operasi mengubah nilainya.</p></div>
+      <div class="sim-nav" role="tablist" aria-label="Pilih simulasi">
+        <button class="sim-btn active" data-sim="bulat">Garis bilangan</button>
+        <button class="sim-btn" data-sim="pecahan">Pecahan visual</button>
+        <button class="sim-btn" data-sim="desimal">Pembulatan desimal</button>
+      </div>
+
+      <article id="sim-bulat" class="sim-panel active card">
+        <div class="card-head"><h3>Lompatan pada garis bilangan</h3><p>Atur bilangan dan operasi. Panah menunjukkan arah serta jarak perpindahan.</p></div>
+        <div class="workgrid">
+          <div class="controls">
+            <div class="field"><label for="intA">Bilangan pertama</label><div class="range-row"><span>−10</span><input id="intA" type="range" min="-10" max="10" value="-3"><output id="intAOut">−3</output></div></div>
+            <div class="field"><label for="intOp">Operasi</label><select id="intOp"><option value="+">Penjumlahan (+)</option><option value="-">Pengurangan (−)</option><option value="*">Perkalian (×)</option><option value="/">Pembagian (÷)</option></select></div>
+            <div class="field"><label for="intB">Bilangan kedua</label><div class="range-row"><span>−10</span><input id="intB" type="range" min="-10" max="10" value="7"><output id="intBOut">7</output></div></div>
+            <button class="action" id="animateLine">Mainkan lompatan</button>
+            <p class="tip" id="intTip">Mulai di −3, lalu lompat 7 langkah ke kanan.</p>
+          </div>
+          <div class="visual">
+            <div class="result-banner"><span>Hasil operasi</span><strong id="intResult">−3 + 7 = 4</strong></div>
+            <svg id="numberSvg" viewBox="0 0 760 250" role="img" aria-label="Visualisasi operasi pada garis bilangan"></svg>
+            <p class="jump-caption" id="jumpCaption">Lompatan ke kanan berarti bertambah.</p>
+            <div class="legend"><span><i class="swatch" style="background:var(--blue)"></i>titik awal</span><span><i class="swatch" style="background:var(--coral)"></i>lintasan</span><span><i class="swatch" style="background:var(--teal)"></i>hasil</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="sim-pecahan" class="sim-panel card">
+        <div class="card-head"><h3>Kalkulator pecahan visual</h3><p>Setiap bagian sama besar. Warna membantu membandingkan bagian yang digunakan.</p></div>
+        <div class="workgrid">
+          <div class="controls">
+            <div class="fraction-fields">
+              <div class="fraction-group"><h4>Pecahan A</h4><div class="frac-input"><input id="numA" type="number" min="0" max="20" value="2" aria-label="Pembilang A"><hr><input id="denA" type="number" min="1" max="12" value="3" aria-label="Penyebut A"></div></div>
+              <div class="fraction-group"><h4 id="fracBTitle">Pecahan B</h4><div class="frac-input"><input id="numB" type="number" min="0" max="12" value="1" aria-label="Pembilang B"><hr><input id="denB" type="number" min="1" max="12" value="4" aria-label="Penyebut B"></div></div>
+            </div>
+            <div class="field" style="margin-top:16px"><label for="fracOp">Operasi</label><select id="fracOp"><option value="+">Penjumlahan (+)</option><option value="-">Pengurangan (−)</option><option value="*">Perkalian (×)</option><option value="/">Pembagian (÷)</option><option value="pow">Pemangkatan</option></select></div>
+            <button class="action" id="calcFrac">Tampilkan hasil</button>
+            <p class="tip">Untuk pemangkatan, isilah pembilang B sebagai pangkat. Contoh: A² berarti pembilang B = 2.</p>
+          </div>
+          <div class="visual">
+            <div class="result-banner"><span>Bentuk paling sederhana</span><strong id="fracResult">2/3 + 1/4 = 11/12</strong></div>
+            <div class="diagram-tools"><button class="tiny-btn active" data-shape="bar">Diagram batang</button><button class="tiny-btn" data-shape="circle">Diagram lingkaran</button></div>
+            <div id="fractionDiagrams" class="fraction-diagrams"></div>
+            <div id="fracNote" class="math-note"></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="sim-desimal" class="sim-panel card">
+        <div class="card-head"><h3>Pembulatan desimal</h3><p>Sorot angka yang dipertahankan dan angka di kanannya yang menjadi penentu.</p></div>
+        <div class="workgrid">
+          <div class="controls">
+            <div class="field"><label for="decimalInput">Bilangan desimal</label><input id="decimalInput" type="number" step="0.001" value="12.786"></div>
+            <div class="field"><label for="placeSelect">Bulatkan ke</label><select id="placeSelect"><option value="0">Satuan terdekat</option><option value="1" selected>Sepersepuluhan terdekat</option><option value="2">Seperseratus terdekat</option><option value="3">Seperseribu terdekat</option></select></div>
+            <button class="action" id="roundBtn">Periksa pembulatan</button>
+            <p class="tip">Aturan cepat: 0–4 tetap, 5–9 naik satu.</p>
+          </div>
+          <div class="visual">
+            <div class="result-banner"><span>Hasil pembulatan</span><strong id="roundResult">12,786 → 12,8</strong></div>
+            <div id="roundDisplay" class="round-display"></div>
+            <div id="roundRule" class="round-rule"></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="kuis" class="view">
+      <div class="section-intro"><div><h2>Uji pemahamanmu.</h2></div><p>Pilih satu jawaban. Pembahasan muncul setelah kamu menjawab—gunakan untuk memperbaiki cara berpikir.</p></div>
+      <div class="quiz-shell">
+        <aside class="quiz-side card score-card">
+          <div class="score-ring" id="scoreRing"><b id="scoreText">0/10</b></div><p>Skor sementara</p>
+          <div class="q-dots" id="qDots" aria-label="Kemajuan kuis"></div>
+        </aside>
+        <div class="card question-card" id="questionCard"></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer-note shell">Belajar bilangan dengan mencoba, mengamati, lalu menjelaskan kembali.</footer>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+  const fmt=n=>String(n).replace('-', '−').replace('.', ',');
+  const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
+
+  $$('.mode-btn').forEach(b=>b.addEventListener('click',()=>{
+    $$('.mode-btn').forEach(x=>x.classList.toggle('active',x===b));
+    $$('.view').forEach(v=>v.classList.toggle('active',v.id===b.dataset.view));
+    if(b.dataset.view==='kuis')startQuiz();
+    window.scrollTo({top:$('.modebar').offsetTop,behavior:'smooth'});
+  }));
+  $$('.sim-btn').forEach(b=>b.addEventListener('click',()=>{
+    $$('.sim-btn').forEach(x=>x.classList.toggle('active',x===b));
+    $$('.sim-panel').forEach(p=>p.classList.toggle('active',p.id==='sim-'+b.dataset.sim));
+  }));
+
+  // Garis bilangan
+  const svg=$('#numberSvg');
+  function drawLine(animate){
+    const a=+$('#intA').value,b=+$('#intB').value,op=$('#intOp').value;
+    $('#intAOut').textContent=fmt(a);$('#intBOut').textContent=fmt(b);
+    let result, jumps=[];
+    if(op==='+'){result=a+b; const dir=Math.sign(b); for(let i=0;i<Math.abs(b);i++) jumps.push([a+i*dir,a+(i+1)*dir]);}
+    if(op==='-'){result=a-b; const dir=-Math.sign(b); for(let i=0;i<Math.abs(b);i++) jumps.push([a+i*dir,a+(i+1)*dir]);}
+    if(op==='*'){result=a*b; const count=Math.abs(b),dir=Math.sign(b)||1; for(let i=0;i<count;i++) jumps.push([i*a*dir,(i+1)*a*dir]);}
+    if(op==='/'){result=b===0?null:a/b;if(result!==null)jumps=[[a,result]];}
+    const sym={'+':'+','-':'−','*':'×','/':'÷'}[op];
+    $('#intResult').textContent=result===null?fmt(a)+' '+sym+' 0 = tidak terdefinisi':fmt(a)+' '+sym+' '+fmt(b)+' = '+fmt(Number(result.toFixed(3)));
+    const direction=result===null?'Pembagian dengan nol tidak dapat dilakukan.':result>a?'Bergerak ke kanan berarti nilai bertambah.':result<a?'Bergerak ke kiri berarti nilai berkurang.':'Posisi akhir sama dengan posisi awal.';
+    $('#jumpCaption').textContent=direction;
+    let tip='';if(op==='+')tip='Mulai di '+fmt(a)+', lalu lompat '+Math.abs(b)+' langkah ke '+(b>=0?'kanan.':'kiri.');
+    if(op==='-')tip='Mengurangi '+fmt(b)+' berarti bergerak '+Math.abs(b)+' langkah ke '+(b>=0?'kiri.':'kanan.');
+    if(op==='*')tip=fmt(a)+' × '+fmt(b)+' divisualkan sebagai '+Math.abs(b)+' lompatan berukuran '+fmt(Math.abs(a))+'.';
+    if(op==='/')tip=b===0?'Penyebut/pembagi tidak boleh nol.':'Satu lintasan menunjukkan perubahan dari bilangan awal ke hasil bagi.';
+    $('#intTip').textContent=tip;
+    let vals=[-10,10,a,result===null?0:result];jumps.forEach(j=>vals.push(j[0],j[1]));let min=Math.floor(Math.min(...vals)-2),max=Math.ceil(Math.max(...vals)+2);if(max-min>50){min=Math.floor(Math.min(a,result)-2);max=Math.ceil(Math.max(a,result)+2)}
+    const x=n=>45+(n-min)/(max-min)*670, y=158;
+    let h='<defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="var(--coral)"/></marker></defs>';
+    h+='<line x1="32" y1="'+y+'" x2="728" y2="'+y+'" stroke="var(--ink)" stroke-width="3"/><path d="M32 '+y+' l12 -7 v14zM728 '+y+' l-12 -7 v14z" fill="var(--ink)"/>';
+    const step=(max-min)<=24?1:Math.ceil((max-min)/16);for(let n=Math.ceil(min/step)*step;n<=max;n+=step){const xx=x(n);h+='<line x1="'+xx+'" y1="151" x2="'+xx+'" y2="166" stroke="var(--ink)" stroke-width="2"/><text x="'+xx+'" y="187" text-anchor="middle" fill="var(--muted)" font-size="12" font-family="DM Sans">'+fmt(n)+'</text>'}
+    jumps.slice(0,16).forEach((j,i)=>{const x1=x(j[0]),x2=x(j[1]),arc=Math.max(22,Math.min(65,Math.abs(x2-x1)*.45));h+='<path d="M'+x1+' '+(y-8)+' Q '+((x1+x2)/2)+' '+(y-arc-14)+' '+x2+' '+(y-8)+'" fill="none" stroke="var(--coral)" stroke-width="3" marker-end="url(#arr)" stroke-dasharray="'+(animate?'400':'0')+'" stroke-dashoffset="'+(animate?'400':'0')+'" style="animation:'+(animate?'dash .7s ease forwards '+(i*.13)+'s':'none')+'"/>'});
+    if(jumps.length>16)h+='<text x="380" y="35" text-anchor="middle" fill="var(--coral)" font-weight="700">Lintasan diringkas karena terlalu panjang</text>';
+    h+='<circle cx="'+x(a)+'" cy="'+y+'" r="9" fill="var(--blue)" stroke="var(--paper)" stroke-width="3"/><text x="'+x(a)+'" y="'+(y+35)+'" text-anchor="middle" fill="var(--blue)" font-weight="800">awal</text>';
+    if(result!==null){h+='<circle cx="'+x(result)+'" cy="'+y+'" r="10" fill="var(--teal)" stroke="var(--paper)" stroke-width="3"/><text x="'+x(result)+'" y="'+(y+52)+'" text-anchor="middle" fill="var(--teal)" font-weight="800">hasil</text>'}
+    svg.innerHTML='<style>@keyframes dash{to{stroke-dashoffset:0}}</style>'+h;
+  }
+  ['intA','intB','intOp'].forEach(id=>$('#'+id).addEventListener('input',()=>drawLine(false)));$('#animateLine').addEventListener('click',()=>drawLine(true));drawLine(false);
+
+  // Pecahan
+  let diagramShape='bar';
+  const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+  function fractionHTML(n,d,cls,shape){
+    if(d<=0)return '';
+    const whole=Math.floor(Math.abs(n)/d),rem=Math.abs(n)%d,count=Math.min(whole+(rem?1:0),5);let h='';
+    if(shape==='bar')for(let k=0;k<count;k++){const filled=k<whole?d:rem;h+='<div class="bar" style="grid-template-columns:repeat('+d+',1fr)">'+Array.from({length:d},(_,i)=>'<i class="piece '+(i<filled?cls:'')+'"></i>').join('')+'</div>'}
+    else for(let k=0;k<count;k++){const filled=k<whole?d:rem,pct=filled/d*100,color=cls==='fill-a'?'var(--teal)':cls==='fill-b'?'var(--coral)':'var(--yellow)';h+='<div class="pie" style="background:conic-gradient('+color+' 0 '+pct+'%,var(--paper) '+pct+'% 100%)"></div>'}
+    if(n<0)h='<span style="color:var(--coral);font-weight:800">−</span>'+h;
+    return h||'<span style="color:var(--muted)">0 bagian</span>';
+  }
+  function calcFraction(){
+    let na=clamp(parseInt($('#numA').value)||0,0,20),da=clamp(parseInt($('#denA').value)||1,1,12),nb=clamp(parseInt($('#numB').value)||0,0,12),db=clamp(parseInt($('#denB').value)||1,1,12),op=$('#fracOp').value;
+    $('#numA').value=na;$('#denA').value=da;$('#numB').value=nb;$('#denB').value=db;
+    let rn,rd,formula,sym;
+    if(op==='+'){rn=na*db+nb*da;rd=da*db;sym='+';formula='Samakan penyebut, lalu jumlahkan pembilang: ('+na+'×'+db+' + '+nb+'×'+da+') / ('+da+'×'+db+').'}
+    if(op==='-'){rn=na*db-nb*da;rd=da*db;sym='−';formula='Samakan penyebut, lalu kurangkan pembilang: ('+na+'×'+db+' − '+nb+'×'+da+') / ('+da+'×'+db+').'}
+    if(op==='*'){rn=na*nb;rd=da*db;sym='×';formula='Kalikan pembilang dengan pembilang dan penyebut dengan penyebut.'}
+    if(op==='/'){rn=na*db;rd=da*nb;sym='÷';formula='Balik pecahan kedua, lalu kalikan.';if(nb===0){rn=null;rd=null;formula='Tidak dapat membagi dengan nol.'}}
+    if(op==='pow'){rn=Math.pow(na,nb);rd=Math.pow(da,nb);sym='^'+nb;formula='Pangkatkan pembilang dan penyebut: '+na+'^'+nb+' / '+da+'^'+nb+'.'}
+    let srn=rn,srd=rd;if(rn!==null){const g=gcd(rn,rd)||1;srn=rn/g;srd=rd/g;if(srd<0){srn*=-1;srd*=-1}}
+    const left=na+'/'+da, right=op==='pow'?nb:nb+'/'+db;
+    $('#fracResult').textContent=rn===null?left+' ÷ 0 = tidak terdefinisi':left+' '+sym+' '+right+' = '+(srd===1?fmt(srn):fmt(srn)+'/'+srd);
+    $('#fracBTitle').textContent=op==='pow'?'Pangkat':'Pecahan B';$('#denB').disabled=op==='pow';
+    let rows='<div class="fraction-row"><strong>A = '+left+'</strong><div class="'+(diagramShape==='bar'?'bars':'circles')+'">'+fractionHTML(na,da,'fill-a',diagramShape)+'</div></div>';
+    if(op!=='pow')rows+='<div class="fraction-row"><strong>B = '+nb+'/'+db+'</strong><div class="'+(diagramShape==='bar'?'bars':'circles')+'">'+fractionHTML(nb,db,'fill-b',diagramShape)+'</div></div>';
+    if(rn!==null)rows+='<div class="fraction-row"><strong>Hasil</strong><div class="'+(diagramShape==='bar'?'bars':'circles')+'">'+fractionHTML(srn,srd,'fill-r',diagramShape)+'</div></div>';
+    $('#fractionDiagrams').innerHTML=rows;$('#fracNote').innerHTML='<strong>Mengapa?</strong> '+formula+(rn!==null&&gcd(rn,rd)>1?' Hasil disederhanakan dengan membagi pembilang dan penyebut oleh '+gcd(rn,rd)+'.':'');
+  }
+  $('#calcFrac').addEventListener('click',calcFraction);$('#fracOp').addEventListener('change',calcFraction);$$('.diagram-tools .tiny-btn').forEach(b=>b.addEventListener('click',()=>{diagramShape=b.dataset.shape;$$('.diagram-tools .tiny-btn').forEach(x=>x.classList.toggle('active',x===b));calcFraction()}));calcFraction();
+
+  // Pembulatan
+  function updateRound(){
+    const value=parseFloat($('#decimalInput').value);const place=+$('#placeSelect').value;if(!Number.isFinite(value)){return}
+    const factor=Math.pow(10,place),rounded=Math.round((value+Number.EPSILON)*factor)/factor;
+    const raw=Math.abs(value).toFixed(Math.max(place+1,3));const parts=raw.split('.'),intPart=parts[0],dec=parts[1];const chars=(value<0?['−']:[]).concat(intPart.split(''),['.'],dec.split(''));
+    const decimalIndex=chars.indexOf('.'),keepIndex=place===0?decimalIndex-1:decimalIndex+place,checkIndex=keepIndex+1;let h='';
+    chars.forEach((c,i)=>{let cl=c==='.'?'digit decimal':'digit';if(i===keepIndex)cl+=' keep';if(i===checkIndex)cl+=' check';h+='<div class="'+cl+'">'+(c==='.'?',':c)+(i===keepIndex?'<small>dipertahankan</small>':i===checkIndex?'<small>penentu</small>':'')+'</div>'});
+    $('#roundDisplay').innerHTML=h;
+    const checkDigit=+(chars[checkIndex]||0),up=checkDigit>=5,names=['satuan','sepersepuluhan','seperseratus','seperseribu'];
+    $('#roundResult').textContent=fmt(value)+' → '+rounded.toLocaleString('id-ID',{minimumFractionDigits:place,maximumFractionDigits:place});
+    $('#roundRule').innerHTML='Angka penentu adalah <strong>'+checkDigit+'</strong>. Karena '+checkDigit+(up?' ≥ 5, angka yang dipertahankan naik satu.':' < 5, angka yang dipertahankan tetap.')+' Jadi, '+fmt(value)+' dibulatkan ke '+names[place]+' menjadi <strong>'+rounded.toLocaleString('id-ID',{minimumFractionDigits:place,maximumFractionDigits:place})+'</strong>.';
+  }
+  $('#roundBtn').addEventListener('click',updateRound);$('#placeSelect').addEventListener('change',updateRound);updateRound();
+
+  // Kuis
+  const questions=[
+    {topic:'Bilangan bulat',q:'Hasil dari −8 + 13 adalah …',o:['−21','−5','5','21'],a:2,e:'Mulai dari −8, bergerak 13 langkah ke kanan: −8 + 13 = 5.'},
+    {topic:'Bilangan bulat',q:'Nilai dari 6 − (−9) adalah …',o:['−15','−3','3','15'],a:3,e:'Mengurangi bilangan negatif sama dengan menambah lawannya: 6 − (−9) = 6 + 9 = 15.'},
+    {topic:'Bilangan bulat',q:'Hasil dari (−7) × 4 adalah …',o:['−28','−11','11','28'],a:0,e:'Bilangan negatif dikali bilangan positif menghasilkan bilangan negatif: 7 × 4 = 28, jadi −28.'},
+    {topic:'Bilangan bulat',q:'Hasil dari 42 ÷ (−6) adalah …',o:['−8','−7','7','8'],a:1,e:'Bilangan positif dibagi bilangan negatif menghasilkan bilangan negatif: 42 ÷ 6 = 7, jadi −7.'},
+    {topic:'Pecahan',q:'Hasil dari 2/3 + 1/4 dalam bentuk paling sederhana adalah …',o:['3/7','5/12','8/12','11/12'],a:3,e:'KPK dari 3 dan 4 adalah 12. Maka 2/3 = 8/12 dan 1/4 = 3/12, sehingga hasilnya 11/12.'},
+    {topic:'Pecahan',q:'Hasil dari 5/6 − 1/3 adalah …',o:['1/2','2/3','4/3','4/6'],a:0,e:'Ubah 1/3 menjadi 2/6. Lalu 5/6 − 2/6 = 3/6 = 1/2.'},
+    {topic:'Pecahan',q:'Hasil dari 3/5 × 10/9 adalah …',o:['2/3','3/2','30/14','13/14'],a:0,e:'3/5 × 10/9 = 30/45. Sederhanakan dengan membagi 15 sehingga menjadi 2/3.'},
+    {topic:'Pecahan',q:'Hasil dari 4/7 ÷ 2/3 adalah …',o:['6/7','8/21','7/6','14/8'],a:0,e:'Balik pecahan kedua lalu kalikan: 4/7 × 3/2 = 12/14 = 6/7.'},
+    {topic:'Pemangkatan pecahan',q:'Nilai dari (2/3)³ adalah …',o:['6/9','6/27','8/9','8/27'],a:3,e:'Pangkatkan pembilang dan penyebut: 2³/3³ = 8/27.'},
+    {topic:'Desimal',q:'Bilangan 7,846 dibulatkan ke seperseratus terdekat menjadi …',o:['7,8','7,84','7,85','7,90'],a:2,e:'Angka seperseratus adalah 4 dan angka penentunya 6. Karena 6 ≥ 5, angka 4 naik menjadi 5: 7,85.'}
+  ];
+  let quizQuestions=[],qi=0,score=0,answered=[];
+  function shuffled(items){
+    const result=items.slice();
+    for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]]}
+    return result;
+  }
+  function startQuiz(){
+    quizQuestions=shuffled(questions).map(q=>{
+      const options=shuffled(q.o.map((text,index)=>({text,correct:index===q.a})));
+      return {...q,o:options.map(option=>option.text),a:options.findIndex(option=>option.correct)};
+    });
+    qi=0;score=0;answered=Array(quizQuestions.length).fill(null);renderQuestion();
+  }
+  function renderDots(){const d=$('#qDots');d.innerHTML=quizQuestions.map((q,i)=>'<button class="q-dot '+(i===qi?'current ':'')+(answered[i]!==null?(answered[i]===q.a?'right':'wrong'):'')+'" aria-label="Soal '+(i+1)+'">'+(i+1)+'</button>').join('');Array.from(d.children).forEach((b,i)=>b.addEventListener('click',()=>{if(i<=answered.filter(x=>x!==null).length){qi=i;renderQuestion()}}));}
+  function renderQuestion(){
+    if(qi>=quizQuestions.length)return renderFinish();const q=quizQuestions[qi],ans=answered[qi];
+    $('#questionCard').innerHTML='<div class="q-meta"><span>Soal '+(qi+1)+' dari '+quizQuestions.length+'</span><span class="q-topic">'+q.topic+'</span></div><h3>'+q.q+'</h3><div class="options">'+q.o.map((o,i)=>'<button class="option '+(ans!==null?(i===q.a?'reveal ':'')+(i===ans?(i===q.a?'chosen right':'chosen wrong'):''):'')+'" data-i="'+i+'" '+(ans!==null?'disabled':'')+'>'+o+'</button>').join('')+'</div><div class="feedback '+(ans!==null?'show':'')+'"><b>'+(ans===q.a?'Tepat!':'Belum tepat.')+'</b><p>'+q.e+'</p></div><div class="quiz-actions"><button class="next" '+(ans===null?'disabled':'')+'>'+(qi===quizQuestions.length-1?'Lihat nilai akhir':'Soal berikutnya')+'</button></div>';
+    $$('.option').forEach(b=>b.addEventListener('click',()=>answer(+b.dataset.i)));$('.next').addEventListener('click',()=>{qi++;renderQuestion()});renderDots();updateScore();
+  }
+  function answer(i){if(answered[qi]!==null)return;answered[qi]=i;i===quizQuestions[qi].a&&score++;renderQuestion()}
+  function updateScore(){const done=answered.filter(x=>x!==null).length;$('#scoreText').textContent=score+'/10';$('#scoreRing').style.setProperty('--progress',(done?score/done*100:0)+'%')}
+  function renderFinish(){const pct=score*10,msg=score>=9?'Luar biasa! Pemahamanmu sangat kuat.':score>=7?'Bagus! Tinggal perkuat beberapa bagian.':score>=5?'Cukup baik. Baca lagi pembahasan soal yang keliru.':'Ayo coba simulasi lagi, lalu ulangi kuis.';$('#questionCard').innerHTML='<div class="finish"><svg class="trophy" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6"><path d="M30 18h40v18c0 20-10 30-20 30S30 56 30 36V18Z"/><path d="M30 25H14v8c0 13 7 21 20 22M70 25h16v8c0 13-7 21-20 22M50 66v14M34 84h32"/></svg><h3>Nilaimu '+pct+'</h3><p>'+msg+'</p><button class="action retry">Ulangi kuis</button></div>';$('.retry').addEventListener('click',startQuiz);renderDots();updateScore()}
+  startQuiz();
+})();
+</script>
+</body>
+</html>

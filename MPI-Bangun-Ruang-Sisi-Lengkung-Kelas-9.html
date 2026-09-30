@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,650;6..72,750&display=swap" rel="stylesheet">
+  <title>Media Interaktif Bangun Ruang Sisi Lengkung</title>
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#f4f8f7;--surface:#ffffff;--surface-2:#eaf2f0;--ink:#102c2d;--muted:#4b6666;
+      --line:#c9d9d5;--teal:#087f78;--teal-dark:#075f5b;--orange:#f0783c;--yellow:#f2c94c;
+      --blue:#2d6cdf;--good:#167a52;--bad:#b83a37;--shadow:0 18px 50px rgba(20,59,58,.10);
+      --r-lg:28px;--r-md:18px;--r-sm:12px;
+    }
+    @media (prefers-color-scheme:dark){
+      :root{--bg:#0e1919;--surface:#152525;--surface-2:#1c3030;--ink:#eef8f5;--muted:#a8c1bd;--line:#35504d;--teal:#47c8bc;--teal-dark:#71ded4;--orange:#ff9866;--yellow:#f4ce62;--blue:#80a7ff;--good:#61d4a0;--bad:#ff8d87;--shadow:0 18px 50px rgba(0,0,0,.25)}
+    }
+    *{box-sizing:border-box}
+    [hidden]{display:none!important}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.55;overflow-x:hidden}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+    .wrap{width:min(1160px,calc(100% - 36px));margin:auto}
+    .hero{position:relative;overflow:hidden;padding:72px 0 48px;background:var(--ink);color:#f7fffd}
+    .hero:after{content:"";position:absolute;width:360px;height:360px;border:68px solid rgba(71,200,188,.25);border-radius:50%;right:-100px;top:-130px}
+    .hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:48px;align-items:center;position:relative;z-index:1}
+    .hero h1{font:750 clamp(2.7rem,6vw,5.4rem)/.94 "Newsreader",serif;letter-spacing:-.04em;margin:0 0 22px;max-width:760px}
+    .hero p{font-size:1.08rem;color:#cae1dc;max-width:650px;margin:0}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .btn{border:0;border-radius:999px;padding:12px 20px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:background .2s,transform .2s;color:#fff;background:var(--teal)}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.orange{background:var(--orange);color:#23130c}.btn.ghost{background:transparent;border:1px solid #78918e;color:#fff}
+    .hero-orbit{height:300px;position:relative;display:grid;place-items:center}
+    .orb{position:absolute;border:2px solid #8ee0d6;box-shadow:inset -20px -18px 38px rgba(0,0,0,.25);background:rgba(71,200,188,.18)}
+    .orb.sphere{width:150px;height:150px;border-radius:50%;left:42%;top:18%}
+    .orb.cylinder{width:116px;height:145px;border-radius:58px/24px;left:10%;top:45%;transform:rotate(-15deg);border-color:#f2c94c}
+    .orb.cone{width:0;height:0;border-left:70px solid transparent;border-right:70px solid transparent;border-bottom:170px solid rgba(240,120,60,.42);background:none;box-shadow:none;border-radius:0;border-top:0;right:0;top:35%;transform:rotate(12deg)}
+    .orb.cone:after{content:"";position:absolute;width:138px;height:34px;border:2px solid #ffb18c;border-radius:50%;left:-69px;top:152px;background:rgba(240,120,60,.3)}
+    .subnav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    .subnav-inner{display:flex;align-items:center;gap:6px;padding:10px 0;overflow:auto;scrollbar-width:none}
+    .subnav a{white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:700;padding:9px 15px;border-radius:999px}
+    .subnav a:hover{background:var(--surface-2);color:var(--ink)}
+    section{padding:76px 0;scroll-margin-top:64px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:30px}
+    .section-head h2{font:750 clamp(2rem,4vw,3.3rem)/1 "Newsreader",serif;letter-spacing:-.025em;margin:0}
+    .section-head p{max-width:520px;color:var(--muted);margin:0}
+    .sim-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:22px;align-items:start}
+    .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+    .visual-panel{overflow:hidden}
+    .shape-tabs{display:flex;gap:8px;padding:16px 16px 0;flex-wrap:wrap}
+    .shape-tab,.net-tab{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:9px 16px;font-weight:700}
+    .shape-tab.active,.net-tab.active{background:var(--teal);border-color:var(--teal);color:#fff}
+    .canvas-wrap{height:460px;position:relative;background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--teal) 14%,var(--surface)),var(--surface) 62%);touch-action:none}
+    canvas{display:block;width:100%;height:100%}
+    .drag-hint{position:absolute;left:18px;bottom:16px;padding:7px 12px;background:color-mix(in srgb,var(--surface) 86%,transparent);border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.84rem;pointer-events:none}
+    .visual-tools{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--line);flex-wrap:wrap}
+    .icon-btn{border:0;background:var(--surface-2);color:var(--ink);border-radius:999px;padding:9px 14px;font-weight:700}
+    .info-card{padding:24px}
+    .info-card h3{font:750 2rem/1.1 "Newsreader",serif;margin:0 0 8px}
+    .element-list{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 22px;padding:0;list-style:none}
+    .element-list li{background:var(--surface-2);border-radius:999px;padding:6px 11px;font-size:.88rem;color:var(--muted)}
+    .control{margin:18px 0}
+    .control label{display:flex;justify-content:space-between;gap:12px;font-weight:700;margin-bottom:8px}
+    .control output{color:var(--teal-dark)}
+    input[type=range]{width:100%;accent-color:var(--teal)}
+    .formula{border-top:1px solid var(--line);padding-top:18px;margin-top:22px}
+    .formula-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:8px 0;color:var(--muted)}
+    .formula-row strong{color:var(--ink);font-size:1.05rem}
+    .result-box{margin-top:16px;background:var(--ink);color:#fff;border-radius:var(--r-md);padding:18px}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .result-grid span{display:block;color:#bcd4d0;font-size:.78rem;margin-bottom:4px}
+    .result-grid strong{font-size:1.18rem}
+    .exact{font-size:.82rem;color:#bcd4d0;margin-top:10px}
+    .nets{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .net-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:stretch}
+    .net-copy{padding:12px 0}
+    .net-copy h3{font:750 2.2rem/1.05 "Newsreader",serif;margin:20px 0 12px}
+    .net-copy p{color:var(--muted)}
+    .net-facts{display:grid;gap:10px;margin:24px 0}
+    .net-fact{display:flex;gap:12px;align-items:flex-start}
+    .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--yellow);color:#281f00;font-weight:800;flex:0 0 auto}
+    .net-panel{padding:18px;min-height:460px;display:flex;flex-direction:column}
+    .net-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    .net-stage{flex:1;min-height:330px;display:grid;place-items:center;padding:12px}
+    #netSvg{width:100%;height:330px;overflow:visible}
+    .fold-control{padding:0 12px 8px}
+    .fold-control label{display:flex;justify-content:space-between;font-weight:700}
+    .fold-ends{font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between}
+    .quiz-section{padding-bottom:96px}
+    .quiz-shell{max-width:840px;margin:auto}
+    .quiz-card{padding:clamp(22px,5vw,44px);min-height:480px;display:flex;flex-direction:column}
+    .quiz-intro{display:grid;place-items:center;text-align:center;min-height:390px}
+    .quiz-mark{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:var(--yellow);color:#2a2100;font:750 2.8rem "Newsreader",serif;margin-bottom:18px}
+    .quiz-intro h3,.final h3{font:750 2.4rem/1.1 "Newsreader",serif;margin:0 0 10px}
+    .quiz-intro p,.final p{color:var(--muted);max-width:520px}
+    .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+    .progress-wrap{flex:1;height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+    .progress{height:100%;width:0;background:var(--teal);transition:width .3s}
+    .q-count{font-weight:800;white-space:nowrap;color:var(--muted)}
+    .question{font:650 clamp(1.4rem,3vw,2rem)/1.25 "Newsreader",serif;margin:8px 0 24px}
+    .choices{display:grid;gap:11px}
+    .choice{width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:var(--r-sm);padding:15px 17px;font-weight:600;transition:border .2s,background .2s,transform .2s}
+    .choice:hover:not(:disabled){border-color:var(--teal);transform:translateX(3px)}
+    .choice.correct{border-color:var(--good);background:color-mix(in srgb,var(--good) 13%,var(--surface))}
+    .choice.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+    .choice:disabled{cursor:default;opacity:1}
+    .feedback{margin-top:20px;padding:17px;background:var(--surface-2);border-radius:var(--r-sm);display:none}
+    .feedback.show{display:block}
+    .feedback h4{margin:0 0 5px}.feedback p{margin:0;color:var(--muted)}
+    .next-row{display:flex;justify-content:flex-end;margin-top:18px}
+    .final{text-align:center;display:grid;place-items:center;min-height:390px}
+    .score-ring{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--teal) var(--score-deg),var(--surface-2) 0);position:relative;margin-bottom:22px}
+    .score-ring:after{content:"";position:absolute;inset:12px;background:var(--surface);border-radius:50%}
+    .score-ring strong{position:relative;z-index:1;font:750 2.5rem "Newsreader",serif}
+    .mini-note{font-size:.84rem;color:var(--muted);margin-top:16px}
+    footer{padding:24px 0 42px;text-align:center;color:var(--muted);font-size:.9rem}
+    @media(max-width:820px){.hero{padding-top:52px}.hero-grid{grid-template-columns:1fr}.hero-orbit{display:none}.sim-grid,.net-grid{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:12px}.canvas-wrap{height:390px}.net-copy{order:2}.net-panel{min-height:430px}.result-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.wrap{width:min(100% - 24px,1160px)}.subnav-inner{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.subnav a{text-align:center;padding:7px 8px;font-size:.84rem}.hero{padding:46px 0 38px}.hero h1{font-size:3rem}.hero-actions .btn{width:100%}section{padding:58px 0}.panel{border-radius:20px}.canvas-wrap{height:330px}.info-card{padding:20px}.shape-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.shape-tab{padding:8px 4px}.visual-tools{align-items:stretch}.visual-tools .icon-btn{flex:1}.net-panel{padding:12px}.net-stage{padding:0}.quiz-card{padding:22px;min-height:520px}.question{font-size:1.45rem}.quiz-top{align-items:flex-start}.result-grid{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.choice,.progress{transition:none}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Putar. Ukur. Temukan polanya.</h1>
+        <p>Jelajahi tabung, kerucut, dan bola dari berbagai sudut. Ubah ukurannya, buka jaring-jaringnya, lalu uji pemahamanmu lewat kuis.</p>
+        <div class="hero-actions">
+          <a class="btn orange" href="#simulasi">Mulai simulasi ↓</a>
+          <a class="btn ghost" href="#kuis">Langsung ke kuis</a>
+        </div>
+      </div>
+      <div class="hero-orbit" aria-hidden="true"><div class="orb cylinder"></div><div class="orb sphere"></div><div class="orb cone"></div></div>
+    </div>
+  </header>
+  <nav class="subnav" aria-label="Navigasi materi"><div class="wrap subnav-inner"><a href="#simulasi">Model 3D & hitung</a><a href="#jaring">Jaring-jaring</a><a href="#ringkas">Rumus inti</a><a href="#kuis">Kuis 10 soal</a></div></nav>
+
+  <main>
+    <section id="simulasi">
+      <div class="wrap">
+        <div class="section-head"><h2>Kenali bentuknya</h2><p>Geser model untuk memutarnya. Ubah jari-jari dan tinggi, lalu perhatikan bagaimana luas permukaan dan volumenya ikut berubah.</p></div>
+        <div class="sim-grid">
+          <div class="panel visual-panel">
+            <div class="shape-tabs" role="tablist" aria-label="Pilih bangun ruang">
+              <button class="shape-tab active" data-shape="cylinder" role="tab" aria-selected="true">Tabung</button>
+              <button class="shape-tab" data-shape="cone" role="tab" aria-selected="false">Kerucut</button>
+              <button class="shape-tab" data-shape="sphere" role="tab" aria-selected="false">Bola</button>
+            </div>
+            <div class="canvas-wrap" id="canvasWrap">
+              <canvas id="shapeCanvas" aria-label="Model tiga dimensi yang dapat diputar"></canvas>
+              <div class="drag-hint">↔ Geser untuk memutar</div>
+            </div>
+            <div class="visual-tools"><span class="mini-note" style="margin:0">Titik oranye menunjukkan ukuran utama</span><div><button class="icon-btn" id="autoBtn" aria-pressed="true">Jeda putaran</button> <button class="icon-btn" id="resetView">Atur ulang</button></div></div>
+          </div>
+          <aside class="panel info-card" aria-live="polite">
+            <h3 id="shapeName">Tabung</h3>
+            <p id="shapeDesc">Memiliki dua alas lingkaran kongruen dan satu selimut lengkung.</p>
+            <ul class="element-list" id="elements"><li>2 sisi datar</li><li>1 sisi lengkung</li><li>2 rusuk lengkung</li><li>0 titik sudut</li></ul>
+            <div class="control"><label for="radius">Jari-jari (r) <output id="radiusOut">7 cm</output></label><input id="radius" type="range" min="1" max="15" value="7" step="1"></div>
+            <div class="control" id="heightControl"><label for="height">Tinggi (t) <output id="heightOut">10 cm</output></label><input id="height" type="range" min="1" max="20" value="10" step="1"></div>
+            <div class="formula" id="ringkas">
+              <div class="formula-row"><span>Luas permukaan</span><strong id="areaFormula">2πr(r + t)</strong></div>
+              <div class="formula-row"><span>Volume</span><strong id="volumeFormula">πr²t</strong></div>
+              <div class="formula-row" id="slantRow" hidden><span>Garis pelukis (s)</span><strong id="slantValue">—</strong></div>
+            </div>
+            <div class="result-box"><div class="result-grid"><div><span>LUAS PERMUKAAN</span><strong id="areaResult">747,70 cm²</strong></div><div><span>VOLUME</span><strong id="volumeResult">1.539,38 cm³</strong></div></div><div class="exact" id="exactResult">Nilai dihitung dengan π ≈ 3,14159</div></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="nets" id="jaring">
+      <div class="wrap">
+        <div class="section-head"><h2>Buka jaring-jaringnya</h2><p>Jaring-jaring adalah bentuk datar yang dapat dilipat menjadi bangun ruang. Geser pengendali untuk melihat proses membuka dan menutup.</p></div>
+        <div class="net-grid">
+          <div class="net-copy">
+            <div class="shape-tabs" style="padding:0" role="tablist" aria-label="Pilih jaring-jaring"><button class="net-tab active" data-net="cylinder" role="tab" aria-selected="true">Tabung</button><button class="net-tab" data-net="cone" role="tab" aria-selected="false">Kerucut</button></div>
+            <h3 id="netTitle">Tabung menjadi dua lingkaran dan satu persegi panjang.</h3>
+            <p id="netText">Panjang persegi panjang sama dengan keliling alas, yaitu 2πr. Lebarnya sama dengan tinggi tabung.</p>
+            <div class="net-facts" id="netFacts">
+              <div class="net-fact"><span class="num">1</span><span>Dua lingkaran menjadi alas dan tutup.</span></div>
+              <div class="net-fact"><span class="num">2</span><span>Persegi panjang menjadi selimut tabung.</span></div>
+            </div>
+          </div>
+          <div class="panel net-panel">
+            <div class="net-top"><strong id="foldStatus">Terbuka 100%</strong><button class="icon-btn" id="toggleFold">Tutup bentuk</button></div>
+            <div class="net-stage"><svg id="netSvg" viewBox="0 0 620 340" role="img" aria-label="Visualisasi jaring-jaring tabung"></svg></div>
+            <div class="fold-control"><label for="foldRange"><span>Tingkat bukaan</span><output id="foldOut">100%</output></label><input type="range" id="foldRange" min="0" max="100" value="100"><div class="fold-ends"><span>Bangun ruang</span><span>Jaring-jaring</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kuis" class="quiz-section">
+      <div class="wrap quiz-shell">
+        <div class="section-head"><h2>Uji pemahamanmu</h2><p>Sepuluh soal akan selalu diacak, termasuk urutan pilihannya. Pilih jawaban untuk melihat pembahasan.</p></div>
+        <div class="panel quiz-card" id="quizCard">
+          <div class="quiz-intro" id="quizIntro"><div><div class="quiz-mark">10</div><h3>Siap menjelajah?</h3><p>Setiap jawaban langsung diberi umpan balik. Gunakan π sesuai petunjuk pada soal.</p><button class="btn" id="startQuiz">Mulai kuis</button></div></div>
+          <div id="quizPlay" hidden>
+            <div class="quiz-top"><div class="progress-wrap" aria-label="Kemajuan kuis"><div class="progress" id="progress"></div></div><span class="q-count" id="qCount">1 / 10</span></div>
+            <div class="question" id="question"></div>
+            <div class="choices" id="choices"></div>
+            <div class="feedback" id="feedback"><h4 id="feedbackTitle"></h4><p id="feedbackText"></p></div>
+            <div class="next-row"><button class="btn" id="nextBtn" hidden>Soal berikutnya</button></div>
+          </div>
+          <div class="final" id="quizFinal" hidden><div><div class="score-ring" id="scoreRing" style="--score-deg:0deg"><strong id="finalScore">0</strong></div><h3 id="finalTitle">Selesai!</h3><p id="finalText"></p><button class="btn orange" id="retryQuiz">Acak & ulangi</button></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">Eksplorasi matematika • Bangun Ruang Sisi Lengkung • Kelas IX</div></footer>
+
+  <script>
+  (function(){
+    'use strict';
+    const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+    const state={shape:'cylinder',r:7,h:10,rotX:-0.25,rotY:0.55,auto:true,drag:false,lastX:0,lastY:0};
+    const info={
+      cylinder:{name:'Tabung',desc:'Memiliki dua alas lingkaran kongruen dan satu selimut lengkung.',elements:['2 sisi datar','1 sisi lengkung','2 rusuk lengkung','0 titik sudut'],area:'2πr(r + t)',volume:'πr²t'},
+      cone:{name:'Kerucut',desc:'Memiliki satu alas lingkaran dan selimut yang meruncing ke satu puncak.',elements:['1 sisi datar','1 sisi lengkung','1 rusuk lengkung','1 titik puncak'],area:'πr(r + s)',volume:'⅓πr²t'},
+      sphere:{name:'Bola',desc:'Seluruh permukaannya lengkung; setiap titik pada permukaan berjarak sama dari pusat.',elements:['1 sisi lengkung','0 rusuk','0 titik sudut','1 titik pusat'],area:'4πr²',volume:'⁴⁄₃πr³'}
+    };
+    const canvas=$('#shapeCanvas'),ctx=canvas.getContext('2d'); let dpr=1,raf;
+    function resize(){const rect=canvas.parentElement.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+    function rot(p){let [x,y,z]=p,cy=Math.cos(state.rotY),sy=Math.sin(state.rotY),cx=Math.cos(state.rotX),sx=Math.sin(state.rotX);let x1=x*cy+z*sy,z1=-x*sy+z*cy;return [x1,y*cx-z1*sx,y*sx+z1*cx]}
+    function proj(p,w,h){const q=rot(p),cam=4.5,k=Math.min(w,h)*.58/(cam+q[2]);return{x:w/2+q[0]*k,y:h/2-q[1]*k,z:q[2],k}}
+    function mesh(){const faces=[],lines=[],n=32;let scaleH=state.shape==='sphere'?1:Math.max(.75,Math.min(1.55,state.h/9));
+      if(state.shape==='cylinder'){
+        for(let i=0;i<n;i++){let a=i*2*Math.PI/n,b=(i+1)*2*Math.PI/n;faces.push({p:[[Math.cos(a),-scaleH,Math.sin(a)],[Math.cos(b),-scaleH,Math.sin(b)],[Math.cos(b),scaleH,Math.sin(b)],[Math.cos(a),scaleH,Math.sin(a)]],c:i%2?'#159b90':'#0d887f'});}
+        let top=[[0,scaleH,0]],bottom=[[0,-scaleH,0]];for(let i=0;i<=n;i++){let a=i*2*Math.PI/n;top.push([Math.cos(a),scaleH,Math.sin(a)]);bottom.push([Math.cos(a),-scaleH,Math.sin(a)])}faces.push({p:top,c:'#63d2c7'});faces.push({p:bottom,c:'#086c67'});lines.push([[0,-scaleH,0],[0,scaleH,0]],[[0,-scaleH,0],[1,-scaleH,0]]);
+      }else if(state.shape==='cone'){
+        for(let i=0;i<n;i++){let a=i*2*Math.PI/n,b=(i+1)*2*Math.PI/n;faces.push({p:[[0,scaleH,0],[Math.cos(a),-scaleH,Math.sin(a)],[Math.cos(b),-scaleH,Math.sin(b)]],c:i%2?'#f1844d':'#dc6c38'});}let base=[[0,-scaleH,0]];for(let i=0;i<=n;i++){let a=-i*2*Math.PI/n;base.push([Math.cos(a),-scaleH,Math.sin(a)])}faces.push({p:base,c:'#bb5124'});lines.push([[0,-scaleH,0],[0,scaleH,0]],[[0,-scaleH,0],[1,-scaleH,0]]);
+      }else{
+        const lat=14,lon=28;for(let j=0;j<lat;j++){let v1=-Math.PI/2+j*Math.PI/lat,v2=-Math.PI/2+(j+1)*Math.PI/lat;for(let i=0;i<lon;i++){let a=i*2*Math.PI/lon,b=(i+1)*2*Math.PI/lon;let point=(u,v)=>[Math.cos(v)*Math.cos(u),Math.sin(v),Math.cos(v)*Math.sin(u)];faces.push({p:[point(a,v1),point(b,v1),point(b,v2),point(a,v2)],c:(i+j)%2?'#3976e5':'#2d69d5'});}}lines.push([[0,0,0],[1,0,0]]);
+      }return{faces,lines};
+    }
+    function shade(hex,amt){let c=parseInt(hex.slice(1),16),r=Math.max(0,Math.min(255,(c>>16)+amt)),g=Math.max(0,Math.min(255,((c>>8)&255)+amt)),b=Math.max(0,Math.min(255,(c&255)+amt));return `rgb(${r},${g},${b})`}
+    function draw(){const w=canvas.clientWidth,h=canvas.clientHeight;ctx.clearRect(0,0,w,h);const m=mesh();let faces=m.faces.map(f=>({f,pts:f.p.map(p=>proj(p,w,h)),z:f.p.reduce((s,p)=>s+rot(p)[2],0)/f.p.length})).sort((a,b)=>a.z-b.z);
+      faces.forEach(o=>{let pts=o.pts;ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.closePath();ctx.fillStyle=shade(o.f.c,Math.round(o.z*16));ctx.fill();ctx.strokeStyle='rgba(255,255,255,.22)';ctx.lineWidth=.7;ctx.stroke()});
+      m.lines.forEach((l,idx)=>{let a=proj(l[0],w,h),b=proj(l[1],w,h);ctx.strokeStyle=idx===0?'#f2c94c':'#ff9866';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.fillStyle='#f2c94c';ctx.beginPath();ctx.arc(a.x,a.y,4,0,7);ctx.arc(b.x,b.y,4,0,7);ctx.fill()});
+      ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--muted');ctx.font='600 13px DM Sans';ctx.textAlign='left';let labels=state.shape==='sphere'?[['r',m.lines[0][1]]]:[['t',m.lines[0][1]],['r',m.lines[1][1]]];labels.forEach(([txt,p])=>{let q=proj(p,w,h);ctx.fillText(txt,q.x+8,q.y-7)});
+    }
+    function loop(){if(state.auto&&!matchMedia('(prefers-reduced-motion: reduce)').matches)state.rotY+=.004;draw();raf=requestAnimationFrame(loop)}
+    canvas.addEventListener('pointerdown',e=>{state.drag=true;state.lastX=e.clientX;state.lastY=e.clientY;state.auto=false;$('#autoBtn').textContent='Putar otomatis';$('#autoBtn').setAttribute('aria-pressed','false');canvas.setPointerCapture(e.pointerId)});
+    canvas.addEventListener('pointermove',e=>{if(!state.drag)return;state.rotY+=(e.clientX-state.lastX)*.012;state.rotX+=(e.clientY-state.lastY)*.008;state.rotX=Math.max(-1.15,Math.min(1.15,state.rotX));state.lastX=e.clientX;state.lastY=e.clientY});
+    canvas.addEventListener('pointerup',()=>state.drag=false);canvas.addEventListener('pointercancel',()=>state.drag=false);
+    $('#autoBtn').onclick=()=>{state.auto=!state.auto;$('#autoBtn').textContent=state.auto?'Jeda putaran':'Putar otomatis';$('#autoBtn').setAttribute('aria-pressed',String(state.auto))};
+    $('#resetView').onclick=()=>{state.rotX=-.25;state.rotY=.55;state.auto=true;$('#autoBtn').textContent='Jeda putaran';$('#autoBtn').setAttribute('aria-pressed','true')};
+    function fmt(n){return n.toLocaleString('id-ID',{maximumFractionDigits:2,minimumFractionDigits:2})}
+    function updateCalc(){let d=info[state.shape],r=state.r,h=state.h,area,vol,s;$('#shapeName').textContent=d.name;$('#shapeDesc').textContent=d.desc;$('#elements').innerHTML=d.elements.map(x=>`<li>${x}</li>`).join('');$('#areaFormula').textContent=d.area;$('#volumeFormula').textContent=d.volume;$('#heightControl').hidden=state.shape==='sphere';$('#slantRow').hidden=state.shape!=='cone';
+      if(state.shape==='cylinder'){area=2*Math.PI*r*(r+h);vol=Math.PI*r*r*h}
+      else if(state.shape==='cone'){s=Math.sqrt(r*r+h*h);area=Math.PI*r*(r+s);vol=Math.PI*r*r*h/3;$('#slantValue').textContent=fmt(s)+' cm'}
+      else{area=4*Math.PI*r*r;vol=4*Math.PI*r*r*r/3}
+      $('#areaResult').textContent=fmt(area)+' cm²';$('#volumeResult').textContent=fmt(vol)+' cm³';$('#exactResult').textContent=`r = ${r} cm${state.shape!=='sphere'?`, t = ${h} cm`:''} • π ≈ 3,14159`;$('#radiusOut').textContent=r+' cm';$('#heightOut').textContent=h+' cm';
+    }
+    $$('.shape-tab').forEach(b=>b.onclick=()=>{$$('.shape-tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false')});b.classList.add('active');b.setAttribute('aria-selected','true');state.shape=b.dataset.shape;updateCalc()});
+    $('#radius').oninput=e=>{state.r=+e.target.value;updateCalc()};$('#height').oninput=e=>{state.h=+e.target.value;updateCalc()};
+    addEventListener('resize',resize);resize();updateCalc();loop();
+
+    let netShape='cylinder';
+    function drawNet(){const svg=$('#netSvg'),v=+$('#foldRange').value,t=v/100;$('#foldOut').textContent=v+'%';$('#foldStatus').textContent=v===0?'Bentuk tertutup':`Terbuka ${v}%`;$('#toggleFold').textContent=v>50?'Tutup bentuk':'Buka jaring-jaring';let html='';
+      if(netShape==='cylinder'){
+        let rectY=110,topY=110-72*t,bottomY=230+72*t;let sideOpacity=.3+.7*t,ellipseOpacity=1-t*.65;
+        html=`<defs><linearGradient id="ng" x1="0" x2="1"><stop stop-color="#087f78"/><stop offset="1" stop-color="#47c8bc"/></linearGradient></defs>
+        <rect x="155" y="110" width="310" height="120" rx="${Math.round(28*(1-t))}" fill="url(#ng)" opacity="${sideOpacity}" stroke="#075f5b" stroke-width="3"/>
+        <circle cx="310" cy="${topY}" r="58" fill="#f2c94c" stroke="#8f7000" stroke-width="3" opacity="${.45+.55*t}"/>
+        <circle cx="310" cy="${bottomY}" r="58" fill="#f2c94c" stroke="#8f7000" stroke-width="3" opacity="${.45+.55*t}"/>
+        <ellipse cx="310" cy="110" rx="155" ry="${28-18*t}" fill="#47c8bc" stroke="#075f5b" stroke-width="3" opacity="${ellipseOpacity}"/>
+        <ellipse cx="310" cy="230" rx="155" ry="${28-18*t}" fill="#087f78" stroke="#075f5b" stroke-width="3" opacity="${ellipseOpacity}"/>
+        ${t>.65?`<text x="310" y="174" text-anchor="middle" fill="#fff" font-family="DM Sans" font-weight="700">selimut: 2πr × t</text><text x="380" y="${topY+5}" fill="#402f00" font-family="DM Sans" font-weight="700">r</text>`:''}`;
+      }else{
+        let angle=40+230*t,rad=145,cx=310,cy=165,start=(-angle/2)*Math.PI/180,end=(angle/2)*Math.PI/180,p1=[cx+rad*Math.cos(start),cy+rad*Math.sin(start)],p2=[cx+rad*Math.cos(end),cy+rad*Math.sin(end)],large=angle>180?1:0,circleY=285+32*t;
+        html=`<path d="M ${cx} ${cy} L ${p1[0]} ${p1[1]} A ${rad} ${rad} 0 ${large} 1 ${p2[0]} ${p2[1]} Z" fill="#f0783c" stroke="#9c3e16" stroke-width="3"/>
+        <circle cx="310" cy="${circleY}" r="54" fill="#f2c94c" stroke="#8f7000" stroke-width="3" opacity="${.55+.45*t}"/>
+        ${t>.62?`<text x="310" y="145" text-anchor="middle" fill="#fff" font-family="DM Sans" font-weight="700">juring lingkaran</text><text x="372" y="${circleY+4}" fill="#402f00" font-family="DM Sans" font-weight="700">r</text>`:''}`;
+      }svg.innerHTML=html;
+    }
+    function updateNetInfo(){if(netShape==='cylinder'){$('#netTitle').textContent='Tabung menjadi dua lingkaran dan satu persegi panjang.';$('#netText').textContent='Panjang persegi panjang sama dengan keliling alas, yaitu 2πr. Lebarnya sama dengan tinggi tabung.';$('#netFacts').innerHTML='<div class="net-fact"><span class="num">1</span><span>Dua lingkaran menjadi alas dan tutup.</span></div><div class="net-fact"><span class="num">2</span><span>Persegi panjang menjadi selimut tabung.</span></div>';$('#netSvg').setAttribute('aria-label','Visualisasi jaring-jaring tabung')}else{$('#netTitle').textContent='Kerucut menjadi satu lingkaran dan satu juring lingkaran.';$('#netText').textContent='Jari-jari juring adalah garis pelukis (s). Panjang busur juring sama dengan keliling alas kerucut, yaitu 2πr.';$('#netFacts').innerHTML='<div class="net-fact"><span class="num">1</span><span>Lingkaran menjadi alas kerucut.</span></div><div class="net-fact"><span class="num">2</span><span>Juring lingkaran menjadi selimut kerucut.</span></div>';$('#netSvg').setAttribute('aria-label','Visualisasi jaring-jaring kerucut')}drawNet()}
+    $$('.net-tab').forEach(b=>b.onclick=()=>{$$('.net-tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false')});b.classList.add('active');b.setAttribute('aria-selected','true');netShape=b.dataset.net;updateNetInfo()});
+    $('#foldRange').oninput=drawNet;$('#toggleFold').onclick=()=>{$('#foldRange').value=+$('#foldRange').value>50?0:100;drawNet()};updateNetInfo();
+
+    const questions=[
+      {q:'Manakah pernyataan yang tepat tentang unsur tabung?',choices:['Memiliki dua sisi datar berbentuk lingkaran','Memiliki satu titik puncak','Tidak memiliki rusuk lengkung','Seluruh permukaannya lengkung'],a:'Memiliki dua sisi datar berbentuk lingkaran',e:'Tabung mempunyai dua sisi datar berbentuk lingkaran yang kongruen: alas dan tutup. Tabung juga memiliki satu sisi lengkung.'},
+      {q:'Sebuah tabung berjari-jari 7 cm dan tinggi 10 cm. Dengan π = 22/7, luas permukaannya adalah …',choices:['748 cm²','440 cm²','1.540 cm²','374 cm²'],a:'748 cm²',e:'L = 2πr(r + t) = 2 × 22/7 × 7 × (7 + 10) = 748 cm².'},
+      {q:'Volume tabung dengan jari-jari 7 cm dan tinggi 10 cm, menggunakan π = 22/7, adalah …',choices:['1.540 cm³','770 cm³','440 cm³','3.080 cm³'],a:'1.540 cm³',e:'V = πr²t = 22/7 × 7² × 10 = 1.540 cm³.'},
+      {q:'Kerucut memiliki jari-jari 6 cm dan tinggi 8 cm. Panjang garis pelukisnya adalah …',choices:['10 cm','14 cm','7 cm','12 cm'],a:'10 cm',e:'Garis pelukis s = √(r² + t²) = √(6² + 8²) = √100 = 10 cm.'},
+      {q:'Luas permukaan kerucut dengan r = 7 cm dan s = 25 cm, menggunakan π = 22/7, adalah …',choices:['704 cm²','550 cm²','616 cm²','1.100 cm²'],a:'704 cm²',e:'L = πr(r + s) = 22/7 × 7 × (7 + 25) = 704 cm².'},
+      {q:'Volume kerucut dengan jari-jari 7 cm dan tinggi 12 cm, menggunakan π = 22/7, adalah …',choices:['616 cm³','1.848 cm³','308 cm³','924 cm³'],a:'616 cm³',e:'V = ⅓πr²t = ⅓ × 22/7 × 7² × 12 = 616 cm³.'},
+      {q:'Luas permukaan bola berjari-jari 7 cm, menggunakan π = 22/7, adalah …',choices:['616 cm²','308 cm²','1.232 cm²','154 cm²'],a:'616 cm²',e:'L = 4πr² = 4 × 22/7 × 7² = 616 cm².'},
+      {q:'Volume bola berjari-jari 3 cm dengan π = 3,14 adalah …',choices:['113,04 cm³','37,68 cm³','84,78 cm³','339,12 cm³'],a:'113,04 cm³',e:'V = ⁴⁄₃πr³ = ⁴⁄₃ × 3,14 × 3³ = 113,04 cm³.'},
+      {q:'Jaring-jaring tabung tersusun atas …',choices:['Dua lingkaran dan satu persegi panjang','Satu lingkaran dan satu segitiga','Dua lingkaran dan satu juring','Satu persegi panjang dan dua segitiga'],a:'Dua lingkaran dan satu persegi panjang',e:'Dua lingkaran membentuk alas dan tutup, sedangkan persegi panjang membentuk selimut tabung.'},
+      {q:'Kerucut dan tabung mempunyai luas alas serta tinggi yang sama. Volume kerucut adalah … volume tabung.',choices:['Sepertiga dari','Tiga kali','Setengah dari','Sama dengan'],a:'Sepertiga dari',e:'Volume tabung = πr²t, sedangkan volume kerucut = ⅓πr²t. Jadi volume kerucut sepertiga volume tabung.'}
+    ];
+    let order=[],qi=0,score=0,answered=false;
+    function shuffle(arr){let a=arr.slice();for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+    function start(){order=shuffle(questions).map(q=>({...q,choices:shuffle(q.choices)}));qi=0;score=0;$('#quizIntro').hidden=true;$('#quizFinal').hidden=true;$('#quizPlay').hidden=false;renderQ()}
+    function renderQ(){answered=false;let q=order[qi];$('#progress').style.width=(qi/questions.length*100)+'%';$('#qCount').textContent=`${qi+1} / ${questions.length}`;$('#question').textContent=q.q;$('#choices').innerHTML='';q.choices.forEach(c=>{let b=document.createElement('button');b.className='choice';b.textContent=c;b.onclick=()=>answer(b,c);$('#choices').appendChild(b)});$('#feedback').classList.remove('show');$('#nextBtn').hidden=true}
+    function answer(btn,c){if(answered)return;answered=true;let q=order[qi],ok=c===q.a;if(ok)score++;$$('.choice').forEach(b=>{b.disabled=true;if(b.textContent===q.a)b.classList.add('correct')});if(!ok)btn.classList.add('wrong');$('#feedbackTitle').textContent=ok?'Tepat!':'Belum tepat';$('#feedbackTitle').style.color=ok?'var(--good)':'var(--bad)';$('#feedbackText').textContent=q.e;$('#feedback').classList.add('show');$('#nextBtn').hidden=false;$('#nextBtn').textContent=qi===questions.length-1?'Lihat nilai akhir':'Soal berikutnya';$('#progress').style.width=((qi+1)/questions.length*100)+'%'}
+    function next(){if(!answered)return;if(qi<questions.length-1){qi++;renderQ()}else finish()}
+    function finish(){$('#quizPlay').hidden=true;$('#quizFinal').hidden=false;let pct=score*10;$('#finalScore').textContent=pct;$('#scoreRing').style.setProperty('--score-deg',(pct*3.6)+'deg');let title,text;if(pct>=90){title='Luar biasa!';text=`Kamu menjawab ${score} dari 10 soal dengan benar. Pemahamanmu sudah sangat kuat.`}else if(pct>=70){title='Bagus sekali!';text=`Kamu menjawab ${score} dari 10 soal dengan benar. Tinjau kembali pembahasan yang masih sulit.`}else{title='Terus berlatih!';text=`Kamu menjawab ${score} dari 10 soal dengan benar. Coba eksplorasi simulasi dan jaring-jaring sekali lagi.`}$('#finalTitle').textContent=title;$('#finalText').textContent=text}
+    $('#startQuiz').onclick=start;$('#retryQuiz').onclick=start;$('#nextBtn').onclick=next;
+  })();
+  </script>
+</body>
+</html>

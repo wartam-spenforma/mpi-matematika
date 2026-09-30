@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Statistika Kelas 9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#f4f8f7;--paper:#ffffff;--paper-2:#eaf2f0;--ink:#172625;--muted:#536a67;
+      --line:#cbdad7;--teal:#087f76;--teal-dark:#065f58;--teal-soft:#d9efeb;
+      --coral:#e1553e;--coral-soft:#fce6df;--gold:#d99a0b;--gold-soft:#fff1c7;
+      --navy:#163a52;--success:#16835b;--danger:#c63d32;--shadow:0 18px 50px rgba(23,55,51,.10);
+      --radius:18px;--radius-sm:11px;
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--bg:#101918;--paper:#172321;--paper-2:#1d2e2b;--ink:#edf7f5;--muted:#a9c2bd;--line:#344a46;
+      --teal:#38c6b7;--teal-dark:#8ce5db;--teal-soft:#183c38;--coral:#ff826b;--coral-soft:#492720;
+      --gold:#f0ba41;--gold-soft:#453716;--navy:#a5d6f3;--success:#58d29e;--danger:#ff8f83;--shadow:0 18px 50px rgba(0,0,0,.28)}
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Source Sans 3",sans-serif}
+    button,input,textarea,select{font:inherit}
+    button{color:inherit}
+    .wrap{width:min(1160px,calc(100% - 36px));margin:auto}
+    .hero{padding:56px 0 34px;background:linear-gradient(120deg,var(--teal-soft),transparent 62%);border-bottom:1px solid var(--line)}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:42px;align-items:center}
+    .kicker{margin:0 0 10px;color:var(--teal-dark);font-weight:700}
+    h1,h2,h3,h4{font-family:"Archivo",sans-serif;line-height:1.15;margin:0}
+    h1{font-size:clamp(2.35rem,6vw,4.7rem);letter-spacing:-.055em;max-width:800px}
+    h1 span{color:var(--coral)}
+    .lead{max-width:680px;font-size:1.18rem;color:var(--muted);margin:20px 0 0}
+    .hero-visual{min-height:245px;position:relative;display:flex;align-items:end;padding:18px 14px 0;border-bottom:4px solid var(--navy)}
+    .bar{flex:1;margin:0 4px;background:var(--teal);border-radius:8px 8px 0 0;min-width:18px;position:relative;animation:rise .7s ease-out both;transform-origin:bottom}
+    .bar:nth-child(2n){background:var(--coral)} .bar:nth-child(3n){background:var(--gold)}
+    .bar::after{content:attr(data-v);position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-weight:700;font-size:.85rem}
+    @keyframes rise{from{transform:scaleY(.1);opacity:.2}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.bar{animation:none}}
+    .tabbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .tabs{display:flex;gap:8px;padding:10px 0}
+    .tab{border:0;background:transparent;padding:11px 17px;border-radius:999px;font-weight:700;cursor:pointer}
+    .tab.active{background:var(--ink);color:var(--bg)}
+    main{padding:36px 0 72px}
+    .section{display:none}.section.active{display:block}
+    .section-intro{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:24px}
+    .section-intro h2{font-size:clamp(1.8rem,4vw,2.65rem);letter-spacing:-.035em}
+    .section-intro p{max-width:520px;margin:0;color:var(--muted)}
+    .workspace{display:grid;grid-template-columns:360px minmax(0,1fr);gap:22px;align-items:start}
+    .panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .controls{padding:23px;position:sticky;top:78px}
+    .panel h3{font-size:1.22rem;margin-bottom:15px}
+    label{display:block;font-weight:700;margin:16px 0 7px}
+    textarea{width:100%;min-height:190px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--bg);color:var(--ink);outline:none}
+    textarea:focus,input:focus{border-color:var(--teal);box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 20%,transparent)}
+    .row{display:flex;gap:10px;align-items:center}.row input{width:92px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink)}
+    .hint,.mini{font-size:.9rem;color:var(--muted)}
+    .hint{margin:7px 0 0}
+    .error{display:none;margin:12px 0 0;padding:10px;border-radius:9px;background:var(--coral-soft);color:var(--danger);font-weight:600}
+    .btn{border:0;border-radius:11px;padding:12px 18px;font-weight:800;cursor:pointer;background:var(--teal);color:white;box-shadow:0 4px 0 var(--teal-dark);transition:transform .12s,box-shadow .12s}
+    .btn:hover{filter:brightness(1.06)}.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--teal-dark)}
+    .btn.secondary{background:var(--paper-2);color:var(--ink);box-shadow:none;border:1px solid var(--line)}
+    .btn.coral{background:var(--coral);box-shadow:0 4px 0 color-mix(in srgb,var(--coral) 68%,black);color:#fff}
+    .wide{width:100%;margin-top:18px}
+    .results{display:grid;gap:22px}
+    .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);overflow:hidden}
+    .stat{background:var(--paper);padding:19px}.stat b{display:block;font-family:"Archivo";font-size:1.55rem;margin-top:2px}.stat span{color:var(--muted);font-size:.9rem}
+    .content-pad{padding:24px}
+    .table-wrap{overflow:hidden;border:1px solid var(--line);border-radius:12px}
+    table{border-collapse:collapse;width:100%}th,td{text-align:right;padding:11px 13px;border-bottom:1px solid var(--line)}th{background:var(--paper-2);font-size:.88rem;color:var(--muted)}th:first-child,td:first-child{text-align:left}tr:last-child td{border-bottom:0}
+    .chart-head{display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+    .chart-tabs{display:flex;gap:6px;flex-wrap:wrap}.chart-tab{border:1px solid var(--line);background:var(--paper);padding:8px 11px;border-radius:9px;font-weight:700;cursor:pointer}.chart-tab.active{border-color:var(--teal);background:var(--teal-soft);color:var(--teal-dark)}
+    .chart{width:100%;height:auto;display:block;min-height:310px}.chart text{font-family:"Source Sans 3",sans-serif;fill:var(--muted);font-size:12px}.chart .axis{stroke:var(--muted);stroke-width:1.2}.chart .grid{stroke:var(--line);stroke-width:1}.chart .barrect{fill:var(--teal)}.chart .line{stroke:var(--coral);stroke-width:3;fill:none}.chart .ogive{stroke:var(--teal);stroke-width:3;fill:none}.chart .dot{fill:var(--paper);stroke:var(--coral);stroke-width:3}.chart .ogdot{fill:var(--paper);stroke:var(--teal);stroke-width:3}
+    .stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    details.calc{border:1px solid var(--line);border-radius:13px;background:var(--paper);overflow:hidden}details.calc summary{cursor:pointer;padding:17px 18px;font-family:"Archivo";font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center}details.calc summary::-webkit-details-marker{display:none}details.calc summary::after{content:"＋";color:var(--teal)}details[open].calc summary::after{content:"−"}.calc-body{padding:0 18px 18px;color:var(--muted)}.formula{background:var(--paper-2);border-radius:9px;padding:10px 12px;color:var(--ink);margin:10px 0;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9rem;overflow-wrap:anywhere}.answer{font-family:"Archivo";font-size:1.35rem;color:var(--teal-dark)}
+    .quiz-shell{max-width:860px;margin:auto}.quiz-top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:18px}.progress-track{height:9px;border-radius:99px;background:var(--paper-2);overflow:hidden;flex:1}.progress-fill{height:100%;width:0;background:var(--teal);transition:width .25s}.progress-label{font-weight:700;white-space:nowrap}
+    .quiz-card{padding:clamp(22px,5vw,42px)}.quiz-card h3{font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.35;margin-bottom:24px}.choices{display:grid;gap:11px}.choice{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:14px 16px;text-align:left;cursor:pointer;font-weight:600;transition:border .15s,background .15s}.choice:hover{border-color:var(--teal);background:var(--teal-soft)}.choice.selected{border:2px solid var(--teal);background:var(--teal-soft)}.choice.correct{border-color:var(--success);background:color-mix(in srgb,var(--success) 15%,var(--paper))}.choice.wrong{border-color:var(--danger);background:var(--coral-soft)}.choice:disabled{cursor:default;color:var(--ink)}
+    .feedback{display:none;margin-top:20px;padding:17px 18px;border-radius:12px;background:var(--paper-2)}.feedback.show{display:block}.feedback strong{font-family:"Archivo"}.feedback.good strong{color:var(--success)}.feedback.bad strong{color:var(--danger)}.feedback p{margin:6px 0 0;color:var(--muted)}
+    .quiz-actions{display:flex;justify-content:flex-end;margin-top:21px}.quiz-actions .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+    .start,.finish{text-align:center;padding:clamp(32px,8vw,70px)}.start h2,.finish h2{font-size:clamp(2rem,5vw,3.3rem);letter-spacing:-.04em}.start p,.finish p{color:var(--muted);max-width:610px;margin:15px auto 24px}.score-ring{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;margin:0 auto 24px;background:conic-gradient(var(--teal) var(--score),var(--paper-2) 0);position:relative}.score-ring::after{content:"";position:absolute;inset:13px;background:var(--paper);border-radius:50%}.score-ring div{position:relative;z-index:1}.score-ring b{font:800 2.25rem "Archivo"}.score-ring span{display:block;color:var(--muted);font-size:.85rem}
+    .legend{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 0;font-size:.88rem;color:var(--muted)}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+    .callout{display:flex;gap:12px;background:var(--gold-soft);padding:14px 16px;border-radius:12px;margin-top:18px}.callout b{color:color-mix(in srgb,var(--gold) 75%,var(--ink))}.callout p{margin:0;color:var(--ink)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:820px){.hero{padding-top:38px}.hero-grid{grid-template-columns:1fr}.hero-visual{display:none}.workspace{grid-template-columns:1fr}.controls{position:static}.summary{grid-template-columns:repeat(2,1fr)}.stats-grid{grid-template-columns:1fr}.section-intro{display:block}.section-intro p{margin-top:10px}.chart{min-height:260px}}
+    @media(max-width:560px){.wrap{width:min(100% - 24px,1160px)}body{font-size:16px}.hero{padding-bottom:26px}.tabs{overflow:visible}.tab{flex:1;padding:10px 8px}.content-pad{padding:17px}.summary{grid-template-columns:1fr 1fr}.stat{padding:15px 13px}.stat b{font-size:1.25rem}.table-wrap{border:0}.table-wrap table,.table-wrap tbody,.table-wrap tr,.table-wrap td{display:block}.table-wrap thead{display:none}.table-wrap tr{border:1px solid var(--line);border-radius:11px;margin-bottom:9px;padding:7px 10px}.table-wrap td{text-align:right!important;border:0;padding:4px 0}.table-wrap td::before{content:attr(data-label);float:left;color:var(--muted);font-size:.86rem}.quiz-card{padding:21px 17px}.quiz-top{align-items:flex-start}.chart-head{align-items:flex-start}.chart-tabs{width:100%}.chart-tab{flex:1;padding:8px 5px;font-size:.87rem}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Statistika data berkelompok · Kelas IX</p>
+        <h1>Ubah data menjadi <span>cerita.</span></h1>
+        <p class="lead">Masukkan data, susun distribusi frekuensi, baca grafik, lalu temukan mean, median, modus, dan kuartilnya langkah demi langkah.</p>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="bar" data-v="3" style="height:28%;animation-delay:.05s"></div><div class="bar" data-v="7" style="height:57%;animation-delay:.1s"></div><div class="bar" data-v="11" style="height:90%;animation-delay:.15s"></div><div class="bar" data-v="9" style="height:73%;animation-delay:.2s"></div><div class="bar" data-v="5" style="height:41%;animation-delay:.25s"></div><div class="bar" data-v="2" style="height:20%;animation-delay:.3s"></div>
+      </div>
+    </div>
+  </header>
+  <nav class="tabbar" aria-label="Bagian pembelajaran">
+    <div class="wrap tabs">
+      <button class="tab active" data-target="simulasi">Simulasi</button>
+      <button class="tab" data-target="kuis">Kuis 10 Soal</button>
+    </div>
+  </nav>
+  <main class="wrap">
+    <section id="simulasi" class="section active">
+      <div class="section-intro">
+        <div><p class="kicker">Laboratorium data</p><h2>Dari angka mentah ke kesimpulan</h2></div>
+        <p>Gunakan data bilangan bulat. Interval kelas dibuat otomatis dari nilai terkecil, banyak kelas, dan panjang kelas.</p>
+      </div>
+      <div class="workspace">
+        <aside class="panel controls">
+          <h3>1. Masukkan data</h3>
+          <label for="dataInput">Data tunggal</label>
+          <textarea id="dataInput" spellcheck="false" aria-describedby="dataHint">52, 55, 57, 58, 60, 61, 62, 63, 64, 65,
+66, 67, 68, 68, 69, 70, 70, 71, 72, 72,
+73, 74, 75, 75, 76, 77, 78, 78, 79, 80,
+81, 82, 83, 84, 85, 86, 88, 90, 92, 95</textarea>
+          <p class="hint" id="dataHint">Pisahkan dengan koma, spasi, atau baris baru.</p>
+          <label for="classCount">Banyak kelas</label>
+          <div class="row"><input id="classCount" type="number" min="3" max="10" value="6"><span class="mini">3–10 kelas</span></div>
+          <div id="inputError" class="error" role="alert"></div>
+          <button id="processBtn" class="btn wide">Olah data</button>
+          <button id="sampleBtn" class="btn secondary wide" style="margin-top:10px">Pulihkan data contoh</button>
+          <div class="callout"><p><b>Ingat:</b> hasil data berkelompok merupakan nilai pendekatan karena setiap anggota kelas diwakili titik tengahnya.</p></div>
+        </aside>
+        <div class="results">
+          <div id="summary" class="panel summary" aria-live="polite"></div>
+          <section class="panel content-pad">
+            <h3>2. Tabel distribusi frekuensi</h3>
+            <div class="table-wrap"><table><thead><tr><th>Interval</th><th>Titik tengah (xᵢ)</th><th>Frekuensi (fᵢ)</th><th>fᵢxᵢ</th><th>Kumulatif</th></tr></thead><tbody id="freqBody"></tbody></table></div>
+          </section>
+          <section class="panel content-pad">
+            <div class="chart-head"><h3>3. Visualisasi</h3><div class="chart-tabs" role="tablist"><button class="chart-tab active" data-chart="hist">Histogram</button><button class="chart-tab" data-chart="poly">Poligon</button><button class="chart-tab" data-chart="ogive">Ogive</button></div></div>
+            <div id="chartContainer" aria-live="polite"></div>
+            <div id="chartLegend" class="legend"></div>
+          </section>
+          <section>
+            <div class="section-intro" style="margin-bottom:14px"><div><p class="kicker">Kalkulator terurai</p><h2 style="font-size:1.75rem">4. Ukuran pemusatan & letak</h2></div><p>Klik setiap hasil untuk melihat asal angka dan substitusi ke rumus.</p></div>
+            <div id="calcGrid" class="stats-grid"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+    <section id="kuis" class="section">
+      <div class="quiz-shell">
+        <div id="quizStart" class="panel start">
+          <p class="kicker">Uji pemahaman</p>
+          <h2>Siap membaca data?</h2>
+          <p>Sepuluh soal akan diacak, begitu pula pilihan jawabannya. Jawab satu per satu dan pelajari pembahasan langsung setelah menjawab.</p>
+          <button id="startQuiz" class="btn coral">Mulai kuis</button>
+        </div>
+        <div id="quizPlay" hidden>
+          <div class="quiz-top"><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div><span id="progressLabel" class="progress-label"></span></div>
+          <article class="panel quiz-card">
+            <h3 id="questionText"></h3>
+            <div id="choices" class="choices"></div>
+            <div id="feedback" class="feedback" aria-live="polite"></div>
+            <div class="quiz-actions"><button id="checkBtn" class="btn" disabled>Periksa jawaban</button><button id="nextBtn" class="btn coral" hidden>Soal berikutnya</button></div>
+          </article>
+        </div>
+        <div id="quizFinish" class="panel finish" hidden>
+          <div id="scoreRing" class="score-ring"><div><b id="scoreValue">0</b><span>nilai akhir</span></div></div>
+          <h2 id="finishTitle">Kuis selesai!</h2><p id="finishText"></p>
+          <button id="restartQuiz" class="btn coral">Acak & ulangi</button>
+        </div>
+      </div>
+    </section>
+  </main>
+<script>
+(function(){
+  'use strict';
+  var sample = '52, 55, 57, 58, 60, 61, 62, 63, 64, 65,\n66, 67, 68, 68, 69, 70, 70, 71, 72, 72,\n73, 74, 75, 75, 76, 77, 78, 78, 79, 80,\n81, 82, 83, 84, 85, 86, 88, 90, 92, 95';
+  var state = {groups:[], data:[], width:0, n:0, activeChart:'hist'};
+  var $ = function(s){return document.querySelector(s)};
+  var $$ = function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+  function fmt(x){return Number(x.toFixed(2)).toLocaleString('id-ID',{maximumFractionDigits:2})}
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function parseData(){
+    var raw=$('#dataInput').value.trim();
+    var parts=raw.split(/[\s,;]+/).filter(Boolean);
+    var data=parts.map(Number);
+    if(data.length<8) return fail('Masukkan sekurang-kurangnya 8 nilai agar dapat dikelompokkan.');
+    if(data.some(function(v){return !Number.isFinite(v)})) return fail('Ada data yang bukan angka. Periksa kembali pemisah dan isinya.');
+    if(data.some(function(v){return !Number.isInteger(v)})) return fail('Gunakan bilangan bulat agar tepi kelas dapat dihitung dengan tepat.');
+    var k=parseInt($('#classCount').value,10);
+    if(!Number.isInteger(k)||k<3||k>10) return fail('Banyak kelas harus antara 3 dan 10.');
+    $('#inputError').style.display='none';
+    return {data:data.sort(function(a,b){return a-b}),k:k};
+  }
+  function fail(msg){var el=$('#inputError');el.textContent=msg;el.style.display='block';return null}
+  function process(){
+    var parsed=parseData();if(!parsed)return;
+    var data=parsed.data,k=parsed.k,n=data.length,min=data[0],max=data[n-1];
+    var width=Math.ceil((max-min+1)/k);if(width<1)width=1;
+    var groups=[],cum=0;
+    for(var i=0;i<k;i++){
+      var lo=min+i*width,hi=lo+width-1;
+      var freq=data.filter(function(v){return v>=lo&&v<=hi}).length;
+      cum+=freq;groups.push({lo:lo,hi:hi,lb:lo-.5,ub:hi+.5,mid:(lo+hi)/2,freq:freq,cum:cum});
+    }
+    state={groups:groups,data:data,width:width,n:n,activeChart:state.activeChart};render();
+  }
+  function render(){renderSummary();renderTable();renderChart();renderCalcs()}
+  function renderSummary(){var d=state.data,g=state.groups;$('#summary').innerHTML='<div class="stat"><span>Banyak data</span><b>'+state.n+'</b></div><div class="stat"><span>Jangkauan</span><b>'+fmt(d[d.length-1]-d[0])+'</b></div><div class="stat"><span>Panjang kelas</span><b>'+state.width+'</b></div><div class="stat"><span>Kelas terpadat</span><b>'+Math.max.apply(null,g.map(function(x){return x.freq}))+' data</b></div>'}
+  function renderTable(){var html='',sumFx=0;state.groups.forEach(function(g){var fx=g.freq*g.mid;sumFx+=fx;html+='<tr><td data-label="Interval">'+g.lo+'–'+g.hi+'</td><td data-label="Titik tengah">'+fmt(g.mid)+'</td><td data-label="Frekuensi">'+g.freq+'</td><td data-label="fᵢxᵢ">'+fmt(fx)+'</td><td data-label="Kumulatif">'+g.cum+'</td></tr>'});html+='<tr><td data-label="Jumlah"><strong>Jumlah</strong></td><td data-label="Titik tengah">—</td><td data-label="Frekuensi"><strong>'+state.n+'</strong></td><td data-label="fᵢxᵢ"><strong>'+fmt(sumFx)+'</strong></td><td data-label="Kumulatif">—</td></tr>';$('#freqBody').innerHTML=html}
+  function svgBase(points,maxY,type){
+    var W=760,H=340,L=58,R=20,T=22,B=62,pw=W-L-R,ph=H-T-B;
+    var ticks=5,grid='';for(var i=0;i<=ticks;i++){var y=T+ph-(i/ticks)*ph;var val=Math.ceil(maxY*i/ticks);grid+='<line class="grid" x1="'+L+'" y1="'+y+'" x2="'+(W-R)+'" y2="'+y+'"/><text x="'+(L-10)+'" y="'+(y+4)+'" text-anchor="end">'+val+'</text>'}
+    var svg='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(type)+'">'+grid+'<line class="axis" x1="'+L+'" y1="'+T+'" x2="'+L+'" y2="'+(T+ph)+'"/><line class="axis" x1="'+L+'" y1="'+(T+ph)+'" x2="'+(W-R)+'" y2="'+(T+ph)+'"/>';
+    return {svg:svg,W:W,H:H,L:L,R:R,T:T,B:B,pw:pw,ph:ph};
+  }
+  function renderChart(){
+    var g=state.groups,type=state.activeChart,maxY=type==='ogive'?state.n:Math.max.apply(null,g.map(function(x){return x.freq}).concat([1]));var s=svgBase([],maxY,type),out=s.svg;
+    if(type==='hist'){
+      var bw=s.pw/g.length;
+      g.forEach(function(x,i){var h=(x.freq/maxY)*s.ph,xx=s.L+i*bw,y=s.T+s.ph-h;out+='<rect class="barrect" x="'+xx+'" y="'+y+'" width="'+(bw)+'" height="'+h+'" opacity=".9"/><rect x="'+xx+'" y="'+y+'" width="'+bw+'" height="'+h+'" fill="none" stroke="var(--paper)"/><text x="'+(xx+bw/2)+'" y="'+(s.T+s.ph+20)+'" text-anchor="middle">'+x.lo+'–'+x.hi+'</text>'});
+      $('#chartLegend').innerHTML='<span><i style="background:var(--teal)"></i>Tinggi batang = frekuensi; batang berhimpitan karena data kontinu.</span>';
+    } else if(type==='poly'){
+      var step=s.pw/(g.length+1),pts=[];pts.push([s.L,s.T+s.ph]);g.forEach(function(x,i){var px=s.L+(i+1)*step,py=s.T+s.ph-(x.freq/maxY)*s.ph;pts.push([px,py]);out+='<text x="'+px+'" y="'+(s.T+s.ph+20)+'" text-anchor="middle">'+fmt(x.mid)+'</text>'});pts.push([s.L+(g.length+1)*step,s.T+s.ph]);out+='<polyline class="line" points="'+pts.map(function(p){return p.join(',')}).join(' ')+'"/>';pts.slice(1,-1).forEach(function(p){out+='<circle class="dot" cx="'+p[0]+'" cy="'+p[1]+'" r="5"/>'});$('#chartLegend').innerHTML='<span><i style="background:var(--coral)"></i>Titik menunjukkan frekuensi pada setiap titik tengah kelas.</span>';
+    } else {
+      var stepO=s.pw/g.length,ptsO=[[s.L,s.T+s.ph]];out+='<text x="'+s.L+'" y="'+(s.T+s.ph+20)+'" text-anchor="middle">'+fmt(g[0].lb)+'</text>';g.forEach(function(x,i){var px=s.L+(i+1)*stepO,py=s.T+s.ph-(x.cum/maxY)*s.ph;ptsO.push([px,py]);out+='<text x="'+px+'" y="'+(s.T+s.ph+20)+'" text-anchor="middle">'+fmt(x.ub)+'</text>'});out+='<polyline class="ogive" points="'+ptsO.map(function(p){return p.join(',')}).join(' ')+'"/>';ptsO.forEach(function(p){out+='<circle class="ogdot" cx="'+p[0]+'" cy="'+p[1]+'" r="5"/>'});$('#chartLegend').innerHTML='<span><i style="background:var(--teal)"></i>Ogive “kurang dari”: frekuensi kumulatif pada tepi atas kelas.</span>';
+    }
+    out+='<text x="18" y="'+(s.T+s.ph/2)+'" transform="rotate(-90 18 '+(s.T+s.ph/2)+')" text-anchor="middle">Frekuensi</text><text x="'+(s.L+s.pw/2)+'" y="'+(s.H-12)+'" text-anchor="middle">'+(type==='poly'?'Titik tengah kelas':type==='ogive'?'Tepi kelas':'Interval kelas')+'</text></svg>';$('#chartContainer').innerHTML=out;
+  }
+  function locate(pos){for(var i=0;i<state.groups.length;i++){if(state.groups[i].cum>=pos)return {g:state.groups[i],prev:i===0?0:state.groups[i-1].cum,index:i}}return null}
+  function renderCalcs(){
+    var sumFx=state.groups.reduce(function(a,g){return a+g.freq*g.mid},0),mean=sumFx/state.n;
+    var med=locate(state.n/2),median=med.g.lb+((state.n/2-med.prev)/med.g.freq)*state.width;
+    var maxF=Math.max.apply(null,state.groups.map(function(g){return g.freq})),mi=state.groups.findIndex(function(g){return g.freq===maxF}),mg=state.groups[mi],before=mi?state.groups[mi-1].freq:0,after=mi<state.groups.length-1?state.groups[mi+1].freq:0,d1=mg.freq-before,d2=mg.freq-after,mode=mg.lb+(d1/(d1+d2||1))*state.width;
+    function quart(k){var q=locate(k*state.n/4),v=q.g.lb+(((k*state.n/4)-q.prev)/q.g.freq)*state.width;return {q:q,v:v,pos:k*state.n/4}}
+    var q1=quart(1),q2=quart(2),q3=quart(3);
+    var cards=[
+      ['Mean (rata-rata)',mean,'Σfᵢxᵢ / n','Σfᵢxᵢ = '+fmt(sumFx)+' dan n = '+state.n,fmt(sumFx)+' / '+state.n+' = '+fmt(mean)],
+      ['Median',median,'Tb + ((½n − F) / f) × p','Kelas median '+med.g.lo+'–'+med.g.hi+': Tb = '+fmt(med.g.lb)+', F = '+med.prev+', f = '+med.g.freq+', p = '+state.width,fmt(med.g.lb)+' + (('+fmt(state.n/2)+' − '+med.prev+') / '+med.g.freq+') × '+state.width+' = '+fmt(median)],
+      ['Modus',mode,'Tb + (d₁ / (d₁ + d₂)) × p','Kelas modus '+mg.lo+'–'+mg.hi+': Tb = '+fmt(mg.lb)+', d₁ = '+d1+', d₂ = '+d2+', p = '+state.width,fmt(mg.lb)+' + ('+d1+' / ('+d1+' + '+d2+')) × '+state.width+' = '+fmt(mode)],
+      ['Kuartil bawah (Q₁)',q1.v,'Tb + ((¼n − F) / f) × p','Posisi Q₁ = '+fmt(q1.pos)+'. Kelas '+q1.q.g.lo+'–'+q1.q.g.hi+': Tb = '+fmt(q1.q.g.lb)+', F = '+q1.q.prev+', f = '+q1.q.g.freq,fmt(q1.v)],
+      ['Kuartil tengah (Q₂)',q2.v,'Tb + ((½n − F) / f) × p','Q₂ sama dengan median. Posisi Q₂ = '+fmt(q2.pos)+'.',fmt(q2.v)],
+      ['Kuartil atas (Q₃)',q3.v,'Tb + ((¾n − F) / f) × p','Posisi Q₃ = '+fmt(q3.pos)+'. Kelas '+q3.q.g.lo+'–'+q3.q.g.hi+': Tb = '+fmt(q3.q.g.lb)+', F = '+q3.q.prev+', f = '+q3.q.g.freq,fmt(q3.v)]
+    ];
+    $('#calcGrid').innerHTML=cards.map(function(c){return '<details class="calc"><summary><span>'+c[0]+'</span><span class="answer">'+fmt(c[1])+'</span></summary><div class="calc-body"><div class="formula">'+c[2]+'</div><p>'+c[3]+'</p><div class="formula">'+c[4]+'</div></div></details>'}).join('');
+  }
+  $$('.tab').forEach(function(btn){btn.addEventListener('click',function(){$$('.tab').forEach(function(b){b.classList.toggle('active',b===btn)});$$('.section').forEach(function(s){s.classList.toggle('active',s.id===btn.dataset.target)});window.scrollTo({top:document.querySelector('.tabbar').offsetTop,behavior:'smooth'})})});
+  $$('.chart-tab').forEach(function(btn){btn.addEventListener('click',function(){state.activeChart=btn.dataset.chart;$$('.chart-tab').forEach(function(b){b.classList.toggle('active',b===btn)});renderChart()})});
+  $('#processBtn').addEventListener('click',process);$('#sampleBtn').addEventListener('click',function(){$('#dataInput').value=sample;$('#classCount').value=6;process()});
+
+  var quizBank=[
+    {q:'Titik tengah kelas 40–44 adalah …',o:['41','42','42,5','44'],a:'42',e:'Titik tengah = (batas bawah + batas atas) ÷ 2 = (40 + 44) ÷ 2 = 42.'},
+    {q:'Frekuensi kelas berturut-turut 4, 7, 9, 6. Frekuensi kumulatif sampai kelas ketiga adalah …',o:['16','20','22','26'],a:'20',e:'Jumlahkan frekuensi hingga kelas ketiga: 4 + 7 + 9 = 20.'},
+    {q:'Untuk kelas 51–60 pada data bilangan bulat, tepi bawah dan tepi atasnya adalah …',o:['51 dan 60','50,5 dan 60,5','50 dan 61','51,5 dan 59,5'],a:'50,5 dan 60,5',e:'Tepi kelas diperoleh dengan mengurangi 0,5 pada batas bawah dan menambah 0,5 pada batas atas.'},
+    {q:'Rumus mean data berkelompok yang tepat adalah …',o:['Σfᵢ ÷ Σxᵢ','Σ(fᵢxᵢ) ÷ Σfᵢ','Σxᵢ ÷ banyak kelas','Σ(fᵢ + xᵢ) ÷ n'],a:'Σ(fᵢxᵢ) ÷ Σfᵢ',e:'Setiap titik tengah xᵢ dibobot oleh frekuensinya fᵢ, lalu jumlahnya dibagi jumlah frekuensi.'},
+    {q:'Suatu kelas memiliki titik tengah 27 dan frekuensi 6. Nilai fᵢxᵢ adalah …',o:['33','162','4,5','21'],a:'162',e:'fᵢxᵢ = 6 × 27 = 162.'},
+    {q:'Kelas yang memuat data pada posisi n/2 digunakan untuk menentukan …',o:['mean','median','jangkauan','panjang kelas'],a:'median',e:'Kelas median adalah kelas pertama yang frekuensi kumulatifnya mencapai atau melampaui n/2.'},
+    {q:'Pada histogram, batang-batang dibuat berhimpitan karena …',o:['frekuensinya selalu sama','data mewakili interval yang berkesinambungan','agar tampak lebih tinggi','semua kelas memiliki modus'],a:'data mewakili interval yang berkesinambungan',e:'Histogram menyajikan data kontinu dalam interval kelas yang berurutan, sehingga batangnya saling berhimpitan.'},
+    {q:'Poligon frekuensi dibentuk dengan menghubungkan titik yang berpasangan antara …',o:['batas bawah dan frekuensi kumulatif','titik tengah kelas dan frekuensi','tepi atas dan panjang kelas','frekuensi dan jangkauan'],a:'titik tengah kelas dan frekuensi',e:'Setiap titik pada poligon berada di atas titik tengah kelas dengan tinggi sesuai frekuensinya.'},
+    {q:'Ogive “kurang dari” menggunakan pasangan tepi atas kelas dengan …',o:['frekuensi kumulatif','titik tengah','frekuensi relatif saja','batas bawah'],a:'frekuensi kumulatif',e:'Ogive kurang dari memplot frekuensi kumulatif terhadap tepi atas setiap kelas.'},
+    {q:'Jika n = 40, posisi kuartil atas Q₃ terletak pada data ke-…',o:['10','20','30','40'],a:'30',e:'Posisi Q₃ = 3n/4 = 3 × 40/4 = 30.'}
+  ];
+  var quiz={items:[],index:0,score:0,selected:null,answered:false};
+  function shuffle(a){var c=a.slice();for(var i=c.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=c[i];c[i]=c[j];c[j]=t}return c}
+  function startQuiz(){quiz.items=shuffle(quizBank).map(function(item){return {q:item.q,o:shuffle(item.o),a:item.a,e:item.e}});quiz.index=0;quiz.score=0;$('#quizStart').hidden=true;$('#quizFinish').hidden=true;$('#quizPlay').hidden=false;showQuestion()}
+  function showQuestion(){var item=quiz.items[quiz.index];quiz.selected=null;quiz.answered=false;$('#progressLabel').textContent='Soal '+(quiz.index+1)+' dari '+quiz.items.length;$('#progressFill').style.width=(quiz.index/quiz.items.length*100)+'%';$('#questionText').textContent=item.q;$('#choices').innerHTML='';item.o.forEach(function(opt){var b=document.createElement('button');b.className='choice';b.textContent=opt;b.addEventListener('click',function(){if(quiz.answered)return;quiz.selected=opt;$$('.choice').forEach(function(x){x.classList.toggle('selected',x===b)});$('#checkBtn').disabled=false});$('#choices').appendChild(b)});$('#feedback').className='feedback';$('#feedback').innerHTML='';$('#checkBtn').hidden=false;$('#checkBtn').disabled=true;$('#nextBtn').hidden=true;$('#nextBtn').textContent=quiz.index===quiz.items.length-1?'Lihat nilai':'Soal berikutnya'}
+  function check(){if(quiz.selected===null)return;quiz.answered=true;var item=quiz.items[quiz.index],ok=quiz.selected===item.a;if(ok)quiz.score++;$$('.choice').forEach(function(b){b.disabled=true;if(b.textContent===item.a)b.classList.add('correct');else if(b.textContent===quiz.selected)b.classList.add('wrong')});var f=$('#feedback');f.className='feedback show '+(ok?'good':'bad');f.innerHTML='<strong>'+(ok?'Tepat!':'Belum tepat.')+'</strong><p>'+esc(item.e)+'</p>';$('#checkBtn').hidden=true;$('#nextBtn').hidden=false;$('#progressFill').style.width=((quiz.index+1)/quiz.items.length*100)+'%'}
+  function next(){quiz.index++;if(quiz.index<quiz.items.length){showQuestion()}else{finish()}}
+  function finish(){var score=quiz.score*10;$('#quizPlay').hidden=true;$('#quizFinish').hidden=false;$('#scoreValue').textContent=score;$('#scoreRing').style.setProperty('--score',score+'%');var title=score>=80?'Hebat, konsepnya sudah kuat!':score>=60?'Bagus, tinggal sedikit lagi!':'Ayo pelajari kembali langkahnya!';$('#finishTitle').textContent=title;$('#finishText').textContent='Kamu menjawab '+quiz.score+' dari '+quiz.items.length+' soal dengan benar. Nilai akhirmu '+score+'.';}
+  $('#startQuiz').addEventListener('click',startQuiz);$('#restartQuiz').addEventListener('click',startQuiz);$('#checkBtn').addEventListener('click',check);$('#nextBtn').addEventListener('click',next);
+  process();
+})();
+</script>
+</body>
+</html>

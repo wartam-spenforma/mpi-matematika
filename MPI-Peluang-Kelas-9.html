@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Peluang Kelas 9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f8f4;
+      --paper: #ffffff;
+      --paper-2: #edf4ef;
+      --ink: #17322e;
+      --muted: #526b66;
+      --line: #ccdad5;
+      --teal: #087f71;
+      --teal-deep: #075e55;
+      --teal-soft: #d9f2eb;
+      --coral: #e45a3f;
+      --coral-soft: #ffe4dc;
+      --yellow: #f2c84b;
+      --yellow-soft: #fff4c8;
+      --blue: #2d6fb0;
+      --blue-soft: #deebf8;
+      --shadow: 0 14px 35px rgba(24, 58, 50, .10);
+      --radius-lg: 24px;
+      --radius-md: 15px;
+      --radius-sm: 9px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1a18;
+        --paper: #172522;
+        --paper-2: #20322e;
+        --ink: #edf8f4;
+        --muted: #abc0ba;
+        --line: #39514b;
+        --teal: #4fd2bc;
+        --teal-deep: #90eadb;
+        --teal-soft: #173d37;
+        --coral: #ff8b72;
+        --coral-soft: #4b2924;
+        --yellow: #f6d96e;
+        --yellow-soft: #40391e;
+        --blue: #79b9f1;
+        --blue-soft: #1c364e;
+        --shadow: 0 16px 40px rgba(0, 0, 0, .24);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--teal) 7%, transparent) 1px, transparent 1px) 0 0 / 32px 32px,
+        linear-gradient(color-mix(in srgb, var(--teal) 7%, transparent) 1px, transparent 1px) 0 0 / 32px 32px,
+        var(--bg);
+      color: var(--ink);
+      font-family: "Nunito Sans", sans-serif;
+      line-height: 1.55;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--yellow) 75%, transparent);
+      outline-offset: 3px;
+    }
+    .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin: 24px auto 16px;
+      padding: clamp(28px, 5vw, 62px);
+      border-radius: 30px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -85px;
+      bottom: -120px;
+      border-radius: 50%;
+      background: var(--yellow-soft);
+      border: 24px solid var(--coral-soft);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 42px; align-items: center; position: relative; z-index: 1; }
+    .kicker { color: var(--teal-deep); font-weight: 800; margin: 0 0 8px; }
+    h1, h2, h3 { font-family: "Literata", serif; line-height: 1.12; margin-top: 0; }
+    h1 { font-size: clamp(2.1rem, 5vw, 3rem); max-width: 700px; margin-bottom: 16px; letter-spacing: -.025em; }
+    h2 { font-size: clamp(1.55rem, 3vw, 2.15rem); margin-bottom: 10px; }
+    h3 { font-size: 1.18rem; margin-bottom: 8px; }
+    p { margin-top: 0; }
+    .lead { font-size: 1.08rem; color: var(--muted); max-width: 680px; }
+    .hero-actions, .toolbar, .preset-row, .quiz-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .btn {
+      border: 0;
+      border-radius: 11px;
+      padding: 11px 16px;
+      font-weight: 800;
+      color: white;
+      background: var(--teal-deep);
+      box-shadow: 0 5px 0 color-mix(in srgb, var(--teal-deep) 68%, black);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--teal-deep) 68%, black); }
+    .btn.secondary { color: var(--ink); background: var(--paper-2); box-shadow: none; border: 1px solid var(--line); }
+    .btn.coral { background: var(--coral); box-shadow: 0 5px 0 color-mix(in srgb, var(--coral) 68%, black); }
+    .btn:disabled { opacity: .52; cursor: not-allowed; transform: none; box-shadow: none; }
+    .hero-visual { min-height: 260px; display: grid; place-items: center; }
+    .prob-card { width: min(100%, 390px); padding: 22px; border: 1px solid var(--line); border-radius: 22px 22px 60px 22px; background: var(--paper-2); transform: rotate(1.5deg); }
+    .prob-card svg { width: 100%; height: auto; display: block; }
+    .formula-line { display: flex; justify-content: space-between; align-items: baseline; gap: 15px; border-top: 1px dashed var(--line); margin-top: 12px; padding-top: 12px; }
+    .formula-line strong { font-family: "Literata", serif; font-size: 1.45rem; color: var(--coral); }
+    .concept-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px auto 28px; }
+    .concept {
+      padding: 15px 16px;
+      border-radius: 14px;
+      background: var(--paper);
+      border-bottom: 4px solid var(--teal);
+      box-shadow: 0 5px 18px rgba(24, 58, 50, .06);
+    }
+    .concept b { display: block; margin-bottom: 3px; }
+    .concept span { color: var(--muted); font-size: .91rem; }
+    .section-nav {
+      position: sticky;
+      top: 8px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 30px;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--paper) 93%, transparent);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .section-nav a { text-decoration: none; color: var(--ink); padding: 8px 12px; border-radius: 10px; font-weight: 800; white-space: nowrap; }
+    .section-nav a:hover { background: var(--teal-soft); }
+    section { scroll-margin-top: 95px; margin-bottom: 54px; }
+    .section-head { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+    .section-no {
+      flex: 0 0 46px; height: 46px; display: grid; place-items: center;
+      border-radius: 50%; color: var(--paper); background: var(--coral);
+      font-family: "Literata", serif; font-size: 1.25rem; font-weight: 700;
+    }
+    .section-head p { color: var(--muted); margin: 0; }
+    .lab {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .lab-grid { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); }
+    .controls { padding: 24px; border-right: 1px solid var(--line); background: var(--paper-2); }
+    .stage-field { margin-top: 14px; }
+    label { display: block; font-weight: 800; margin-bottom: 6px; }
+    .hint { color: var(--muted); font-size: .88rem; margin: 5px 0 0; }
+    input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 10px 12px;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    input[type="range"] { padding: 0; accent-color: var(--teal); }
+    .view { padding: 24px; min-width: 0; }
+    .tree-wrap { min-height: 360px; display: grid; place-items: center; border-radius: 16px; background: var(--bg); border: 1px dashed var(--line); overflow: hidden; }
+    #treeSvg { width: 100%; height: auto; min-height: 320px; }
+    .tree-line { stroke: var(--teal); stroke-width: 2; }
+    .tree-node { fill: var(--paper); stroke: var(--teal); stroke-width: 2; }
+    .tree-root { fill: var(--coral); stroke: var(--coral); }
+    .tree-label { fill: var(--ink); font: 700 12px "Nunito Sans", sans-serif; }
+    .tree-branch { fill: var(--muted); font: 600 10px "Nunito Sans", sans-serif; }
+    .tree-summary { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; margin-top: 16px; }
+    .metric { min-width: 94px; padding: 12px; text-align: center; border-radius: 12px; background: var(--teal-soft); }
+    .metric strong { display: block; color: var(--teal-deep); font-family: "Literata", serif; font-size: 1.45rem; }
+    .outcomes { color: var(--muted); overflow-wrap: anywhere; }
+    .error { display: none; margin-top: 10px; color: var(--coral); font-weight: 800; }
+    .sim-layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 20px; }
+    .panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 21px; box-shadow: 0 6px 22px rgba(24, 58, 50, .06); }
+    .range-line { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    .range-value { font-family: "Literata", serif; font-weight: 700; color: var(--coral); font-size: 1.35rem; }
+    .bar-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; color: var(--muted); font-size: .9rem; }
+    .dot { width: 11px; height: 11px; border-radius: 2px; display: inline-block; margin-right: 6px; }
+    .bar-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 65px; gap: 10px; align-items: center; margin: 12px 0; }
+    .bar-label { font-weight: 800; text-align: right; }
+    .bar-track { position: relative; height: 22px; border-radius: 5px; background: var(--paper-2); overflow: hidden; }
+    .bar-fill { height: 100%; width: 0; background: var(--teal); transition: width .65s cubic-bezier(.2,.8,.2,1); }
+    .theory-mark { position: absolute; top: 0; bottom: 0; width: 3px; background: var(--coral); transform: translateX(-1px); }
+    .bar-value { font-variant-numeric: tabular-nums; font-weight: 800; }
+    .insight { margin: 18px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--yellow-soft); color: var(--ink); }
+    .expected-grid { display: grid; grid-template-columns: 1fr auto 1fr auto; gap: 12px; align-items: end; }
+    .math-sign { font-size: 1.7rem; padding-bottom: 7px; color: var(--muted); }
+    .result-box { min-width: 190px; padding: 14px 18px; border-radius: 13px; background: var(--coral-soft); }
+    .result-box small { display: block; color: var(--muted); }
+    .result-box strong { font-family: "Literata", serif; color: var(--coral); font-size: 1.75rem; }
+    .quiz-shell { background: var(--paper); border: 1px solid var(--line); border-radius: 26px; overflow: hidden; box-shadow: var(--shadow); }
+    .quiz-top { padding: 18px 24px; display: flex; justify-content: space-between; gap: 18px; align-items: center; background: var(--teal-soft); }
+    .progress-track { flex: 1; max-width: 480px; height: 10px; border-radius: 99px; background: var(--paper); overflow: hidden; }
+    .progress-fill { width: 0; height: 100%; background: var(--teal); transition: width .3s ease; }
+    .score-live { font-weight: 800; white-space: nowrap; }
+    .quiz-body { padding: clamp(24px, 5vw, 48px); }
+    .quiz-intro { display: grid; grid-template-columns: 1fr .75fr; gap: 30px; align-items: center; }
+    .quiz-intro ul { padding-left: 1.2rem; color: var(--muted); }
+    .quiz-doodle { padding: 24px; background: var(--yellow-soft); border-radius: 18px 56px 18px 18px; }
+    .quiz-doodle .big { font-family: "Literata", serif; font-weight: 700; font-size: 3.5rem; line-height: 1; color: var(--coral); }
+    .question-count { color: var(--teal-deep); font-weight: 800; margin-bottom: 7px; }
+    .question-text { font-family: "Literata", serif; font-size: clamp(1.25rem, 3vw, 1.75rem); line-height: 1.35; max-width: 850px; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+    .choice {
+      width: 100%; text-align: left; border: 2px solid var(--line); border-radius: 13px;
+      padding: 14px 16px; background: var(--paper); color: var(--ink); font-weight: 700;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .choice:hover:not(:disabled) { border-color: var(--teal); background: var(--teal-soft); }
+    .choice.correct { border-color: var(--teal); background: var(--teal-soft); color: var(--teal-deep); }
+    .choice.wrong { border-color: var(--coral); background: var(--coral-soft); }
+    .choice:disabled { cursor: default; opacity: 1; }
+    .feedback { display: none; padding: 16px; border-radius: 13px; margin-bottom: 18px; }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--teal-soft); }
+    .feedback.bad { background: var(--coral-soft); }
+    .feedback b { display: block; margin-bottom: 4px; }
+    .final-score { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; margin-bottom: 26px; }
+    .score-circle { width: 132px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; text-align: center; background: var(--teal-soft); border: 10px solid var(--teal); }
+    .score-circle strong { font-family: "Literata", serif; font-size: 2rem; color: var(--teal-deep); line-height: 1; }
+    .review-list { display: grid; gap: 10px; margin: 20px 0; }
+    .review-item { padding: 13px 15px; border-radius: 10px; background: var(--paper-2); }
+    .review-item b { color: var(--teal-deep); }
+    .review-item.missed b { color: var(--coral); }
+    .footer-note { text-align: center; color: var(--muted); padding: 5px 16px 38px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    [hidden] { display: none !important; }
+    @media (max-width: 820px) {
+      .hero-grid, .lab-grid, .sim-layout, .quiz-intro { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 210px; }
+      .controls { border-right: 0; border-bottom: 1px solid var(--line); }
+      .concept-strip { grid-template-columns: 1fr 1fr; }
+      .expected-grid { grid-template-columns: 1fr 24px 1fr; }
+      .expected-grid .result-box { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .page { width: min(100% - 20px, 1180px); }
+      .hero { margin-top: 10px; padding: 25px 20px 30px; border-radius: 20px; }
+      .hero-grid { gap: 18px; }
+      .concept-strip { grid-template-columns: 1fr; }
+      .section-nav { width: 100%; justify-content: space-between; overflow: hidden; }
+      .section-nav a { padding: 8px 7px; font-size: .83rem; }
+      .section-head { gap: 11px; }
+      .section-no { flex-basis: 38px; height: 38px; }
+      .controls, .view, .panel, .quiz-body { padding: 17px; }
+      .tree-wrap { min-height: 300px; }
+      #treeSvg { min-height: 280px; }
+      .tree-summary { grid-template-columns: 1fr; }
+      .choices { grid-template-columns: 1fr; }
+      .quiz-top { padding: 14px 16px; }
+      .final-score { grid-template-columns: 1fr; }
+      .score-circle { width: 112px; }
+      .expected-grid { grid-template-columns: 1fr; }
+      .math-sign { text-align: center; padding: 0; }
+      .bar-row { grid-template-columns: 58px minmax(0,1fr) 57px; gap: 7px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <main>
+    <div class="page">
+      <header class="hero">
+        <div class="hero-grid">
+          <div>
+            <p class="kicker">Laboratorium matematika · Kelas IX</p>
+            <h1>Peluang: dari semua kemungkinan menuju prediksi</h1>
+            <p class="lead">Susun ruang sampel, lakukan ribuan percobaan dalam sekejap, lalu uji pemahamanmu. Perhatikan bagaimana hasil eksperimen makin mendekati teori.</p>
+            <div class="hero-actions">
+              <a class="btn" href="#pohon">Mulai simulasi</a>
+              <a class="btn secondary" href="#kuis">Langsung ke kuis</a>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="prob-card">
+              <svg viewBox="0 0 340 170" role="img">
+                <path d="M42 84 L135 42 M42 84 L135 126 M135 42 L235 22 M135 42 L235 64 M135 126 L235 105 M135 126 L235 147" fill="none" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/>
+                <g fill="var(--paper)" stroke="var(--coral)" stroke-width="4">
+                  <circle cx="42" cy="84" r="10" fill="var(--coral)"/><circle cx="135" cy="42" r="9"/><circle cx="135" cy="126" r="9"/>
+                  <circle cx="235" cy="22" r="8"/><circle cx="235" cy="64" r="8"/><circle cx="235" cy="105" r="8"/><circle cx="235" cy="147" r="8"/>
+                </g>
+                <g fill="var(--ink)" font-family="Nunito Sans" font-size="14" font-weight="800"><text x="257" y="27">AA</text><text x="257" y="69">AG</text><text x="257" y="110">GA</text><text x="257" y="152">GG</text></g>
+              </svg>
+              <div class="formula-line"><span>P(1 gambar)</span><strong>2/4 = ½</strong></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="concept-strip" aria-label="Ringkasan konsep">
+        <div class="concept"><b>Ruang sampel</b><span>Semua hasil yang mungkin.</span></div>
+        <div class="concept"><b>Peluang teoretis</b><span>n(A) ÷ n(S).</span></div>
+        <div class="concept"><b>Frekuensi relatif</b><span>Hasil kejadian ÷ percobaan.</span></div>
+        <div class="concept"><b>Frekuensi harapan</b><span>n × P(A).</span></div>
+      </div>
+
+      <nav class="section-nav" aria-label="Navigasi materi">
+        <a href="#pohon">Pohon</a>
+        <a href="#percobaan">Percobaan</a>
+        <a href="#harapan">Harapan</a>
+        <a href="#kuis">Kuis</a>
+      </nav>
+
+      <section id="pohon">
+        <div class="section-head">
+          <span class="section-no">1</span>
+          <div><h2>Bangun diagram pohon</h2><p>Setiap tahap memecah kemungkinan. Di sini tiap hasil pada satu tahap dianggap sama mungkin.</p></div>
+        </div>
+        <div class="lab">
+          <div class="lab-grid">
+            <div class="controls">
+              <h3>Atur percobaan</h3>
+              <label for="preset">Contoh cepat</label>
+              <select id="preset">
+                <option value="coin2">Dua kali lempar koin</option>
+                <option value="coin3">Tiga kali lempar koin</option>
+                <option value="coinDie">Koin lalu dadu</option>
+                <option value="custom">Susun sendiri</option>
+              </select>
+              <div class="stage-field">
+                <label for="stageCount">Jumlah tahap</label>
+                <select id="stageCount"><option value="1">1 tahap</option><option value="2" selected>2 tahap</option><option value="3">3 tahap</option></select>
+              </div>
+              <div class="stage-field" id="stageField1"><label for="stage1">Hasil tahap 1</label><input id="stage1" aria-label="Hasil tahap 1" value="Angka, Gambar" maxlength="40"><p class="hint">Pisahkan dengan koma, maksimal 6 hasil.</p></div>
+              <div class="stage-field" id="stageField2"><label for="stage2">Hasil tahap 2</label><input id="stage2" aria-label="Hasil tahap 2" value="Angka, Gambar" maxlength="40"></div>
+              <div class="stage-field" id="stageField3" hidden><label for="stage3">Hasil tahap 3</label><input id="stage3" aria-label="Hasil tahap 3" value="Angka, Gambar" maxlength="40"></div>
+              <p class="error" id="treeError" role="alert"></p>
+              <button class="btn" id="buildTree" type="button">Buat diagram</button>
+            </div>
+            <div class="view">
+              <div class="tree-wrap"><svg id="treeSvg" role="img" aria-label="Diagram pohon ruang sampel"></svg></div>
+              <div class="tree-summary">
+                <div class="metric"><span>n(S)</span><strong id="sampleCount">4</strong></div>
+                <div class="outcomes"><b>Ruang sampel:</b> <span id="sampleList">(Angka, Angka), (Angka, Gambar), (Gambar, Angka), (Gambar, Gambar)</span><p class="hint" id="leafChance">Peluang setiap hasil akhir = 1/4.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="percobaan">
+        <div class="section-head">
+          <span class="section-no">2</span>
+          <div><h2>Uji hukum bilangan besar</h2><p>Bandingkan frekuensi relatif hasil acak dengan peluang teoretisnya.</p></div>
+        </div>
+        <div class="sim-layout">
+          <div class="panel">
+            <label for="experiment">Jenis percobaan</label>
+            <select id="experiment"><option value="coin">Lempar koin</option><option value="die">Lempar dadu</option></select>
+            <div style="height:14px"></div>
+            <div class="range-line"><label for="trialRange">Jumlah percobaan</label><span class="range-value" id="trialValue">1.000</span></div>
+            <input id="trialRange" aria-label="Jumlah percobaan" type="range" min="1" max="4" step="1" value="3">
+            <div class="preset-row" aria-hidden="true"><span class="hint">10</span><span class="hint">100</span><span class="hint">1.000</span><span class="hint">10.000</span></div>
+            <button class="btn coral" id="runSim" type="button" style="margin-top:18px;width:100%">Jalankan percobaan</button>
+            <p class="hint" style="margin-top:12px">Ulangi beberapa kali. Hasil acak dapat berbeda, tetapi polanya akan terlihat.</p>
+          </div>
+          <div class="panel">
+            <div class="bar-legend"><span><i class="dot" style="background:var(--teal)"></i>Frekuensi relatif</span><span><i class="dot" style="background:var(--coral)"></i>Peluang teoretis</span></div>
+            <div id="bars" aria-live="polite"></div>
+            <p class="insight" id="simInsight">Tekan “Jalankan percobaan” untuk memulai.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="harapan">
+        <div class="section-head">
+          <span class="section-no">3</span>
+          <div><h2>Hitung frekuensi harapan</h2><p>Jika peluang kejadian A adalah P(A), maka dalam n percobaan kita mengharapkan kejadian itu muncul sekitar n × P(A) kali.</p></div>
+        </div>
+        <div class="panel">
+          <div class="expected-grid">
+            <div><label for="expectedN">Banyak percobaan (n)</label><input id="expectedN" aria-label="Banyak percobaan (n)" type="number" min="1" max="1000000" value="120"></div>
+            <div class="math-sign">×</div>
+            <div><label for="expectedP">Peluang P(A)</label><input id="expectedP" inputmode="decimal" value="1/6" placeholder="contoh: 1/6 atau 0,25"><p class="hint">Boleh pecahan atau desimal.</p></div>
+            <div class="result-box"><small>Frekuensi harapan</small><strong id="expectedResult">20 kali</strong></div>
+          </div>
+          <p class="error" id="expectedError" role="alert"></p>
+          <p class="hint" id="expectedWorking">120 × 1/6 = 20</p>
+        </div>
+      </section>
+
+      <section id="kuis">
+        <div class="section-head">
+          <span class="section-no">4</span>
+          <div><h2>Kuis tantangan peluang</h2><p>Sepuluh soal dipilih dan diacak. Pilihan jawaban juga berubah urutan setiap kali kuis dimulai.</p></div>
+        </div>
+        <div class="quiz-shell">
+          <div class="quiz-top">
+            <div class="progress-track" aria-label="Kemajuan kuis"><div class="progress-fill" id="quizProgress"></div></div>
+            <div class="score-live" id="scoreLive">Skor 0</div>
+          </div>
+          <div class="quiz-body">
+            <div id="quizIntro" class="quiz-intro">
+              <div>
+                <h3>Siap menguji dugaanmu?</h3>
+                <ul><li>10 soal, masing-masing bernilai 10.</li><li>Pembahasan muncul setelah menjawab.</li><li>Urutan soal dan pilihan selalu diacak.</li></ul>
+                <button class="btn coral" id="startQuiz" type="button">Mulai kuis</button>
+              </div>
+              <div class="quiz-doodle" aria-hidden="true"><div class="big">P(A)</div><p>teori ↔ percobaan</p><svg viewBox="0 0 280 70" width="100%"><path d="M5 55 C50 50,70 20,110 33 S180 56,275 10" fill="none" stroke="var(--teal)" stroke-width="6" stroke-linecap="round"/><circle cx="110" cy="33" r="8" fill="var(--coral)"/></svg></div>
+            </div>
+            <div id="quizQuestion" hidden>
+              <div class="question-count" id="questionCount"></div>
+              <div class="question-text" id="questionText"></div>
+              <div class="choices" id="choices"></div>
+              <div class="feedback" id="feedback" aria-live="polite"></div>
+              <button class="btn" id="nextQuestion" type="button" hidden>Soal berikutnya</button>
+            </div>
+            <div id="quizResult" hidden>
+              <div class="final-score">
+                <div class="score-circle"><div><strong id="finalScore">0</strong><br><span>nilai</span></div></div>
+                <div><h3 id="resultTitle">Hasilmu</h3><p id="resultMessage"></p><button class="btn coral" id="restartQuiz" type="button">Acak & ulangi</button></div>
+              </div>
+              <h3>Ringkasan jawaban</h3>
+              <div class="review-list" id="reviewList"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p class="footer-note">Belajar peluang berarti menghubungkan kemungkinan, percobaan, dan prediksi.</p>
+    </div>
+  </main>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = 'http://www.w3.org/2000/svg';
+
+  function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a || 1; }
+  function fractionText(num, den) { var g = gcd(num, den); return (num / g) + '/' + (den / g); }
+  function parseItems(value) {
+    return value.split(',').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 6);
+  }
+  function combinations(stages) {
+    return stages.reduce(function (acc, choices) {
+      var next = [];
+      acc.forEach(function (prefix) { choices.forEach(function (choice) { next.push(prefix.concat(choice)); }); });
+      return next;
+    }, [[]]);
+  }
+  function svgEl(name, attrs, text) {
+    var el = document.createElementNS(NS, name);
+    Object.keys(attrs || {}).forEach(function (key) { el.setAttribute(key, attrs[key]); });
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
+  function shortLabel(s) { return s.length > 11 ? s.slice(0, 9) + '…' : s; }
+  function buildTree() {
+    var count = Number($('stageCount').value);
+    var stages = [];
+    for (var i = 1; i <= count; i++) stages.push(parseItems($('stage' + i).value));
+    var error = $('treeError');
+    if (stages.some(function (s) { return s.length < 2; })) {
+      error.textContent = 'Setiap tahap perlu sedikitnya dua hasil yang dipisahkan koma.'; error.style.display = 'block'; return;
+    }
+    var leaves = combinations(stages);
+    if (leaves.length > 24) {
+      error.textContent = 'Diagram terlalu padat. Batasi gabungan hingga maksimal 24 hasil akhir.'; error.style.display = 'block'; return;
+    }
+    error.style.display = 'none';
+    var svg = $('treeSvg'); svg.innerHTML = '';
+    var width = 760, gapY = Math.max(30, Math.min(54, 620 / leaves.length));
+    var height = Math.max(320, 56 + (leaves.length - 1) * gapY);
+    svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+    var marginY = (height - (leaves.length - 1) * gapY) / 2;
+    var xGap = (width - 120) / count;
+    var positions = { '': { x: 50, y: height / 2 } };
+    for (var d = 1; d <= count; d++) {
+      var seen = {};
+      leaves.forEach(function (leaf, idx) {
+        var key = leaf.slice(0, d).join('\u0001');
+        if (!seen[key]) seen[key] = [];
+        seen[key].push(idx);
+      });
+      Object.keys(seen).forEach(function (key) {
+        var indices = seen[key];
+        var avg = indices.reduce(function (sum, n) { return sum + (marginY + n * gapY); }, 0) / indices.length;
+        positions[key] = { x: 50 + d * xGap, y: avg };
+      });
+    }
+    Object.keys(positions).filter(function (k) { return k !== ''; }).forEach(function (key) {
+      var parts = key.split('\u0001');
+      var parentKey = parts.slice(0, -1).join('\u0001');
+      var p = positions[parentKey], c = positions[key];
+      svg.appendChild(svgEl('line', { x1:p.x, y1:p.y, x2:c.x, y2:c.y, 'class':'tree-line' }));
+      var labelY = (p.y + c.y) / 2 - 5;
+      svg.appendChild(svgEl('text', { x:(p.x+c.x)/2, y:labelY, 'text-anchor':'middle', 'class':'tree-branch' }, shortLabel(parts[parts.length-1]) + ' (1/' + stages[parts.length-1].length + ')'));
+    });
+    Object.keys(positions).forEach(function (key) {
+      var pos = positions[key];
+      svg.appendChild(svgEl('circle', { cx:pos.x, cy:pos.y, r:key === '' ? 8 : 6, 'class':key === '' ? 'tree-node tree-root' : 'tree-node' }));
+      if (key !== '' && key.split('\u0001').length === count) {
+        svg.appendChild(svgEl('text', { x:pos.x + 12, y:pos.y + 4, 'class':'tree-label' }, key.split('\u0001').map(shortLabel).join('–')));
+      }
+    });
+    $('sampleCount').textContent = leaves.length;
+    $('sampleList').textContent = leaves.map(function (leaf) { return '(' + leaf.join(', ') + ')'; }).join(', ');
+    $('leafChance').textContent = 'Peluang setiap hasil akhir = ' + fractionText(1, leaves.length) + '.';
+  }
+  function setStageVisibility() {
+    var count = Number($('stageCount').value);
+    $('stageField2').hidden = count < 2; $('stageField3').hidden = count < 3;
+  }
+  var presets = {
+    coin2: [['Angka','Gambar'],['Angka','Gambar']],
+    coin3: [['Angka','Gambar'],['Angka','Gambar'],['Angka','Gambar']],
+    coinDie: [['Angka','Gambar'],['1','2','3','4','5','6']]
+  };
+  $('preset').addEventListener('change', function () {
+    var p = presets[this.value]; if (!p) return;
+    $('stageCount').value = p.length;
+    p.forEach(function (arr, i) { $('stage' + (i + 1)).value = arr.join(', '); });
+    setStageVisibility(); buildTree();
+  });
+  $('stageCount').addEventListener('change', function () { $('preset').value = 'custom'; setStageVisibility(); });
+  ['stage1','stage2','stage3'].forEach(function (id) { $(id).addEventListener('input', function () { $('preset').value = 'custom'; }); });
+  $('buildTree').addEventListener('click', buildTree);
+  setStageVisibility(); buildTree();
+
+  var trialOptions = [10,100,1000,10000];
+  function formatID(n) { return new Intl.NumberFormat('id-ID').format(n); }
+  $('trialRange').addEventListener('input', function () { $('trialValue').textContent = formatID(trialOptions[Number(this.value)-1]); });
+  function emptyBars() {
+    var labels = $('experiment').value === 'coin' ? ['Angka','Gambar'] : ['1','2','3','4','5','6'];
+    $('bars').innerHTML = labels.map(function (label) {
+      var theory = 100 / labels.length;
+      return '<div class="bar-row"><span class="bar-label">' + label + '</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div><div class="theory-mark" style="left:' + theory + '%"></div></div><span class="bar-value">0,0%</span></div>';
+    }).join('');
+  }
+  $('experiment').addEventListener('change', function () { emptyBars(); $('simInsight').textContent = 'Tekan “Jalankan percobaan” untuk memulai.'; });
+  $('runSim').addEventListener('click', function () {
+    var total = trialOptions[Number($('trialRange').value)-1];
+    var labels = $('experiment').value === 'coin' ? ['Angka','Gambar'] : ['1','2','3','4','5','6'];
+    var counts = labels.map(function () { return 0; });
+    for (var i=0; i<total; i++) counts[Math.floor(Math.random()*labels.length)]++;
+    var theory = 100 / labels.length, maxDiff = 0;
+    $('bars').innerHTML = labels.map(function (label, idx) {
+      var pct = counts[idx] / total * 100; maxDiff = Math.max(maxDiff, Math.abs(pct-theory));
+      return '<div class="bar-row"><span class="bar-label">' + label + '</span><div class="bar-track"><div class="bar-fill" data-width="' + pct.toFixed(3) + '"></div><div class="theory-mark" style="left:' + theory + '%"></div></div><span class="bar-value">' + pct.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%</span></div>';
+    }).join('');
+    requestAnimationFrame(function () { document.querySelectorAll('.bar-fill[data-width]').forEach(function (bar) { bar.style.width = bar.getAttribute('data-width') + '%'; }); });
+    $('simInsight').innerHTML = '<b>' + formatID(total) + ' percobaan selesai.</b> Selisih terbesar dari peluang teori adalah ' + maxDiff.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1}) + ' poin persentase.';
+  });
+  emptyBars();
+
+  function parseProbability(text) {
+    var value = String(text).trim().replace(',', '.');
+    if (value.indexOf('/') > -1) { var parts = value.split('/'); if (parts.length !== 2) return NaN; return Number(parts[0]) / Number(parts[1]); }
+    return Number(value);
+  }
+  function calculateExpected() {
+    var n = Number($('expectedN').value), raw = $('expectedP').value, p = parseProbability(raw), err = $('expectedError');
+    if (!Number.isFinite(n) || n < 1 || !Number.isFinite(p) || p < 0 || p > 1) {
+      err.textContent = 'Masukkan banyak percobaan positif dan peluang antara 0 sampai 1.'; err.style.display = 'block';
+      $('expectedResult').textContent = '—'; $('expectedWorking').textContent = ''; return;
+    }
+    err.style.display = 'none'; var result = n * p;
+    $('expectedResult').textContent = result.toLocaleString('id-ID',{maximumFractionDigits:3}) + ' kali';
+    $('expectedWorking').textContent = formatID(n) + ' × ' + raw + ' = ' + result.toLocaleString('id-ID',{maximumFractionDigits:3});
+  }
+  $('expectedN').addEventListener('input', calculateExpected); $('expectedP').addEventListener('input', calculateExpected); calculateExpected();
+
+  var questionBank = [
+    { q:'Sebuah koin dilempar dua kali. Berapa banyak anggota ruang sampelnya?', choices:['2','3','4','6'], answer:'4', exp:'Setiap lemparan memiliki 2 hasil. Jadi n(S) = 2 × 2 = 4: AA, AG, GA, dan GG.' },
+    { q:'Peluang muncul bilangan genap saat sebuah dadu seimbang dilempar adalah …', choices:['1/6','1/3','1/2','2/3'], answer:'1/2', exp:'Bilangan genap adalah 2, 4, dan 6. Ada 3 hasil yang sesuai dari 6 kemungkinan, jadi 3/6 = 1/2.' },
+    { q:'Dalam 200 kali percobaan, lampu merah muncul 46 kali. Frekuensi relatif lampu merah adalah …', choices:['0,23','0,46','2,3','4,6'], answer:'0,23', exp:'Frekuensi relatif = 46 ÷ 200 = 0,23 atau 23%.' },
+    { q:'Sebuah kejadian memiliki peluang 0,3. Dalam 500 percobaan, frekuensi harapannya adalah …', choices:['15','50','150','350'], answer:'150', exp:'Frekuensi harapan = n × P(A) = 500 × 0,3 = 150.' },
+    { q:'Dua koin dilempar bersama. Peluang muncul tepat satu sisi gambar adalah …', choices:['1/4','1/3','1/2','3/4'], answer:'1/2', exp:'Ruang sampelnya AA, AG, GA, GG. Tepat satu gambar terjadi pada AG dan GA, jadi 2/4 = 1/2.' },
+    { q:'Sebuah kantong berisi 3 kelereng merah dan 2 biru. Jika diambil satu secara acak, peluang terambil biru adalah …', choices:['2/3','2/5','3/5','1/5'], answer:'2/5', exp:'Ada 2 kelereng biru dari total 5 kelereng, sehingga peluangnya 2/5.' },
+    { q:'Saat jumlah percobaan diperbesar, frekuensi relatif suatu kejadian cenderung …', choices:['mendekati peluang teoretis','selalu sama dengan nol','menjauhi peluang teoretis','menjadi lebih dari satu'], answer:'mendekati peluang teoretis', exp:'Hukum bilangan besar menyatakan bahwa frekuensi relatif cenderung mendekati peluang teoretis ketika percobaan makin banyak.' },
+    { q:'Sebuah dadu dan sebuah koin dilempar bersamaan. Banyak anggota ruang sampelnya adalah …', choices:['6','8','12','18'], answer:'12', exp:'Dadu memiliki 6 hasil dan koin 2 hasil. Dengan aturan perkalian, n(S) = 6 × 2 = 12.' },
+    { q:'Peluang muncul kelipatan 3 pada sebuah dadu seimbang adalah …', choices:['1/6','1/3','1/2','2/3'], answer:'1/3', exp:'Kelipatan 3 pada dadu adalah 3 dan 6. Jadi peluangnya 2/6 = 1/3.' },
+    { q:'Sebuah dadu dilempar 120 kali. Frekuensi harapan muncul mata dadu 6 adalah …', choices:['6 kali','20 kali','60 kali','100 kali'], answer:'20 kali', exp:'Peluang muncul 6 adalah 1/6. Frekuensi harapan = 120 × 1/6 = 20 kali.' },
+    { q:'Peluang suatu kejadian yang mustahil adalah …', choices:['0','1/4','1/2','1'], answer:'0', exp:'Kejadian mustahil tidak memiliki hasil yang mendukung, sehingga peluangnya 0.' },
+    { q:'Jika peluang hujan adalah 0,65, peluang tidak hujan adalah …', choices:['0,25','0,35','0,45','0,65'], answer:'0,35', exp:'Peluang kejadian komplemen = 1 − P(A). Jadi 1 − 0,65 = 0,35.' }
+  ];
+  var quiz = [], qIndex = 0, score = 0, answered = false, history = [];
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i=a.length-1; i>0; i--) { var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+  function startQuiz() {
+    quiz = shuffle(questionBank).slice(0,10).map(function (item) { return {q:item.q, choices:shuffle(item.choices), answer:item.answer, exp:item.exp}; });
+    qIndex=0; score=0; answered=false; history=[];
+    $('quizIntro').hidden=true; $('quizResult').hidden=true; $('quizQuestion').hidden=false; $('scoreLive').textContent='Skor 0';
+    renderQuestion();
+  }
+  function renderQuestion() {
+    answered=false; var item=quiz[qIndex];
+    $('questionCount').textContent='Soal ' + (qIndex+1) + ' dari ' + quiz.length;
+    $('questionText').textContent=item.q; $('quizProgress').style.width=(qIndex/quiz.length*100)+'%';
+    $('feedback').className='feedback'; $('feedback').innerHTML=''; $('nextQuestion').hidden=true;
+    $('choices').innerHTML='';
+    item.choices.forEach(function (choice) {
+      var button=document.createElement('button'); button.type='button'; button.className='choice'; button.textContent=choice;
+      button.addEventListener('click', function () { answerQuestion(choice, button); }); $('choices').appendChild(button);
+    });
+  }
+  function answerQuestion(choice, button) {
+    if (answered) return; answered=true; var item=quiz[qIndex], correct=choice===item.answer;
+    if (correct) score += 10;
+    document.querySelectorAll('.choice').forEach(function (b) { b.disabled=true; if (b.textContent===item.answer) b.classList.add('correct'); });
+    if (!correct) button.classList.add('wrong');
+    var feedback=$('feedback'); feedback.className='feedback show ' + (correct?'good':'bad');
+    feedback.innerHTML='<b>'+(correct?'Tepat!':'Belum tepat. Jawaban benar: '+item.answer)+'</b><span>'+item.exp+'</span>';
+    history.push({q:item.q, correct:correct, answer:item.answer, exp:item.exp});
+    $('scoreLive').textContent='Skor '+score; $('quizProgress').style.width=((qIndex+1)/quiz.length*100)+'%';
+    $('nextQuestion').textContent=qIndex===quiz.length-1?'Lihat nilai akhir':'Soal berikutnya'; $('nextQuestion').hidden=false;
+  }
+  function nextQuestion() { if (!answered) return; qIndex++; if (qIndex<quiz.length) renderQuestion(); else showResult(); }
+  function showResult() {
+    $('quizQuestion').hidden=true; $('quizResult').hidden=false; $('finalScore').textContent=score;
+    var title, message;
+    if(score>=90){title='Luar biasa!';message='Kamu sudah sangat kuat menghubungkan ruang sampel, teori, dan hasil percobaan.';}
+    else if(score>=70){title='Bagus, lanjutkan!';message='Dasarnya sudah kuat. Pelajari kembali pembahasan yang masih keliru.';}
+    else {title='Terus bertumbuh!';message='Gunakan simulasi di atas, lalu ulangi kuis dengan susunan soal baru.';}
+    $('resultTitle').textContent=title; $('resultMessage').textContent=message;
+    $('reviewList').innerHTML=history.map(function(h,i){return '<div class="review-item '+(h.correct?'':'missed')+'"><b>'+(h.correct?'Benar':'Perlu ditinjau')+' · Soal '+(i+1)+'</b><div>'+h.q+'</div><small>Jawaban: '+h.answer+'. '+h.exp+'</small></div>';}).join('');
+  }
+  $('startQuiz').addEventListener('click', startQuiz); $('restartQuiz').addEventListener('click', startQuiz); $('nextQuestion').addEventListener('click', nextQuestion);
+})();
+</script>
+</body>
+</html>

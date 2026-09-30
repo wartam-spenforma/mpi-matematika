@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0b6e68" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Relasi dan Fungsi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Literata:opsz,wght@7..72,650;7..72,750&display=swap');
+
+    :root {
+      color-scheme: light dark;
+      --bg: #f3f7f5;
+      --surface: #ffffff;
+      --surface-2: #e8f2ef;
+      --ink: #16302e;
+      --muted: #526b68;
+      --line: #c9d9d5;
+      --accent: #087b72;
+      --accent-dark: #055c56;
+      --accent-soft: #d7eeea;
+      --warm: #e46f3c;
+      --warm-soft: #fde9df;
+      --yellow: #f2bf45;
+      --ok: #177347;
+      --ok-soft: #daf1e4;
+      --bad: #b33c3c;
+      --bad-soft: #fae1de;
+      --shadow: 0 12px 34px rgba(31, 66, 62, .10);
+      --radius-lg: 22px;
+      --radius-md: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1918;
+        --surface: #172422;
+        --surface-2: #1d312e;
+        --ink: #edf8f5;
+        --muted: #a9c1bc;
+        --line: #354b47;
+        --accent: #50c8ba;
+        --accent-dark: #8be0d6;
+        --accent-soft: #173e39;
+        --warm: #ff9568;
+        --warm-soft: #4a2c21;
+        --yellow: #f4c95d;
+        --ok: #62d89b;
+        --ok-soft: #173c2a;
+        --bad: #ff8d8d;
+        --bad-soft: #492525;
+        --shadow: 0 14px 40px rgba(0, 0, 0, .28);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px),
+        var(--bg);
+      background-size: 32px 32px;
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      outline-offset: 3px;
+    }
+    .shell { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 64px; }
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+    .intro-main, .goal-panel { background: var(--surface); box-shadow: var(--shadow); }
+    .intro-main { border-radius: 30px 10px 30px 10px; padding: clamp(26px, 5vw, 54px); position: relative; overflow: hidden; }
+    .intro-main::after {
+      content: "f(x)";
+      position: absolute;
+      right: -8px; bottom: -38px;
+      font: 750 clamp(88px, 15vw, 170px)/1 "Literata", serif;
+      color: var(--accent-soft);
+      transform: rotate(-8deg);
+      z-index: 0;
+    }
+    .intro-main > * { position: relative; z-index: 1; }
+    .class-tag { display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; border-radius: 8px; background: var(--accent-soft); color: var(--accent-dark); font-weight: 700; font-size: .84rem; }
+    .class-tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    h1, h2, h3 { margin: 0; }
+    h1 { font: 750 clamp(2.2rem, 6vw, 4.8rem)/1.06 "Literata", serif; letter-spacing: -.045em; max-width: 780px; margin-top: 20px; }
+    .lead { font-size: clamp(1rem, 2vw, 1.18rem); color: var(--muted); max-width: 650px; margin: 18px 0 0; }
+    .goal-panel { border-radius: 10px 30px 10px 30px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
+    .goal-panel strong { font: 650 1.3rem/1.3 "Literata", serif; }
+    .goal-list { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 13px; }
+    .goal-list li { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); }
+    .goal-list li::before { content: "✓"; flex: 0 0 24px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 7px; background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; }
+    .tabs { position: sticky; top: 8px; z-index: 20; display: flex; gap: 6px; padding: 6px; width: fit-content; max-width: 100%; margin: 0 auto 28px; background: color-mix(in srgb, var(--surface) 94%, transparent); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 24px rgba(20,50,47,.09); }
+    .tab { border: 0; background: transparent; padding: 11px 18px; border-radius: 9px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    .tab.active { background: var(--accent); color: #fff; }
+    .view { display: none; }
+    .view.active { display: block; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 38px 0 16px; }
+    .section-head h2 { font: 700 clamp(1.55rem, 4vw, 2.35rem)/1.16 "Literata", serif; letter-spacing: -.025em; }
+    .section-head p { margin: 0; color: var(--muted); max-width: 520px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .concepts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .concept { padding: 20px; min-height: 164px; border-top: 4px solid var(--accent); }
+    .concept:nth-child(2) { border-top-color: var(--warm); }
+    .concept:nth-child(3) { border-top-color: var(--yellow); }
+    .concept:nth-child(4) { border-top-color: var(--ok); }
+    .concept h3 { font-size: 1.05rem; margin-bottom: 8px; }
+    .concept p { margin: 0; color: var(--muted); font-size: .94rem; }
+    .activity { padding: clamp(18px, 3.5vw, 34px); margin-bottom: 22px; }
+    .activity-top { display: flex; gap: 16px; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .step-no { width: 40px; height: 40px; display: grid; place-items: center; flex: 0 0 40px; border-radius: 50% 50% 50% 12px; background: var(--warm); color: white; font-weight: 800; }
+    .activity-title { flex: 1; }
+    .activity-title h3 { font: 650 clamp(1.3rem, 3vw, 1.75rem)/1.2 "Literata", serif; }
+    .activity-title p { margin: 5px 0 0; color: var(--muted); }
+    .relation-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(240px, .55fr); gap: 22px; }
+    .relation-board { position: relative; min-height: 390px; background: var(--surface-2); border: 1px dashed var(--accent); border-radius: 18px; padding: 30px 26px; overflow: hidden; }
+    .relation-board svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: visible; }
+    .sets { display: flex; height: 100%; justify-content: space-between; gap: 90px; position: relative; z-index: 2; }
+    .set { width: 122px; display: flex; flex-direction: column; align-items: center; gap: 13px; }
+    .set-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 2px; text-align: center; }
+    .node { width: 54px; height: 54px; padding: 0; border: 2px solid var(--accent); background: var(--surface); border-radius: 50%; cursor: pointer; font-weight: 800; transition: background .15s, color .15s, transform .15s; }
+    .node:hover { transform: translateY(-2px); }
+    .node.selected { background: var(--warm); color: #fff; border-color: var(--warm); }
+    .node.connected { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 13%, transparent); }
+    .side-controls { display: flex; flex-direction: column; gap: 12px; }
+    .instruction { padding: 16px; background: var(--accent-soft); color: var(--accent-dark); border-radius: 12px; font-weight: 600; }
+    .btn { border: 0; border-radius: 10px; padding: 12px 17px; background: var(--accent); color: #fff; font-weight: 700; cursor: pointer; min-height: 46px; }
+    .btn:hover { background: var(--accent-dark); }
+    .btn.secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); }
+    .result { min-height: 76px; padding: 15px; border-radius: 12px; background: var(--surface-2); color: var(--muted); }
+    .result.good { background: var(--ok-soft); color: var(--ok); }
+    .result.bad { background: var(--bad-soft); color: var(--bad); }
+    .result strong { display: block; color: inherit; margin-bottom: 3px; }
+    .legend-note { font-size: .84rem; color: var(--muted); margin: 0; }
+    .machine { display: grid; grid-template-columns: .8fr 1.2fr; gap: 24px; align-items: center; }
+    .controls { display: grid; gap: 14px; }
+    .field label { display: block; font-weight: 700; margin-bottom: 6px; }
+    select, input[type="number"] { width: 100%; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; padding: 12px; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .machine-visual { min-height: 270px; display: grid; grid-template-columns: 94px 1fr 94px; align-items: center; gap: 14px; }
+    .number-box { padding: 16px 8px; text-align: center; border: 2px solid var(--accent); border-radius: 12px; background: var(--surface); }
+    .number-box span { display: block; font-size: .8rem; color: var(--muted); }
+    .number-box strong { font: 700 2rem/1.2 "Literata", serif; }
+    .machine-body { position: relative; padding: 36px 18px; background: var(--accent); color: #fff; text-align: center; border-radius: 42px 12px 42px 12px; box-shadow: inset 0 -8px 0 rgba(0,0,0,.10); }
+    .machine-body::before, .machine-body::after { content: ""; position: absolute; top: 50%; width: 18px; height: 4px; background: var(--accent); }
+    .machine-body::before { left: -18px; } .machine-body::after { right: -18px; }
+    .machine-body strong { display: block; font: 650 clamp(1.2rem, 3vw, 1.8rem)/1.3 "Literata", serif; }
+    .machine-body small { opacity: .86; }
+    .calculation { grid-column: 1 / -1; text-align: center; padding: 11px; background: var(--warm-soft); color: var(--warm); border-radius: 10px; font-weight: 700; }
+    .graph-layout { display: grid; grid-template-columns: minmax(220px, .58fr) minmax(0, 1.42fr); gap: 24px; align-items: start; }
+    .type-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--surface-2); padding: 5px; border-radius: 12px; }
+    .type-btn { border: 0; padding: 10px; border-radius: 8px; background: transparent; font-weight: 700; cursor: pointer; }
+    .type-btn.active { background: var(--surface); color: var(--accent-dark); box-shadow: 0 3px 10px rgba(0,0,0,.08); }
+    .slider-row { margin-top: 18px; }
+    .slider-row label { display: flex; justify-content: space-between; font-weight: 700; }
+    .slider-row output { color: var(--accent-dark); }
+    .graph-insight { margin-top: 18px; padding: 15px; background: var(--accent-soft); border-radius: 12px; color: var(--accent-dark); }
+    .graph-wrap { background: var(--surface-2); border-radius: 16px; padding: 10px; min-width: 0; }
+    #graphSvg { width: 100%; display: block; aspect-ratio: 1.5 / 1; max-height: 450px; }
+    .graph-caption { text-align: center; font-weight: 700; color: var(--accent-dark); margin: 4px 0 8px; }
+    .quiz-shell { max-width: 820px; margin: 0 auto; }
+    .quiz-intro { padding: clamp(28px, 5vw, 50px); text-align: center; }
+    .quiz-intro h2 { font: 750 clamp(2rem, 6vw, 3.5rem)/1.1 "Literata", serif; }
+    .quiz-intro p { max-width: 590px; margin: 14px auto 22px; color: var(--muted); }
+    .quiz-facts { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+    .quiz-facts span { padding: 7px 11px; border-radius: 8px; background: var(--surface-2); font-weight: 600; font-size: .9rem; }
+    .quiz-card { padding: clamp(20px, 5vw, 42px); }
+    .quiz-meta { display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-weight: 700; margin-bottom: 10px; }
+    .progress { height: 8px; background: var(--surface-2); border-radius: 9px; overflow: hidden; margin-bottom: 28px; }
+    .progress-fill { height: 100%; background: var(--warm); width: 10%; transition: width .25s; }
+    .question { font: 650 clamp(1.25rem, 3vw, 1.65rem)/1.35 "Literata", serif; margin-bottom: 22px; }
+    .options { display: grid; gap: 10px; }
+    .option { text-align: left; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer; font-weight: 600; min-height: 52px; }
+    .option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+    .option.correct { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); }
+    .option.wrong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+    .option:disabled { cursor: default; }
+    .feedback { display: none; margin-top: 18px; padding: 16px; border-radius: 12px; }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--ok-soft); color: var(--ok); }
+    .feedback.bad { background: var(--bad-soft); color: var(--bad); }
+    .feedback strong { display: block; margin-bottom: 3px; }
+    .quiz-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
+    .final { text-align: center; padding: clamp(30px, 6vw, 58px); }
+    .score-ring { width: 150px; height: 150px; margin: 0 auto 22px; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--accent) var(--score, 0%), var(--surface-2) 0); position: relative; }
+    .score-ring::after { content: ""; position: absolute; inset: 12px; background: var(--surface); border-radius: 50%; }
+    .score-ring strong { position: relative; z-index: 1; font: 750 2.1rem/1 "Literata", serif; }
+    .final h2 { font: 700 2rem/1.2 "Literata", serif; }
+    .final p { color: var(--muted); max-width: 520px; margin: 10px auto 22px; }
+    .hidden { display: none !important; }
+    .footer-note { text-align: center; color: var(--muted); font-size: .86rem; margin-top: 30px; }
+    @media (max-width: 850px) {
+      .intro { grid-template-columns: 1fr; }
+      .goal-panel { border-radius: 12px 26px 12px 26px; }
+      .concepts { grid-template-columns: repeat(2, 1fr); }
+      .relation-layout, .machine, .graph-layout { grid-template-columns: 1fr; }
+      .side-controls { display: grid; grid-template-columns: 1fr 1fr; }
+      .instruction, .result, .legend-note { grid-column: 1 / -1; }
+      .machine-visual { max-width: 650px; margin: 0 auto; width: 100%; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 20px, 1160px); padding-top: 14px; }
+      .intro-main { padding: 26px 22px 36px; border-radius: 22px 8px 22px 8px; }
+      .goal-panel { padding: 22px; }
+      .tabs { width: 100%; }
+      .tab { flex: 1; padding: 10px 8px; font-size: .9rem; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 7px; }
+      .concepts { grid-template-columns: 1fr; }
+      .concept { min-height: auto; }
+      .activity-top { gap: 11px; }
+      .activity { padding: 17px; }
+      .relation-board { min-height: 360px; padding: 24px 14px; }
+      .sets { gap: 36px; }
+      .set { width: 72px; }
+      .node { width: 50px; height: 50px; }
+      .side-controls { grid-template-columns: 1fr; }
+      .instruction, .result, .legend-note { grid-column: auto; }
+      .machine-visual { grid-template-columns: 78px 1fr 78px; gap: 8px; min-height: 230px; }
+      .number-box { padding-inline: 4px; }
+      .number-box span { font-size: .68rem; white-space: normal; }
+      .number-box strong { font-size: 1.45rem; }
+      .machine-body { padding: 30px 8px; }
+      .quiz-meta { font-size: .88rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <section class="intro" aria-labelledby="pageTitle">
+      <div class="intro-main">
+        <span class="class-tag">Matematika kelas VIII</span>
+        <h1 id="pageTitle">Dari pasangan ke pola: temukan cara kerja fungsi</h1>
+        <p class="lead">Hubungkan anggota himpunan, jalankan mesin fungsi, lalu amati perubahan grafik. Belajar lewat percobaan—bukan sekadar menghafal rumus.</p>
+      </div>
+      <aside class="goal-panel">
+        <strong>Setelah belajar, kamu dapat…</strong>
+        <ul class="goal-list">
+          <li>Membedakan relasi dan fungsi.</li>
+          <li>Menentukan domain, kodomain, dan range.</li>
+          <li>Menghitung nilai fungsi.</li>
+          <li>Mengenali grafik linear dan nonlinear.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <nav class="tabs" aria-label="Bagian pembelajaran">
+      <button class="tab active" data-view="simulasi" aria-selected="true">Simulasi</button>
+      <button class="tab" data-view="kuis" aria-selected="false">Kuis 10 soal</button>
+    </nav>
+
+    <section id="simulasi" class="view active">
+      <div class="section-head">
+        <h2>Bekal konsep</h2>
+        <p>Baca ringkasannya, lalu buktikan pemahamanmu melalui tiga percobaan.</p>
+      </div>
+      <div class="concepts">
+        <article class="card concept"><h3>Relasi</h3><p>Aturan yang memasangkan anggota suatu himpunan dengan anggota himpunan lain. Dapat disajikan sebagai diagram panah, pasangan berurutan, atau diagram Kartesius.</p></article>
+        <article class="card concept"><h3>Fungsi</h3><p>Relasi khusus: setiap anggota domain memiliki tepat satu pasangan di kodomain. Boleh beberapa anggota domain menuju nilai yang sama.</p></article>
+        <article class="card concept"><h3>Domain · Kodomain · Range</h3><p>Domain adalah himpunan asal, kodomain himpunan tujuan, sedangkan range adalah anggota kodomain yang benar-benar mendapat pasangan.</p></article>
+        <article class="card concept"><h3>Linear · Nonlinear</h3><p>Fungsi linear berbentuk f(x)=ax+b dan grafiknya garis lurus. Fungsi nonlinear tidak membentuk garis lurus, misalnya f(x)=x².</p></article>
+      </div>
+
+      <div class="section-head">
+        <h2>Laboratorium mini</h2>
+        <p>Ubah, coba, dan periksa hasilnya secara langsung.</p>
+      </div>
+
+      <article class="card activity">
+        <div class="activity-top">
+          <span class="step-no">1</span>
+          <div class="activity-title"><h3>Pembuat diagram panah</h3><p>Pilih satu angka di himpunan A, lalu pilih pasangannya di himpunan B.</p></div>
+        </div>
+        <div class="relation-layout">
+          <div class="relation-board" id="relationBoard">
+            <svg id="arrowSvg" aria-hidden="true"><defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--warm)"/></marker></defs><g id="arrowLines"></g></svg>
+            <div class="sets">
+              <div class="set" id="setA"><div class="set-title">Domain A</div><button class="node" data-side="a" data-value="1">1</button><button class="node" data-side="a" data-value="2">2</button><button class="node" data-side="a" data-value="3">3</button><button class="node" data-side="a" data-value="4">4</button></div>
+              <div class="set" id="setB"><div class="set-title">Kodomain B</div><button class="node" data-side="b" data-value="2">2</button><button class="node" data-side="b" data-value="4">4</button><button class="node" data-side="b" data-value="6">6</button><button class="node" data-side="b" data-value="8">8</button></div>
+            </div>
+          </div>
+          <div class="side-controls">
+            <div class="instruction" id="relationInstruction">Mulai dengan memilih anggota domain A.</div>
+            <button class="btn" id="checkRelation">Periksa relasi</button>
+            <button class="btn secondary" id="clearRelation">Hapus semua panah</button>
+            <div class="result" id="relationResult" aria-live="polite">Hasil pemeriksaan akan muncul di sini.</div>
+            <p class="legend-note">Petunjuk: pilih pasangan yang sama sekali lagi untuk menghapus panahnya.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card activity">
+        <div class="activity-top">
+          <span class="step-no">2</span>
+          <div class="activity-title"><h3>Mesin nilai fungsi</h3><p>Pilih aturan, masukkan x, dan lihat bagaimana nilai keluaran dihitung.</p></div>
+        </div>
+        <div class="machine">
+          <div class="controls">
+            <div class="field"><label for="ruleSelect">Aturan fungsi</label><select id="ruleSelect"><option value="2x3">f(x) = 2x + 3</option><option value="negx4">f(x) = −x + 4</option><option value="square1">f(x) = x² − 1</option><option value="abs">f(x) = |x|</option></select></div>
+            <div class="field"><label for="xInput">Nilai x</label><input id="xInput" type="number" value="2" min="-20" max="20" step="1" /></div>
+            <div class="result"><strong>Apa yang terjadi?</strong>Setiap nilai x yang dimasukkan menghasilkan tepat satu nilai f(x). Itulah ciri fungsi.</div>
+          </div>
+          <div class="machine-visual" aria-live="polite">
+            <div class="number-box"><span>masukan x</span><strong id="inputNumber">2</strong></div>
+            <div class="machine-body"><small>aturan aktif</small><strong id="machineRule">× 2, lalu + 3</strong></div>
+            <div class="number-box"><span>keluaran</span><strong id="outputNumber">7</strong></div>
+            <div class="calculation" id="calculation">f(2) = 2(2) + 3 = 7</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card activity">
+        <div class="activity-top">
+          <span class="step-no">3</span>
+          <div class="activity-title"><h3>Jelajah grafik</h3><p>Geser parameter dan bandingkan jejak fungsi linear dengan fungsi nonlinear.</p></div>
+        </div>
+        <div class="graph-layout">
+          <div>
+            <div class="type-switch" role="group" aria-label="Jenis fungsi"><button class="type-btn active" data-type="linear">Linear</button><button class="type-btn" data-type="quadratic">Nonlinear</button></div>
+            <div class="slider-row"><label for="paramA"><span id="labelA">Kemiringan a</span><output id="outA">1</output></label><input type="range" id="paramA" min="-3" max="3" step="0.5" value="1"></div>
+            <div class="slider-row"><label for="paramB"><span id="labelB">Titik potong b</span><output id="outB">0</output></label><input type="range" id="paramB" min="-4" max="4" step="1" value="0"></div>
+            <div class="graph-insight" id="graphInsight"><strong>Linear:</strong> perubahan x yang sama menghasilkan perubahan y yang tetap, sehingga titik-titiknya membentuk garis lurus.</div>
+          </div>
+          <div class="graph-wrap">
+            <svg id="graphSvg" viewBox="0 0 600 400" role="img" aria-label="Grafik fungsi pada bidang Kartesius"></svg>
+            <p class="graph-caption" id="graphFormula">f(x) = x</p>
+          </div>
+        </div>
+      </article>
+      <p class="footer-note">Selesaikan tiga percobaan, lalu pindah ke kuis untuk menguji pemahamanmu.</p>
+    </section>
+
+    <section id="kuis" class="view">
+      <div class="quiz-shell">
+        <div class="card quiz-intro" id="quizIntro">
+          <h2>Siap menguji pemahaman?</h2>
+          <p>Setiap permainan memiliki urutan soal dan pilihan jawaban yang berbeda. Jawabanmu langsung diperiksa dan disertai pembahasan.</p>
+          <div class="quiz-facts"><span>10 soal</span><span>Skor otomatis</span><span>Pembahasan langsung</span></div>
+          <button class="btn" id="startQuiz">Mulai kuis</button>
+        </div>
+        <div class="card quiz-card hidden" id="quizCard">
+          <div class="quiz-meta"><span id="questionCount">Soal 1 dari 10</span><span id="scoreNow">Skor: 0</span></div>
+          <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="question" id="questionText"></div>
+          <div class="options" id="optionsList"></div>
+          <div class="feedback" id="feedback" aria-live="polite"></div>
+          <div class="quiz-actions"><button class="btn hidden" id="nextQuestion">Soal berikutnya</button></div>
+        </div>
+        <div class="card final hidden" id="finalCard">
+          <div class="score-ring" id="scoreRing"><strong id="finalScore">0</strong></div>
+          <h2 id="finalTitle">Kuis selesai</h2>
+          <p id="finalMessage"></p>
+          <button class="btn" id="restartQuiz">Acak dan ulangi</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+      var tabs = document.querySelectorAll('.tab');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+          document.querySelectorAll('.view').forEach(function (v) { v.classList.remove('active'); });
+          tab.classList.add('active'); tab.setAttribute('aria-selected', 'true');
+          document.getElementById(tab.dataset.view).classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (tab.dataset.view === 'simulasi') { setTimeout(drawArrows, 30); }
+        });
+      });
+
+      var selectedA = null;
+      var connections = [];
+      var relationBoard = document.getElementById('relationBoard');
+      var relationInstruction = document.getElementById('relationInstruction');
+      var relationResult = document.getElementById('relationResult');
+
+      document.querySelectorAll('.node').forEach(function (node) {
+        node.addEventListener('click', function () {
+          if (node.dataset.side === 'a') {
+            document.querySelectorAll('.node[data-side="a"]').forEach(function (n) { n.classList.remove('selected'); });
+            selectedA = node.dataset.value;
+            node.classList.add('selected');
+            relationInstruction.textContent = 'Domain ' + selectedA + ' dipilih. Sekarang pilih pasangannya di B.';
+          } else if (selectedA !== null) {
+            var b = node.dataset.value;
+            var index = connections.findIndex(function (c) { return c.a === selectedA && c.b === b; });
+            if (index >= 0) { connections.splice(index, 1); relationInstruction.textContent = 'Panah ' + selectedA + ' → ' + b + ' dihapus.'; }
+            else { connections.push({ a: selectedA, b: b }); relationInstruction.textContent = 'Panah ' + selectedA + ' → ' + b + ' dibuat. Pilih domain lain atau tambah pasangan.'; }
+            document.querySelectorAll('.node').forEach(function (n) { n.classList.remove('selected'); });
+            selectedA = null;
+            relationResult.className = 'result'; relationResult.textContent = 'Perubahan tersimpan. Tekan “Periksa relasi” saat selesai.';
+            drawArrows(); updateConnectedNodes();
+          } else {
+            relationInstruction.textContent = 'Pilih anggota domain A terlebih dahulu.';
+          }
+        });
+      });
+
+      function drawArrows() {
+        var group = document.getElementById('arrowLines');
+        group.innerHTML = '';
+        var boardRect = relationBoard.getBoundingClientRect();
+        connections.forEach(function (c) {
+          var start = document.querySelector('.node[data-side="a"][data-value="' + c.a + '"]').getBoundingClientRect();
+          var end = document.querySelector('.node[data-side="b"][data-value="' + c.b + '"]').getBoundingClientRect();
+          var x1 = start.right - boardRect.left - 3, y1 = start.top + start.height / 2 - boardRect.top;
+          var x2 = end.left - boardRect.left + 1, y2 = end.top + end.height / 2 - boardRect.top;
+          var bend = Math.max(24, (x2 - x1) * .35);
+          var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', 'M' + x1 + ',' + y1 + ' C' + (x1 + bend) + ',' + y1 + ' ' + (x2 - bend) + ',' + y2 + ' ' + x2 + ',' + y2);
+          path.setAttribute('fill', 'none'); path.setAttribute('stroke', 'var(--warm)'); path.setAttribute('stroke-width', '3'); path.setAttribute('marker-end', 'url(#arrowhead)');
+          group.appendChild(path);
+        });
+      }
+      function updateConnectedNodes() {
+        document.querySelectorAll('.node').forEach(function (n) { n.classList.remove('connected'); });
+        connections.forEach(function (c) {
+          document.querySelector('.node[data-side="a"][data-value="' + c.a + '"]').classList.add('connected');
+          document.querySelector('.node[data-side="b"][data-value="' + c.b + '"]').classList.add('connected');
+        });
+      }
+      document.getElementById('checkRelation').addEventListener('click', function () {
+        var counts = { '1': 0, '2': 0, '3': 0, '4': 0 };
+        var range = [];
+        connections.forEach(function (c) { counts[c.a]++; if (range.indexOf(c.b) < 0) range.push(c.b); });
+        var missing = Object.keys(counts).filter(function (k) { return counts[k] === 0; });
+        var multiple = Object.keys(counts).filter(function (k) { return counts[k] > 1; });
+        if (missing.length === 0 && multiple.length === 0) {
+          relationResult.className = 'result good';
+          relationResult.innerHTML = '<strong>Ya, ini fungsi.</strong>Setiap anggota domain memiliki tepat satu pasangan. Range = {' + range.sort(function(a,b){return a-b;}).join(', ') + '}.';
+        } else {
+          relationResult.className = 'result bad';
+          var reasons = [];
+          if (missing.length) reasons.push('domain ' + missing.join(', ') + ' belum memiliki pasangan');
+          if (multiple.length) reasons.push('domain ' + multiple.join(', ') + ' memiliki lebih dari satu pasangan');
+          relationResult.innerHTML = '<strong>Belum merupakan fungsi.</strong>' + reasons.join('; ') + '.';
+        }
+      });
+      document.getElementById('clearRelation').addEventListener('click', function () {
+        connections = []; selectedA = null; drawArrows(); updateConnectedNodes();
+        document.querySelectorAll('.node').forEach(function (n) { n.classList.remove('selected'); });
+        relationInstruction.textContent = 'Mulai dengan memilih anggota domain A.';
+        relationResult.className = 'result'; relationResult.textContent = 'Semua panah sudah dihapus.';
+      });
+      window.addEventListener('resize', drawArrows);
+
+      var ruleSelect = document.getElementById('ruleSelect');
+      var xInput = document.getElementById('xInput');
+      function updateMachine() {
+        var x = Number(xInput.value); if (!Number.isFinite(x)) x = 0;
+        var y, rule, calc;
+        if (ruleSelect.value === '2x3') { y = 2*x+3; rule = '× 2, lalu + 3'; calc = 'f(' + x + ') = 2(' + x + ') + 3 = ' + y; }
+        else if (ruleSelect.value === 'negx4') { y = -x+4; rule = '× (−1), lalu + 4'; calc = 'f(' + x + ') = −(' + x + ') + 4 = ' + y; }
+        else if (ruleSelect.value === 'square1') { y = x*x-1; rule = 'kuadratkan, lalu − 1'; calc = 'f(' + x + ') = (' + x + ')² − 1 = ' + y; }
+        else { y = Math.abs(x); rule = 'ambil nilai mutlak'; calc = 'f(' + x + ') = |' + x + '| = ' + y; }
+        document.getElementById('inputNumber').textContent = x;
+        document.getElementById('outputNumber').textContent = y;
+        document.getElementById('machineRule').textContent = rule;
+        document.getElementById('calculation').textContent = calc;
+      }
+      ruleSelect.addEventListener('change', updateMachine); xInput.addEventListener('input', updateMachine);
+
+      var graphType = 'linear', aSlider = document.getElementById('paramA'), bSlider = document.getElementById('paramB');
+      document.querySelectorAll('.type-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.type-btn').forEach(function (b) { b.classList.remove('active'); }); btn.classList.add('active'); graphType = btn.dataset.type;
+          document.getElementById('labelA').textContent = graphType === 'linear' ? 'Kemiringan a' : 'Koefisien a';
+          document.getElementById('labelB').textContent = graphType === 'linear' ? 'Titik potong b' : 'Pergeseran c';
+          document.getElementById('graphInsight').innerHTML = graphType === 'linear' ? '<strong>Linear:</strong> perubahan x yang sama menghasilkan perubahan y yang tetap, sehingga titik-titiknya membentuk garis lurus.' : '<strong>Nonlinear:</strong> perubahan y tidak tetap. Pada fungsi kuadrat, titik-titik membentuk kurva parabola.';
+          drawGraph();
+        });
+      });
+      aSlider.addEventListener('input', drawGraph); bSlider.addEventListener('input', drawGraph);
+      function svgEl(name, attrs, text) {
+        var el = document.createElementNS('http://www.w3.org/2000/svg', name);
+        Object.keys(attrs || {}).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+        if (text !== undefined) el.textContent = text; return el;
+      }
+      function fmt(n) { return n === 0 ? '' : (n > 0 ? ' + ' + n : ' − ' + Math.abs(n)); }
+      function drawGraph() {
+        var svg = document.getElementById('graphSvg'); svg.innerHTML = '';
+        var a = Number(aSlider.value), b = Number(bSlider.value), W = 600, H = 400, sx = 48, sy = 36, ox = W/2, oy = H/2;
+        document.getElementById('outA').textContent = a; document.getElementById('outB').textContent = b;
+        for (var gx=-6; gx<=6; gx++) { var xp=ox+gx*sx; svg.appendChild(svgEl('line',{x1:xp,y1:14,x2:xp,y2:H-14,stroke:'var(--line)','stroke-width':1})); if(gx!==0) svg.appendChild(svgEl('text',{x:xp,y:oy+18,'text-anchor':'middle',fill:'var(--muted)','font-size':12},gx)); }
+        for (var gy=-5; gy<=5; gy++) { var yp=oy-gy*sy; svg.appendChild(svgEl('line',{x1:14,y1:yp,x2:W-14,y2:yp,stroke:'var(--line)','stroke-width':1})); if(gy!==0) svg.appendChild(svgEl('text',{x:ox-9,y:yp+4,'text-anchor':'end',fill:'var(--muted)','font-size':12},gy)); }
+        svg.appendChild(svgEl('line',{x1:14,y1:oy,x2:W-14,y2:oy,stroke:'var(--ink)','stroke-width':2}));
+        svg.appendChild(svgEl('line',{x1:ox,y1:14,x2:ox,y2:H-14,stroke:'var(--ink)','stroke-width':2}));
+        svg.appendChild(svgEl('text',{x:W-22,y:oy-9,fill:'var(--ink)','font-weight':700},'x'));
+        svg.appendChild(svgEl('text',{x:ox+9,y:24,fill:'var(--ink)','font-weight':700},'y'));
+        var points = [];
+        for (var px=-6; px<=6; px+=.05) { var py = graphType === 'linear' ? a*px+b : a*px*px+b; var X=ox+px*sx, Y=oy-py*sy; if(Y>-40 && Y<H+40) points.push(X.toFixed(1)+','+Y.toFixed(1)); }
+        svg.appendChild(svgEl('polyline',{points:points.join(' '),fill:'none',stroke:'var(--warm)','stroke-width':4,'stroke-linecap':'round','stroke-linejoin':'round'}));
+        for (var xi=-4; xi<=4; xi+=2) { var yi=graphType==='linear'?a*xi+b:a*xi*xi+b; if(yi>=-5&&yi<=5) svg.appendChild(svgEl('circle',{cx:ox+xi*sx,cy:oy-yi*sy,r:5,fill:'var(--surface)',stroke:'var(--warm)','stroke-width':3})); }
+        var formula;
+        if (graphType === 'linear') { formula = a === 0 ? 'f(x) = ' + b : 'f(x) = ' + (a===1?'':a===-1?'−':a) + 'x' + fmt(b); }
+        else { formula = a === 0 ? 'f(x) = ' + b + ' (konstan)' : 'f(x) = ' + (a===1?'':a===-1?'−':a) + 'x²' + fmt(b); }
+        document.getElementById('graphFormula').textContent = formula;
+      }
+      drawGraph();
+
+      var questions = [
+        { q:'Pernyataan manakah yang tepat tentang relasi?', options:['Aturan yang memasangkan anggota dua himpunan','Himpunan yang tidak memiliki anggota','Operasi untuk mencari luas','Bilangan yang selalu bernilai nol'], answer:'Aturan yang memasangkan anggota dua himpunan', explain:'Relasi adalah aturan yang memasangkan anggota suatu himpunan dengan anggota himpunan lain.' },
+        { q:'Suatu relasi disebut fungsi apabila…', options:['setiap anggota domain mempunyai tepat satu pasangan','setiap anggota kodomain wajib mendapat pasangan','satu anggota domain boleh memiliki tiga pasangan','domain dan kodomain harus sama'], answer:'setiap anggota domain mempunyai tepat satu pasangan', explain:'Syarat fungsi berpusat pada domain: masing-masing anggota domain harus memiliki tepat satu pasangan.' },
+        { q:'Diketahui A = {1, 2, 3} dan B = {2, 4, 6, 8}. Relasi {(1,2), (2,4), (3,6)} memiliki range…', options:['{2, 4, 6}','{1, 2, 3}','{2, 4, 6, 8}','{1, 2, 3, 8}'], answer:'{2, 4, 6}', explain:'Range berisi anggota kodomain yang benar-benar menjadi pasangan, yaitu 2, 4, dan 6.' },
+        { q:'Pada pemetaan P = {(a,1), (b,2), (c,2)}, kodomainnya adalah {1, 2, 3}. Manakah yang benar?', options:['Range P = {1, 2}','Range P = {1, 2, 3}','Domain P = {1, 2}','P bukan fungsi'], answer:'Range P = {1, 2}', explain:'Nilai 1 dan 2 mendapat panah, sedangkan 3 tidak. Jadi range-nya {1, 2}; P tetap fungsi.' },
+        { q:'Jika f(x) = 3x − 2, nilai f(4) adalah…', options:['10','14','7','−10'], answer:'10', explain:'Substitusikan x = 4: f(4) = 3(4) − 2 = 12 − 2 = 10.' },
+        { q:'Jika g(x) = x² + 1, nilai g(−3) adalah…', options:['10','−8','8','−10'], answer:'10', explain:'g(−3) = (−3)² + 1 = 9 + 1 = 10.' },
+        { q:'Manakah yang merupakan fungsi linear?', options:['f(x) = 2x + 5','f(x) = x² + 5','f(x) = 3/x','f(x) = |x|'], answer:'f(x) = 2x + 5', explain:'Fungsi linear satu variabel berbentuk f(x) = ax + b; pangkat tertinggi x adalah satu.' },
+        { q:'Ciri grafik fungsi linear adalah…', options:['berbentuk garis lurus','selalu berbentuk lingkaran','berbentuk parabola','tidak memiliki titik'], answer:'berbentuk garis lurus', explain:'Nilai perubahan yang tetap pada fungsi linear membuat titik-titik grafik terletak pada satu garis lurus.' },
+        { q:'Relasi {(1,2), (1,4), (2,6)} bukan fungsi karena…', options:['anggota domain 1 memiliki dua pasangan','angka 6 terlalu besar','kodomain memuat bilangan genap','domain hanya memiliki dua anggota'], answer:'anggota domain 1 memiliki dua pasangan', explain:'Dalam fungsi, satu anggota domain tidak boleh menuju lebih dari satu anggota kodomain.' },
+        { q:'Diketahui h(x) = −2x + 6. Jika h(x) = 0, nilai x adalah…', options:['3','−3','6','−6'], answer:'3', explain:'0 = −2x + 6, sehingga 2x = 6 dan x = 3.' }
+      ];
+      var quiz = [], current = 0, score = 0, answered = false;
+      function shuffled(array) { var copy=array.slice(); for(var i=copy.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=copy[i];copy[i]=copy[j];copy[j]=tmp;} return copy; }
+      function startQuiz() {
+        quiz = shuffled(questions).map(function (q) { return { q:q.q, options:shuffled(q.options), answer:q.answer, explain:q.explain }; });
+        current=0; score=0;
+        document.getElementById('quizIntro').classList.add('hidden'); document.getElementById('finalCard').classList.add('hidden'); document.getElementById('quizCard').classList.remove('hidden');
+        renderQuestion();
+      }
+      function renderQuestion() {
+        answered=false; var q=quiz[current];
+        document.getElementById('questionCount').textContent='Soal '+(current+1)+' dari '+quiz.length;
+        document.getElementById('scoreNow').textContent='Skor: '+score;
+        document.getElementById('progressFill').style.width=((current+1)/quiz.length*100)+'%';
+        document.getElementById('questionText').textContent=q.q;
+        var list=document.getElementById('optionsList'); list.innerHTML='';
+        q.options.forEach(function(opt){var button=document.createElement('button');button.className='option';button.textContent=opt;button.addEventListener('click',function(){chooseAnswer(button,opt);});list.appendChild(button);});
+        var fb=document.getElementById('feedback'); fb.className='feedback'; fb.innerHTML=''; document.getElementById('nextQuestion').classList.add('hidden');
+      }
+      function chooseAnswer(button,opt) {
+        if(answered)return; answered=true; var q=quiz[current], correct=opt===q.answer;
+        if(correct)score++;
+        document.querySelectorAll('.option').forEach(function(b){b.disabled=true;if(b.textContent===q.answer)b.classList.add('correct');});
+        if(!correct)button.classList.add('wrong');
+        var fb=document.getElementById('feedback');fb.className='feedback show '+(correct?'good':'bad');fb.innerHTML='<strong>'+(correct?'Tepat!':'Belum tepat.')+'</strong>'+q.explain;
+        document.getElementById('scoreNow').textContent='Skor: '+score;
+        var next=document.getElementById('nextQuestion');next.textContent=current===quiz.length-1?'Lihat nilai akhir':'Soal berikutnya';next.classList.remove('hidden');
+      }
+      function showFinal(){
+        document.getElementById('quizCard').classList.add('hidden');document.getElementById('finalCard').classList.remove('hidden');
+        var pct=score*10, title, msg;if(score>=9){title='Hebat, pemahamanmu kuat!';msg='Kamu sudah sangat baik dalam mengenali relasi, fungsi, nilai fungsi, dan bentuk grafik.';}else if(score>=7){title='Bagus, tinggal sedikit lagi!';msg='Pemahaman dasarmu sudah baik. Coba tinjau kembali pembahasan yang sempat keliru.';}else{title='Ayo coba lagi!';msg='Kembali ke simulasi, lakukan beberapa percobaan, lalu ulangi kuis dengan urutan baru.';}
+        document.getElementById('scoreRing').style.setProperty('--score',pct+'%');document.getElementById('finalScore').textContent=pct;document.getElementById('finalTitle').textContent=title;document.getElementById('finalMessage').textContent='Kamu menjawab '+score+' dari 10 soal dengan benar. '+msg;
+      }
+      document.getElementById('startQuiz').addEventListener('click',startQuiz);
+      document.getElementById('restartQuiz').addEventListener('click',startQuiz);
+      document.getElementById('nextQuestion').addEventListener('click',function(){if(current<quiz.length-1){current++;renderQuestion();}else showFinal();});
+    })();
+  </script>
+</body>
+</html>

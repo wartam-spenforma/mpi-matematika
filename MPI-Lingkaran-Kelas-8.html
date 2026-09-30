@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f5f7f2" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet" />
+  <title>Media Interaktif Lingkaran</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7f2;
+      --surface: #ffffff;
+      --surface-2: #edf4ee;
+      --ink: #16241e;
+      --muted: #52635b;
+      --line: #cfdbd1;
+      --green: #13795b;
+      --green-dark: #075e46;
+      --green-soft: #d9f2e7;
+      --orange: #e66b25;
+      --orange-soft: #ffeadb;
+      --blue: #2574a9;
+      --blue-soft: #deeffa;
+      --red: #ba3b46;
+      --red-soft: #fde8e9;
+      --yellow: #f4c542;
+      --shadow: 0 16px 44px rgba(32, 61, 47, .10);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101814;
+        --surface: #18231e;
+        --surface-2: #1e2d26;
+        --ink: #eff7f1;
+        --muted: #b7c9bd;
+        --line: #33483c;
+        --green: #55d6a8;
+        --green-dark: #84e6c2;
+        --green-soft: #173c30;
+        --orange: #ff9b5f;
+        --orange-soft: #47291e;
+        --blue: #72b9e8;
+        --blue-soft: #19374c;
+        --red: #ff8790;
+        --red-soft: #432127;
+        --yellow: #f4cf67;
+        --shadow: 0 18px 48px rgba(0,0,0,.28);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 280px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Atkinson Hyperlegible", sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    svg text { font-family: "Atkinson Hyperlegible", sans-serif; fill: var(--ink); }
+    .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    .hero {
+      padding: clamp(32px, 7vw, 72px) 0 28px;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: clamp(26px, 5vw, 64px);
+      align-items: center;
+    }
+    .hero h1, h2, h3, .big-number { font-family: "Baloo 2", sans-serif; }
+    .hero h1 { margin: 0 0 14px; font-size: clamp(38px, 6.6vw, 72px); line-height: .98; letter-spacing: -.035em; max-width: 760px; }
+    .hero p { margin: 0 0 22px; max-width: 610px; color: var(--muted); font-size: clamp(18px, 2vw, 21px); }
+    .formula-strip { display: flex; flex-wrap: wrap; gap: 10px; }
+    .formula-chip { padding: 8px 13px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,.03); }
+    .hero-visual { position: relative; min-height: 300px; display: grid; place-items: center; }
+    .orbit { width: min(340px, 88vw); aspect-ratio: 1; border: 3px solid var(--green); border-radius: 50%; position: relative; background: radial-gradient(circle at center, var(--green) 0 5px, transparent 6px), conic-gradient(from -30deg, var(--orange-soft) 0 72deg, transparent 72deg 360deg); box-shadow: var(--shadow); }
+    .orbit::before { content: ""; position: absolute; left: 50%; top: 50%; width: 45%; height: 3px; background: var(--green); transform-origin: left center; transform: rotate(-30deg); }
+    .orbit::after { content: ""; position: absolute; left: 50%; top: 50%; width: 44%; height: 44%; border-left: 2px dashed var(--orange); border-top: 2px dashed var(--orange); transform-origin: left top; transform: rotate(42deg); border-radius: 100% 0 0 0; }
+    .orbit-label { position: absolute; padding: 6px 10px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); font-weight: 700; box-shadow: 0 5px 14px rgba(0,0,0,.08); }
+    .ol1 { right: -5px; top: 18%; color: var(--orange); }
+    .ol2 { right: 7%; top: 44%; color: var(--green); }
+
+    .section-nav { position: sticky; top: 10px; z-index: 10; display: flex; gap: 8px; width: fit-content; margin: 12px auto 52px; padding: 7px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 92%, transparent); border-radius: 16px; box-shadow: 0 9px 24px rgba(20,48,34,.12); backdrop-filter: blur(10px); }
+    .nav-btn { border: 0; border-radius: 11px; background: transparent; color: var(--muted); padding: 10px 18px; font-weight: 700; cursor: pointer; }
+    .nav-btn.active { color: #fff; background: var(--green-dark); }
+    .page-section { display: none; padding-bottom: 72px; }
+    .page-section.active { display: block; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+    .section-head h2 { margin: 0; font-size: clamp(30px, 4.5vw, 46px); line-height: 1.05; }
+    .section-head p { margin: 0; color: var(--muted); max-width: 520px; }
+
+    .lesson-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .lesson-tab { border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 12px; padding: 10px 14px; cursor: pointer; font-weight: 700; }
+    .lesson-tab[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .lesson-panel { display: none; }
+    .lesson-panel.active { display: block; }
+    .sim-card { display: grid; grid-template-columns: minmax(0, 1.28fr) minmax(280px, .72fr); min-height: 530px; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+    .stage { min-width: 0; padding: clamp(18px, 3vw, 34px); display: grid; place-items: center; background: var(--surface-2); }
+    .stage svg { width: 100%; max-width: 620px; height: auto; overflow: visible; }
+    .control-panel { padding: clamp(22px, 3vw, 34px); display: flex; flex-direction: column; justify-content: center; }
+    .control-panel h3 { margin: 0 0 8px; font-size: 28px; line-height: 1.1; }
+    .control-panel > p { margin: 0 0 22px; color: var(--muted); }
+    .range-row { margin: 8px 0 24px; }
+    .range-label { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .range-label strong { color: var(--green-dark); font-size: 25px; }
+    input[type="range"] { width: 100%; accent-color: var(--green); cursor: grab; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat { background: var(--surface-2); border-radius: 14px; padding: 14px; }
+    .stat span { display: block; color: var(--muted); font-size: 14px; }
+    .stat strong { display: block; font-size: 23px; color: var(--green-dark); }
+    .formula-box { margin-top: 14px; padding: 15px; border-radius: 12px; background: var(--green-soft); color: var(--ink); }
+    .formula-box strong { color: var(--green-dark); }
+    .formula-box .calc { margin-top: 5px; font-size: 15px; }
+    .tip { margin-top: 16px; padding: 12px 14px; border-left: 4px solid var(--orange); background: var(--orange-soft); border-radius: 4px 12px 12px 4px; font-size: 15px; }
+
+    .element-layout { grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr); }
+    .element-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 14px; }
+    .element-btn { border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; background: var(--surface); color: var(--ink); text-align: left; cursor: pointer; font-weight: 700; }
+    .element-btn:hover { border-color: var(--green); }
+    .element-btn.active { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+    .element-note { min-height: 112px; margin-top: 16px; padding: 15px; background: var(--surface-2); border-radius: 14px; }
+    .element-note strong { display: block; font-family: "Baloo 2", sans-serif; font-size: 22px; color: var(--green-dark); }
+    .element-note p { margin: 2px 0 0; color: var(--muted); }
+    .geo-part { opacity: .12; transition: opacity .2s, stroke-width .2s; }
+    .geo-part.active { opacity: 1; }
+
+    .relation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .relation { padding: 13px; background: var(--surface-2); border-radius: 13px; }
+    .relation span { display: block; font-size: 14px; color: var(--muted); }
+    .relation strong { display: block; font-size: 22px; }
+    .relation.central strong { color: var(--orange); }
+    .relation.inscribed strong { color: var(--blue); }
+    .sector-results { display: grid; gap: 8px; margin-top: 15px; }
+    .sector-results div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .sector-results div:last-child { border-bottom: 0; }
+
+    .quiz-shell { max-width: 820px; margin: 0 auto; }
+    .quiz-intro, .quiz-card, .result-card { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; }
+    .quiz-intro { display: grid; grid-template-columns: .85fr 1.15fr; }
+    .quiz-intro-graphic { display: grid; place-items: center; min-height: 330px; background: var(--green-soft); }
+    .quiz-intro-copy { padding: clamp(26px, 5vw, 48px); align-self: center; }
+    .quiz-intro h3, .result-card h3 { margin: 0 0 10px; font-size: 34px; line-height: 1.1; }
+    .quiz-intro p { margin: 0 0 16px; color: var(--muted); }
+    .rules { padding-left: 20px; margin: 0 0 24px; color: var(--muted); }
+    .rules li { margin: 6px 0; }
+    .primary-btn, .secondary-btn { border: 0; border-radius: 12px; padding: 12px 20px; font-weight: 700; cursor: pointer; }
+    .primary-btn { background: var(--green-dark); color: #fff; }
+    .primary-btn:hover { filter: brightness(1.08); }
+    .secondary-btn { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); }
+    .quiz-card { display: none; }
+    .quiz-top { padding: 18px 24px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 16px; }
+    .progress-track { flex: 1; height: 9px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+    .progress-bar { height: 100%; width: 10%; background: var(--green); border-radius: inherit; transition: width .25s; }
+    .question-area { padding: clamp(24px, 5vw, 44px); }
+    .question-number { margin: 0 0 8px; color: var(--green-dark); font-weight: 700; }
+    .question { margin: 0 0 22px; font-family: "Baloo 2", sans-serif; font-size: clamp(24px, 4vw, 32px); line-height: 1.2; }
+    .answers { display: grid; gap: 11px; }
+    .answer { width: 100%; text-align: left; padding: 14px 16px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; cursor: pointer; font-weight: 700; }
+    .answer:hover:not(:disabled) { border-color: var(--green); background: var(--green-soft); }
+    .answer:disabled { cursor: default; }
+    .answer.correct { border-color: var(--green); background: var(--green-soft); color: var(--green-dark); }
+    .answer.wrong { border-color: var(--red); background: var(--red-soft); color: var(--red); }
+    .feedback { display: none; margin-top: 20px; padding: 16px; border-radius: 13px; background: var(--surface-2); }
+    .feedback.show { display: block; }
+    .feedback strong { display: block; margin-bottom: 3px; font-size: 19px; }
+    .feedback p { margin: 0; color: var(--muted); }
+    .next-row { display: none; justify-content: flex-end; margin-top: 18px; }
+    .next-row.show { display: flex; }
+    .result-card { display: none; text-align: center; padding: clamp(30px, 6vw, 58px); }
+    .score-ring { width: 170px; aspect-ratio: 1; margin: 0 auto 24px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--green) var(--score-angle, 0deg), var(--surface-2) 0); position: relative; }
+    .score-ring::after { content: ""; position: absolute; inset: 14px; background: var(--surface); border-radius: 50%; }
+    .score-ring-inner { position: relative; z-index: 1; }
+    .big-number { font-size: 48px; line-height: .95; color: var(--green-dark); }
+    .score-ring small { color: var(--muted); }
+    .result-card p { color: var(--muted); max-width: 520px; margin: 0 auto 22px; }
+    .review { margin: 26px auto 0; max-width: 640px; text-align: left; }
+    .review h4 { font-family: "Baloo 2", sans-serif; font-size: 22px; margin: 0 0 10px; }
+    .review-item { padding: 12px 0; border-top: 1px solid var(--line); }
+    .review-item strong { color: var(--red); }
+    footer { padding: 12px 0 34px; color: var(--muted); text-align: center; font-size: 14px; }
+
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .formula-strip { justify-content: center; }
+      .hero-visual { min-height: 270px; }
+      .orbit { width: min(280px, 78vw); }
+      .section-head { align-items: start; flex-direction: column; }
+      .sim-card, .element-layout, .quiz-intro { grid-template-columns: 1fr; }
+      .sim-card { min-height: auto; }
+      .stage { min-height: 370px; }
+      .quiz-intro-graphic { min-height: 230px; }
+    }
+    @media (max-width: 520px) {
+      body { font-size: 16px; }
+      .wrap { width: min(100% - 20px, 1120px); }
+      .hero { padding-top: 30px; }
+      .hero h1 { font-size: 44px; }
+      .hero-visual { min-height: 240px; }
+      .orbit { width: 226px; }
+      .section-nav { top: 6px; width: calc(100% - 20px); margin-bottom: 36px; }
+      .nav-btn { flex: 1; padding: 10px 8px; }
+      .lesson-tabs { display: grid; grid-template-columns: 1fr; }
+      .lesson-tab { text-align: left; }
+      .stage { min-height: 310px; padding: 12px; }
+      .control-panel { padding: 22px 18px 26px; }
+      .stats, .element-buttons, .relation-grid { grid-template-columns: 1fr; }
+      .element-note { min-height: 0; }
+      .quiz-top { padding: 14px 16px; }
+      .question-area { padding: 24px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <main>
+    <section class="hero wrap">
+      <div>
+        <h1>Ayo jelajahi lingkaran.</h1>
+        <p>Geser, klik, dan amati sendiri hubungan antara jari-jari, keliling, luas, sudut, busur, dan juring.</p>
+        <div class="formula-strip" aria-label="Rumus penting">
+          <span class="formula-chip">K = 2πr</span>
+          <span class="formula-chip">L = πr²</span>
+          <span class="formula-chip">Pada busur sama: ∠ pusat = 2 × ∠ keliling</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit"><span class="orbit-label ol1">juring</span><span class="orbit-label ol2">jari-jari</span></div>
+      </div>
+    </section>
+
+    <nav class="section-nav" aria-label="Bagian pembelajaran">
+      <button class="nav-btn active" data-section="simulasi" aria-pressed="true">Simulasi</button>
+      <button class="nav-btn" data-section="kuis" aria-pressed="false">Kuis</button>
+    </nav>
+
+    <section class="page-section active wrap" id="simulasi">
+      <div class="section-head">
+        <h2>Belajar dengan mencoba</h2>
+        <p>Pilih eksplorasi, ubah parameternya, lalu perhatikan pola yang muncul pada gambar dan perhitungan.</p>
+      </div>
+
+      <div class="lesson-tabs" role="tablist" aria-label="Pilihan simulasi">
+        <button class="lesson-tab" role="tab" aria-selected="true" data-panel="ukuran">Keliling &amp; luas</button>
+        <button class="lesson-tab" role="tab" aria-selected="false" data-panel="unsur">Unsur lingkaran</button>
+        <button class="lesson-tab" role="tab" aria-selected="false" data-panel="sudut">Sudut, busur &amp; juring</button>
+      </div>
+
+      <div class="lesson-panel active" id="panel-ukuran" role="tabpanel">
+        <article class="sim-card">
+          <div class="stage">
+            <svg id="sizeSvg" viewBox="0 0 520 430" role="img" aria-labelledby="sizeTitle sizeDesc">
+              <title id="sizeTitle">Lingkaran dengan jari-jari yang dapat diubah</title>
+              <desc id="sizeDesc">Jari-jari ditunjukkan oleh garis dari pusat ke tepi lingkaran.</desc>
+              <circle cx="260" cy="205" r="128" fill="var(--green-soft)" stroke="var(--green)" stroke-width="5" id="sizeCircle" />
+              <line x1="260" y1="205" x2="388" y2="205" stroke="var(--orange)" stroke-width="6" stroke-linecap="round" id="radiusLine" />
+              <circle cx="260" cy="205" r="7" fill="var(--ink)" />
+              <circle cx="388" cy="205" r="8" fill="var(--orange)" id="radiusPoint" />
+              <text x="320" y="190" text-anchor="middle" font-size="21" font-weight="700" id="radiusSvgLabel">r = 7 cm</text>
+              <text x="260" y="405" text-anchor="middle" font-size="17" fill="var(--muted)">Ubah jari-jari dengan penggeser</text>
+            </svg>
+          </div>
+          <div class="control-panel">
+            <h3>Ukuran lingkaran</h3>
+            <p>Ketika jari-jari membesar, keliling bertambah secara teratur, sedangkan luas bertambah lebih cepat.</p>
+            <div class="range-row">
+              <label class="range-label" for="radiusRange"><span>Jari-jari</span><strong id="radiusValue">7 cm</strong></label>
+              <input id="radiusRange" type="range" min="2" max="14" value="7" step="1" />
+            </div>
+            <div class="stats">
+              <div class="stat"><span>Keliling</span><strong id="circValue">44 cm</strong></div>
+              <div class="stat"><span>Luas</span><strong id="areaValue">154 cm²</strong></div>
+            </div>
+            <div class="formula-box">
+              <strong id="piChoice">Gunakan π = 22/7</strong>
+              <div class="calc" id="calcText">K = 2 × 22/7 × 7 = 44 cm<br>L = 22/7 × 7² = 154 cm²</div>
+            </div>
+            <div class="tip">Coba gandakan jari-jari. Apakah luasnya ikut menjadi dua kali?</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="lesson-panel" id="panel-unsur" role="tabpanel">
+        <article class="sim-card element-layout">
+          <div class="stage">
+            <svg viewBox="0 0 500 400" role="img" aria-labelledby="elementTitle elementDesc">
+              <title id="elementTitle">Unsur-unsur lingkaran</title>
+              <desc id="elementDesc">Diagram lingkaran dengan jari-jari, diameter, busur, tali busur, juring, tembereng, dan apotema.</desc>
+              <circle cx="250" cy="200" r="145" fill="var(--surface)" stroke="var(--ink)" stroke-width="3" />
+              <path class="geo-part" data-element="juring" d="M250 200 L352.5 97.5 A145 145 0 0 1 386.2 249.6 Z" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="3" />
+              <path class="geo-part" data-element="tembereng" d="M130 119 A145 145 0 0 1 370 119 L130 119 Z" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="3" />
+              <line class="geo-part" data-element="diameter" x1="105" y1="200" x2="395" y2="200" stroke="var(--blue)" stroke-width="7" stroke-linecap="round" />
+              <line class="geo-part active" data-element="jari-jari" x1="250" y1="200" x2="352.5" y2="97.5" stroke="var(--orange)" stroke-width="7" stroke-linecap="round" />
+              <path class="geo-part" data-element="busur" d="M126 275 A145 145 0 0 0 374 275" fill="none" stroke="var(--green)" stroke-width="10" stroke-linecap="round" />
+              <line class="geo-part" data-element="tali-busur" x1="130" y1="119" x2="370" y2="119" stroke="var(--blue)" stroke-width="7" stroke-linecap="round" />
+              <line class="geo-part" data-element="apotema" x1="250" y1="200" x2="250" y2="119" stroke="var(--green)" stroke-width="7" stroke-dasharray="9 7" />
+              <path class="geo-part" data-element="apotema" d="M250 134 h15 v-15" fill="none" stroke="var(--green)" stroke-width="3" />
+              <circle cx="250" cy="200" r="7" fill="var(--ink)" />
+              <text x="264" y="224" font-size="19" font-weight="700">O</text>
+            </svg>
+          </div>
+          <div class="control-panel">
+            <h3>Klik sebuah unsur</h3>
+            <p>Bagian terpilih akan disorot pada gambar.</p>
+            <div class="element-buttons">
+              <button class="element-btn active" data-element="jari-jari">Jari-jari</button>
+              <button class="element-btn" data-element="diameter">Diameter</button>
+              <button class="element-btn" data-element="busur">Busur</button>
+              <button class="element-btn" data-element="tali-busur">Tali busur</button>
+              <button class="element-btn" data-element="juring">Juring</button>
+              <button class="element-btn" data-element="tembereng">Tembereng</button>
+              <button class="element-btn" data-element="apotema">Apotema</button>
+            </div>
+            <div class="element-note" aria-live="polite">
+              <strong id="elementName">Jari-jari</strong>
+              <p id="elementDescription">Ruas garis dari titik pusat ke satu titik pada lingkaran.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="lesson-panel" id="panel-sudut" role="tabpanel">
+        <article class="sim-card">
+          <div class="stage">
+            <svg id="angleSvg" viewBox="0 0 500 430" role="img" aria-labelledby="angleTitle angleDesc">
+              <title id="angleTitle">Hubungan sudut pusat dan sudut keliling</title>
+              <desc id="angleDesc">Sudut pusat dan sudut keliling menghadap busur yang sama.</desc>
+              <circle cx="250" cy="205" r="150" fill="var(--surface)" stroke="var(--ink)" stroke-width="3" />
+              <path id="sectorPath" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="2" />
+              <path id="arcPath" fill="none" stroke="var(--green)" stroke-width="9" stroke-linecap="round" />
+              <line id="oaLine" stroke="var(--orange)" stroke-width="5" />
+              <line id="obLine" stroke="var(--orange)" stroke-width="5" />
+              <line id="paLine" stroke="var(--blue)" stroke-width="4" />
+              <line id="pbLine" stroke="var(--blue)" stroke-width="4" />
+              <circle cx="250" cy="205" r="6" fill="var(--ink)" />
+              <circle id="pointA" r="6" fill="var(--green)" />
+              <circle id="pointB" r="6" fill="var(--green)" />
+              <circle id="pointP" cx="250" cy="355" r="6" fill="var(--blue)" />
+              <text x="260" y="225" font-size="17" font-weight="700">O</text>
+              <text id="labelA" font-size="17" font-weight="700">A</text>
+              <text id="labelB" font-size="17" font-weight="700">B</text>
+              <text x="260" y="380" font-size="17" font-weight="700">P</text>
+              <text id="centralLabel" x="250" y="155" text-anchor="middle" font-size="21" font-weight="700" fill="var(--orange)">100°</text>
+              <text id="inscribedLabel" x="250" y="330" text-anchor="middle" font-size="21" font-weight="700" fill="var(--blue)">50°</text>
+            </svg>
+          </div>
+          <div class="control-panel">
+            <h3>Satu busur, dua sudut</h3>
+            <p>Sudut pusat AOB dan sudut keliling APB menghadap busur AB yang sama.</p>
+            <div class="range-row">
+              <label class="range-label" for="angleRange"><span>Sudut pusat</span><strong id="angleValue">100°</strong></label>
+              <input id="angleRange" type="range" min="40" max="160" value="100" step="10" />
+            </div>
+            <div class="relation-grid">
+              <div class="relation central"><span>Sudut pusat</span><strong id="centralValue">100°</strong></div>
+              <div class="relation inscribed"><span>Sudut keliling</span><strong id="inscribedValue">50°</strong></div>
+            </div>
+            <div class="formula-box"><strong>Hubungan utama</strong><div class="calc" id="angleCalc">∠APB = ½ × ∠AOB = 50°</div></div>
+            <div class="sector-results">
+              <div><span>Panjang busur AB</span><strong id="arcLength">12,22 cm</strong></div>
+              <div><span>Luas juring AOB</span><strong id="sectorArea">42,78 cm²</strong></div>
+            </div>
+            <div class="tip">Perhitungan busur dan juring memakai jari-jari dari simulasi pertama.</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section wrap" id="kuis">
+      <div class="section-head">
+        <h2>Uji pemahamanmu</h2>
+        <p>Sepuluh soal akan diacak, termasuk posisi setiap pilihan jawaban.</p>
+      </div>
+      <div class="quiz-shell">
+        <div class="quiz-intro" id="quizIntro">
+          <div class="quiz-intro-graphic" aria-hidden="true">
+            <svg width="210" height="210" viewBox="0 0 210 210">
+              <circle cx="105" cy="105" r="78" fill="var(--surface)" stroke="var(--green)" stroke-width="5" />
+              <path d="M105 105 L105 27 A78 78 0 0 1 173 143 Z" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="4" />
+              <text x="105" y="119" text-anchor="middle" font-size="42" font-weight="700">?</text>
+            </svg>
+          </div>
+          <div class="quiz-intro-copy">
+            <h3>Siap menguji konsep?</h3>
+            <p>Kerjakan tanpa terburu-buru. Pembahasan muncul setelah setiap jawaban.</p>
+            <ul class="rules">
+              <li>10 soal pilihan jawaban</li>
+              <li>Soal dan pilihan selalu diacak</li>
+              <li>Nilai akhir dihitung otomatis</li>
+            </ul>
+            <button class="primary-btn" id="startQuiz">Mulai kuis</button>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-top">
+            <strong id="quizCounter">1 / 10</strong>
+            <div class="progress-track" aria-label="Kemajuan kuis"><div class="progress-bar" id="progressBar"></div></div>
+            <span id="liveScore">Skor 0</span>
+          </div>
+          <div class="question-area">
+            <p class="question-number" id="questionTopic">Konsep dasar</p>
+            <h3 class="question" id="questionText"></h3>
+            <div class="answers" id="answers"></div>
+            <div class="feedback" id="feedback" aria-live="polite">
+              <strong id="feedbackTitle"></strong>
+              <p id="feedbackText"></p>
+            </div>
+            <div class="next-row" id="nextRow"><button class="primary-btn" id="nextQuestion">Soal berikutnya</button></div>
+          </div>
+        </div>
+
+        <div class="result-card" id="resultCard">
+          <div class="score-ring" id="scoreRing"><div class="score-ring-inner"><div class="big-number" id="finalScore">0</div><small>dari 100</small></div></div>
+          <h3 id="resultTitle">Hasil kuis</h3>
+          <p id="resultMessage"></p>
+          <button class="primary-btn" id="restartQuiz">Acak &amp; ulangi kuis</button>
+          <button class="secondary-btn" id="backSimulation">Kembali ke simulasi</button>
+          <div class="review" id="reviewBox"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap">Eksplorasi matematika kelas VIII • Gunakan π = 22/7 atau 3,14 sesuai kebutuhan</footer>
+
+  <script>
+    (function () {
+      var navButtons = document.querySelectorAll('.nav-btn');
+      var sections = document.querySelectorAll('.page-section');
+      function showSection(id) {
+        sections.forEach(function (section) { section.classList.toggle('active', section.id === id); });
+        navButtons.forEach(function (button) {
+          var active = button.dataset.section === id;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        document.querySelector('.section-nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      navButtons.forEach(function (button) { button.addEventListener('click', function () { showSection(button.dataset.section); }); });
+
+      var lessonTabs = document.querySelectorAll('.lesson-tab');
+      var lessonPanels = document.querySelectorAll('.lesson-panel');
+      lessonTabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          lessonTabs.forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+          lessonPanels.forEach(function (p) { p.classList.remove('active'); });
+          tab.setAttribute('aria-selected', 'true');
+          document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+        });
+      });
+
+      function formatNumber(n) {
+        return n.toLocaleString('id-ID', { maximumFractionDigits: 2 });
+      }
+      var currentRadius = 7;
+      var radiusRange = document.getElementById('radiusRange');
+      function updateRadius() {
+        var r = Number(radiusRange.value);
+        currentRadius = r;
+        var pi = r % 7 === 0 ? 22 / 7 : 3.14;
+        var piText = r % 7 === 0 ? '22/7' : '3,14';
+        var circ = 2 * pi * r;
+        var area = pi * r * r;
+        var visualR = 72 + (r - 2) * 8;
+        document.getElementById('sizeCircle').setAttribute('r', visualR);
+        document.getElementById('radiusLine').setAttribute('x2', 260 + visualR);
+        document.getElementById('radiusPoint').setAttribute('cx', 260 + visualR);
+        document.getElementById('radiusSvgLabel').setAttribute('x', 260 + visualR / 2);
+        document.getElementById('radiusSvgLabel').textContent = 'r = ' + r + ' cm';
+        document.getElementById('radiusValue').textContent = r + ' cm';
+        document.getElementById('circValue').textContent = formatNumber(circ) + ' cm';
+        document.getElementById('areaValue').textContent = formatNumber(area) + ' cm²';
+        document.getElementById('piChoice').textContent = 'Gunakan π = ' + piText;
+        document.getElementById('calcText').innerHTML = 'K = 2 × ' + piText + ' × ' + r + ' = ' + formatNumber(circ) + ' cm<br>L = ' + piText + ' × ' + r + '² = ' + formatNumber(area) + ' cm²';
+        updateAngle();
+      }
+      radiusRange.addEventListener('input', updateRadius);
+
+      var elementInfo = {
+        'jari-jari': ['Jari-jari', 'Ruas garis dari titik pusat ke satu titik pada lingkaran.'],
+        'diameter': ['Diameter', 'Ruas garis melalui titik pusat yang menghubungkan dua titik pada lingkaran. Panjangnya dua kali jari-jari.'],
+        'busur': ['Busur', 'Bagian lengkung dari keliling lingkaran yang diapit oleh dua titik.'],
+        'tali-busur': ['Tali busur', 'Ruas garis yang menghubungkan dua titik pada lingkaran. Diameter adalah tali busur terpanjang.'],
+        'juring': ['Juring', 'Daerah yang dibatasi oleh dua jari-jari dan satu busur. Bentuknya seperti potongan kue.'],
+        'tembereng': ['Tembereng', 'Daerah yang dibatasi oleh satu tali busur dan busur yang bersesuaian.'],
+        'apotema': ['Apotema', 'Jarak terpendek dari titik pusat ke tali busur; selalu tegak lurus tali busur.']
+      };
+      document.querySelectorAll('.element-btn').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var key = button.dataset.element;
+          document.querySelectorAll('.element-btn').forEach(function (b) { b.classList.toggle('active', b === button); });
+          document.querySelectorAll('.geo-part').forEach(function (part) { part.classList.toggle('active', part.dataset.element === key); });
+          document.getElementById('elementName').textContent = elementInfo[key][0];
+          document.getElementById('elementDescription').textContent = elementInfo[key][1];
+        });
+      });
+
+      var angleRange = document.getElementById('angleRange');
+      function polar(cx, cy, radius, angleDeg) {
+        var rad = angleDeg * Math.PI / 180;
+        return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) };
+      }
+      function updateAngle() {
+        if (!angleRange) return;
+        var theta = Number(angleRange.value);
+        var cx = 250, cy = 205, vr = 150;
+        var aAngle = -90 - theta / 2;
+        var bAngle = -90 + theta / 2;
+        var a = polar(cx, cy, vr, aAngle);
+        var b = polar(cx, cy, vr, bAngle);
+        var p = { x: 250, y: 355 };
+        function setLine(id, p1, p2) {
+          var el = document.getElementById(id);
+          el.setAttribute('x1', p1.x); el.setAttribute('y1', p1.y); el.setAttribute('x2', p2.x); el.setAttribute('y2', p2.y);
+        }
+        setLine('oaLine', {x:cx,y:cy}, a); setLine('obLine', {x:cx,y:cy}, b);
+        setLine('paLine', p, a); setLine('pbLine', p, b);
+        document.getElementById('pointA').setAttribute('cx', a.x); document.getElementById('pointA').setAttribute('cy', a.y);
+        document.getElementById('pointB').setAttribute('cx', b.x); document.getElementById('pointB').setAttribute('cy', b.y);
+        document.getElementById('labelA').setAttribute('x', a.x - 20); document.getElementById('labelA').setAttribute('y', a.y - 8);
+        document.getElementById('labelB').setAttribute('x', b.x + 10); document.getElementById('labelB').setAttribute('y', b.y - 8);
+        var large = theta > 180 ? 1 : 0;
+        var arc = 'M ' + a.x + ' ' + a.y + ' A ' + vr + ' ' + vr + ' 0 ' + large + ' 1 ' + b.x + ' ' + b.y;
+        document.getElementById('arcPath').setAttribute('d', arc);
+        document.getElementById('sectorPath').setAttribute('d', 'M ' + cx + ' ' + cy + ' L ' + a.x + ' ' + a.y + ' A ' + vr + ' ' + vr + ' 0 ' + large + ' 1 ' + b.x + ' ' + b.y + ' Z');
+        document.getElementById('angleValue').textContent = theta + '°';
+        document.getElementById('centralValue').textContent = theta + '°';
+        document.getElementById('inscribedValue').textContent = theta / 2 + '°';
+        document.getElementById('centralLabel').textContent = theta + '°';
+        document.getElementById('inscribedLabel').textContent = theta / 2 + '°';
+        document.getElementById('angleCalc').textContent = '∠APB = ½ × ∠AOB = ' + theta / 2 + '°';
+        var pi = currentRadius % 7 === 0 ? 22 / 7 : 3.14;
+        var arcLength = theta / 360 * 2 * pi * currentRadius;
+        var sectorArea = theta / 360 * pi * currentRadius * currentRadius;
+        document.getElementById('arcLength').textContent = formatNumber(arcLength) + ' cm';
+        document.getElementById('sectorArea').textContent = formatNumber(sectorArea) + ' cm²';
+      }
+      angleRange.addEventListener('input', updateAngle);
+      updateRadius();
+
+      var questionBank = [
+        { topic: 'Keliling', q: 'Sebuah lingkaran berjari-jari 7 cm. Berapa kelilingnya jika π = 22/7?', options: ['44 cm', '22 cm', '154 cm', '49 cm'], answer: '44 cm', explain: 'K = 2πr = 2 × 22/7 × 7 = 44 cm.' },
+        { topic: 'Luas', q: 'Diameter sebuah lingkaran 20 cm. Berapa luasnya jika π = 3,14?', options: ['314 cm²', '62,8 cm²', '1.256 cm²', '31,4 cm²'], answer: '314 cm²', explain: 'Jari-jari = 20 ÷ 2 = 10 cm. L = πr² = 3,14 × 10² = 314 cm².' },
+        { topic: 'Unsur lingkaran', q: 'Ruas garis yang melalui titik pusat dan menghubungkan dua titik pada lingkaran disebut …', options: ['diameter', 'jari-jari', 'apotema', 'busur'], answer: 'diameter', explain: 'Diameter selalu melalui titik pusat dan panjangnya dua kali jari-jari.' },
+        { topic: 'Sudut', q: 'Sudut pusat yang menghadap busur MN adalah 100°. Berapa sudut keliling yang menghadap busur MN yang sama?', options: ['50°', '100°', '200°', '25°'], answer: '50°', explain: 'Sudut keliling yang menghadap busur sama besarnya setengah sudut pusat: ½ × 100° = 50°.' },
+        { topic: 'Sudut', q: 'Sudut keliling yang menghadap busur PQ adalah 37°. Berapa sudut pusat yang menghadap busur yang sama?', options: ['74°', '18,5°', '37°', '111°'], answer: '74°', explain: 'Sudut pusat besarnya dua kali sudut keliling: 2 × 37° = 74°.' },
+        { topic: 'Busur', q: 'Panjang busur dengan sudut pusat 90° pada lingkaran berjari-jari 14 cm adalah … (π = 22/7)', options: ['22 cm', '44 cm', '11 cm', '154 cm'], answer: '22 cm', explain: 'Panjang busur = 90/360 × 2 × 22/7 × 14 = 22 cm.' },
+        { topic: 'Juring', q: 'Luas juring 90° pada lingkaran berjari-jari 14 cm adalah … (π = 22/7)', options: ['154 cm²', '616 cm²', '308 cm²', '44 cm²'], answer: '154 cm²', explain: 'Luas juring = 90/360 × 22/7 × 14² = 154 cm².' },
+        { topic: 'Unsur lingkaran', q: 'Ruas garis yang menghubungkan dua titik pada lingkaran, tetapi tidak harus melalui pusat, disebut …', options: ['tali busur', 'diameter', 'juring', 'apotema'], answer: 'tali busur', explain: 'Tali busur menghubungkan dua titik pada lingkaran. Jika melalui pusat, tali busur itu juga merupakan diameter.' },
+        { topic: 'Unsur lingkaran', q: 'Jarak terpendek dari titik pusat ke sebuah tali busur disebut …', options: ['apotema', 'busur', 'tembereng', 'diameter'], answer: 'apotema', explain: 'Apotema tegak lurus tali busur sehingga menjadi jarak terpendek dari pusat ke tali busur.' },
+        { topic: 'Daerah lingkaran', q: 'Daerah yang dibatasi oleh dua jari-jari dan sebuah busur disebut …', options: ['juring', 'tembereng', 'cakram', 'tali busur'], answer: 'juring', explain: 'Juring dibatasi dua jari-jari dan satu busur; tembereng dibatasi tali busur dan busur.' }
+      ];
+      var quiz = [], current = 0, score = 0, mistakes = [];
+      function shuffle(arr) {
+        var copy = arr.slice();
+        for (var i = copy.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = copy[i]; copy[i] = copy[j]; copy[j] = temp;
+        }
+        return copy;
+      }
+      function startQuiz() {
+        quiz = shuffle(questionBank).map(function (item) {
+          return { topic: item.topic, q: item.q, options: shuffle(item.options), answer: item.answer, explain: item.explain };
+        });
+        current = 0; score = 0; mistakes = [];
+        document.getElementById('quizIntro').style.display = 'none';
+        document.getElementById('resultCard').style.display = 'none';
+        document.getElementById('quizCard').style.display = 'block';
+        renderQuestion();
+      }
+      function renderQuestion() {
+        var item = quiz[current];
+        document.getElementById('quizCounter').textContent = (current + 1) + ' / ' + quiz.length;
+        document.getElementById('progressBar').style.width = ((current + 1) / quiz.length * 100) + '%';
+        document.getElementById('liveScore').textContent = 'Skor ' + score;
+        document.getElementById('questionTopic').textContent = item.topic;
+        document.getElementById('questionText').textContent = item.q;
+        var answers = document.getElementById('answers');
+        answers.innerHTML = '';
+        item.options.forEach(function (option) {
+          var button = document.createElement('button');
+          button.className = 'answer';
+          button.textContent = option;
+          button.addEventListener('click', function () { chooseAnswer(button, option); });
+          answers.appendChild(button);
+        });
+        document.getElementById('feedback').classList.remove('show');
+        document.getElementById('nextRow').classList.remove('show');
+        document.getElementById('nextQuestion').textContent = current === quiz.length - 1 ? 'Lihat nilai akhir' : 'Soal berikutnya';
+      }
+      function chooseAnswer(button, selected) {
+        var item = quiz[current];
+        var correct = selected === item.answer;
+        document.querySelectorAll('.answer').forEach(function (b) {
+          b.disabled = true;
+          if (b.textContent === item.answer) b.classList.add('correct');
+        });
+        if (correct) {
+          score += 10;
+          document.getElementById('feedbackTitle').textContent = 'Tepat!';
+        } else {
+          button.classList.add('wrong');
+          document.getElementById('feedbackTitle').textContent = 'Belum tepat. Jawaban benar: ' + item.answer;
+          mistakes.push({ q: item.q, answer: item.answer });
+        }
+        document.getElementById('feedbackText').textContent = item.explain;
+        document.getElementById('feedback').classList.add('show');
+        document.getElementById('nextRow').classList.add('show');
+        document.getElementById('liveScore').textContent = 'Skor ' + score;
+      }
+      function showResult() {
+        document.getElementById('quizCard').style.display = 'none';
+        document.getElementById('resultCard').style.display = 'block';
+        document.getElementById('finalScore').textContent = score;
+        document.getElementById('scoreRing').style.setProperty('--score-angle', (score / 100 * 360) + 'deg');
+        var title, message;
+        if (score >= 90) { title = 'Hebat, konsepnya kuat!'; message = 'Kamu memahami hampir semua bagian lingkaran dengan sangat baik.'; }
+        else if (score >= 70) { title = 'Bagus, lanjutkan!'; message = 'Pemahamanmu sudah baik. Tinjau kembali soal yang masih keliru.'; }
+        else { title = 'Mari eksplorasi lagi'; message = 'Kembali ke simulasi, coba ubah parameter, lalu ulangi kuis dengan susunan baru.'; }
+        document.getElementById('resultTitle').textContent = title;
+        document.getElementById('resultMessage').textContent = message;
+        var review = document.getElementById('reviewBox');
+        if (mistakes.length) {
+          review.innerHTML = '<h4>Yang perlu ditinjau</h4>' + mistakes.map(function (m) { return '<div class="review-item">' + m.q + '<br><strong>Jawaban: ' + m.answer + '</strong></div>'; }).join('');
+        } else {
+          review.innerHTML = '<h4>Semua jawaban benar</h4><div class="review-item">Kamu berhasil menjawab seluruh soal tanpa kesalahan.</div>';
+        }
+      }
+      document.getElementById('startQuiz').addEventListener('click', startQuiz);
+      document.getElementById('restartQuiz').addEventListener('click', startQuiz);
+      document.getElementById('nextQuestion').addEventListener('click', function () {
+        if (current < quiz.length - 1) { current += 1; renderQuestion(); }
+        else { showResult(); }
+      });
+      document.getElementById('backSimulation').addEventListener('click', function () { showSection('simulasi'); });
+    }());
+  </script>
+</body>
+</html>

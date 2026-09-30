@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <title>Media Interaktif PLSV dan PtLSV</title>
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#f6f7f2;--paper:#ffffff;--ink:#172724;--muted:#51625f;--line:#d7dfdc;
+      --teal:#087f73;--teal-2:#dff4ee;--orange:#ef7b2d;--orange-2:#fff0dc;
+      --blue:#296ba8;--blue-2:#e5f1fb;--yellow:#f5c451;--yellow-2:#fff7d7;
+      --red:#c94d44;--red-2:#ffe8e5;--shadow:0 12px 34px rgba(24,49,44,.10);
+      --radius:18px;--radius-sm:11px;
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--bg:#101917;--paper:#182522;--ink:#edf6f2;--muted:#a9bbb5;--line:#334640;
+      --teal:#58c9b9;--teal-2:#173a34;--orange:#ff9a55;--orange-2:#3d2b1c;--blue:#78b5e7;
+      --blue-2:#1b3447;--yellow:#f6d36f;--yellow-2:#3c351e;--red:#ff8f86;--red-2:#472522;
+      --shadow:0 15px 38px rgba(0,0,0,.24)}
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",sans-serif;font-size:17px;line-height:1.55}
+    button,input,select{font:inherit}button{cursor:pointer}.wrap{width:min(1120px,calc(100% - 32px));margin:auto}
+    .hero{padding:clamp(28px,5vw,64px) 0 28px}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:36px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--teal);font-weight:800;background:var(--teal-2);padding:7px 11px;border-radius:999px;font-size:.88rem}.eyebrow svg{width:18px}
+    h1,h2,h3{font-family:Nunito,sans-serif;line-height:1.13;margin:0}h1{font-size:clamp(2.25rem,5.5vw,4.5rem);letter-spacing:-.045em;margin-top:16px;max-width:760px}h1 span{color:var(--orange)}
+    .lead{font-size:clamp(1.04rem,2vw,1.25rem);color:var(--muted);max-width:660px;margin:18px 0 24px}
+    .hero-actions,.toolbar,.action-row{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:transform .16s,background .16s;color:#fff;background:var(--teal)}.btn:hover{transform:translateY(-1px)}.btn:focus-visible,.choice:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}.btn.secondary{background:var(--paper);border:1px solid var(--line);color:var(--ink)}.btn.orange{background:var(--orange)}.btn.blue{background:var(--blue)}.btn.small{padding:8px 12px;font-size:.92rem}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+    .hero-visual{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:26px;padding:24px;position:relative;overflow:hidden;min-height:310px}.hero-visual:before{content:"";position:absolute;inset:0;background:linear-gradient(140deg,var(--yellow-2),transparent 42%);pointer-events:none}.mini-board{position:relative;z-index:1}.equation-large{font-family:Nunito,sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;text-align:center;padding:16px 0 22px}.equal-badge{color:var(--orange)}
+    .mini-scale{height:150px;position:relative}.beam{position:absolute;top:45px;left:9%;right:9%;height:8px;border-radius:4px;background:var(--ink)}.beam:before{content:"";position:absolute;width:8px;height:42px;background:var(--ink);left:15%;top:2px}.beam:after{content:"";position:absolute;width:8px;height:42px;background:var(--ink);right:15%;top:2px}.pivot{position:absolute;top:50px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:42px solid transparent;border-right:42px solid transparent;border-bottom:75px solid var(--teal)}.tray{position:absolute;top:84px;width:34%;height:18px;border:4px solid var(--orange);border-top:0;border-radius:0 0 50% 50%;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px;font-family:Nunito;font-weight:900}.tray.left{left:0}.tray.right{right:0}
+    .quick-nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);border-block:1px solid var(--line)}.nav-row{display:flex;gap:6px;overflow:auto;padding:9px 0;scrollbar-width:none}.nav-row::-webkit-scrollbar{display:none}.nav-link{white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:800;padding:8px 12px;border-radius:9px}.nav-link:hover{background:var(--paper);color:var(--ink)}
+    section{padding:clamp(42px,7vw,82px) 0;scroll-margin-top:55px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:26px}.section-head p{margin:8px 0 0;color:var(--muted);max-width:680px}.section-num{font-family:Nunito;font-size:.9rem;font-weight:900;color:var(--orange)}h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.025em}h3{font-size:1.25rem}
+    .concepts{display:grid;grid-template-columns:1fr 1fr;gap:18px}.concept{padding:24px;border-radius:var(--radius);position:relative;overflow:hidden}.concept.eq{background:var(--teal-2)}.concept.ineq{background:var(--orange-2)}.concept h3{font-size:1.45rem;margin-bottom:8px}.concept p{margin:0 0 14px;color:var(--muted)}.formula{display:inline-block;background:var(--paper);border:1px solid var(--line);padding:10px 15px;border-radius:9px;font-family:Nunito,sans-serif;font-weight:900;font-size:1.12rem}.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.rule{background:var(--paper);border:1px solid var(--line);padding:14px;border-radius:12px}.rule strong{display:block;font-family:Nunito;margin-bottom:3px}.rule span{font-size:.94rem;color:var(--muted)}
+    .workspace{background:var(--paper);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.workspace-top{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;align-items:center}.workspace-top p{margin:4px 0 0;color:var(--muted);font-size:.96rem}.workspace-body{padding:22px}
+    .balance-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:stretch}.balance-stage{background:var(--yellow-2);border-radius:16px;min-height:380px;padding:20px;position:relative;overflow:hidden}.balance-readout{text-align:center;font-family:Nunito;font-weight:900;font-size:clamp(1.6rem,4vw,2.3rem)}.balance-readout small{display:block;font-family:"Atkinson Hyperlegible";font-size:.9rem;font-weight:700;color:var(--muted)}
+    .scale-live{height:270px;position:relative;margin-top:8px}.scale-beam{position:absolute;left:7%;right:7%;top:63px;height:9px;border-radius:9px;background:var(--ink);transition:transform .35s}.scale-beam:before,.scale-beam:after{content:"";position:absolute;top:0;width:4px;height:55px;background:var(--ink)}.scale-beam:before{left:15%}.scale-beam:after{right:15%}.scale-pan{position:absolute;top:54px;width:36%;height:115px;border:4px solid var(--orange);border-top:0;border-radius:0 0 55% 55%;display:flex;align-content:flex-end;justify-content:center;gap:5px;flex-wrap:wrap;padding:38px 10px 12px}.scale-pan.left{left:0}.scale-pan.right{right:0}.scale-base{position:absolute;top:70px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:52px solid transparent;border-right:52px solid transparent;border-bottom:108px solid var(--teal)}.scale-foot{position:absolute;top:170px;left:33%;right:33%;height:12px;background:var(--teal);border-radius:12px}.x-block{background:var(--blue);color:#fff;border-radius:6px;padding:4px 9px;font-weight:900;font-family:Nunito}.unit{width:23px;height:23px;background:var(--yellow);border:2px solid color-mix(in srgb,var(--yellow) 70%,#000);border-radius:50%;font-size:.76rem;color:#2c260e;display:grid;place-items:center;font-weight:900}.unit.neg{background:var(--red);border-color:var(--red);color:#fff}.empty-pan{font-size:.85rem;color:var(--muted)}
+    .controls{display:flex;flex-direction:column;gap:15px}.control-card{border:1px solid var(--line);border-radius:14px;padding:16px}.control-card h3{font-size:1.06rem;margin-bottom:10px}.op-line{display:grid;grid-template-columns:1fr auto;gap:9px}.op-line input,.field input,.field select{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:9px;padding:10px 11px}.hint{font-size:.91rem;color:var(--muted);margin:8px 0 0}.status{padding:12px 14px;border-radius:10px;background:var(--teal-2);color:var(--ink);font-weight:700}.status.warn{background:var(--red-2)}
+    .solver-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:22px}.form-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center}.field label{display:block;font-weight:800;font-size:.88rem;margin-bottom:5px;color:var(--muted)}.operator{padding-top:24px;font-family:Nunito;font-weight:900;font-size:1.35rem}.steps{display:flex;flex-direction:column;gap:9px;min-height:180px}.step{display:grid;grid-template-columns:32px 1fr;gap:11px;align-items:start;padding:12px;background:var(--bg);border-radius:11px;border:1px solid var(--line)}.step-n{width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:900}.step strong{display:block;font-family:Nunito}.step span{color:var(--muted)}.empty{height:100%;min-height:170px;display:grid;place-items:center;text-align:center;color:var(--muted);border:2px dashed var(--line);border-radius:13px;padding:20px}
+    .ineq-layout{display:grid;grid-template-columns:.78fr 1.22fr;gap:22px}.ineq-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field.wide{grid-column:1/-1}.number-card{background:var(--blue-2);border-radius:16px;padding:20px}.inequality-result{text-align:center;font-family:Nunito;font-size:1.45rem;font-weight:900;margin-bottom:12px}.line-wrap{overflow:hidden}.line-wrap svg{width:100%;height:auto;display:block}.legend{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;margin-top:7px}.dot-open,.dot-closed{width:14px;height:14px;border-radius:50%;border:3px solid var(--orange);display:inline-block;vertical-align:-2px;margin-right:4px}.dot-closed{background:var(--orange)}.explain-box{margin-top:14px;padding:13px 15px;background:var(--paper);border:1px solid var(--line);border-radius:11px}
+    .story{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.story-card{background:var(--paper);border:1px solid var(--line);padding:22px;border-radius:var(--radius)}.story-card.main{background:var(--yellow-2);border:0}.story-card ol{padding-left:22px;margin:12px 0 0}.story-card li{margin-bottom:8px}.example-flow{display:grid;gap:8px}.flow-row{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:center}.flow-row b{width:32px;height:32px;background:var(--orange);color:#fff;border-radius:9px;display:grid;place-items:center}.flow-row span{background:var(--paper);padding:10px 12px;border-radius:10px;border:1px solid var(--line)}
+    .quiz-shell{display:grid;grid-template-columns:240px 1fr;min-height:470px}.quiz-side{padding:22px;background:var(--ink);color:var(--bg)}.quiz-side h3{font-size:1.35rem}.score-big{font-family:Nunito;font-size:2.5rem;font-weight:900;color:var(--yellow);margin:10px 0}.progress-track{height:9px;background:color-mix(in srgb,var(--bg) 18%,transparent);border-radius:20px;overflow:hidden;margin:12px 0}.progress-bar{height:100%;width:0;background:var(--yellow);transition:width .3s}.quiz-dots{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:18px}.qdot{aspect-ratio:1;border-radius:7px;display:grid;place-items:center;background:color-mix(in srgb,var(--bg) 12%,transparent);font-weight:900;font-size:.82rem}.qdot.done{background:var(--teal);color:#fff}.qdot.wrong{background:var(--red);color:#fff}.quiz-main{padding:clamp(22px,4vw,38px)}.qtype{color:var(--orange);font-weight:900;font-family:Nunito}.question{font-family:Nunito;font-size:clamp(1.35rem,3vw,1.8rem);font-weight:800;line-height:1.3;margin:8px 0 20px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:11px}.choice{border:1px solid var(--line);background:var(--bg);color:var(--ink);text-align:left;border-radius:12px;padding:13px 15px;font-weight:800;transition:border-color .16s,background .16s}.choice:hover:not(:disabled){border-color:var(--teal);background:var(--teal-2)}.choice.correct{background:var(--teal-2);border-color:var(--teal)}.choice.incorrect{background:var(--red-2);border-color:var(--red)}.feedback{margin-top:16px;padding:15px;border-radius:12px;background:var(--blue-2);display:none}.feedback.show{display:block}.feedback strong{font-family:Nunito;display:block}.quiz-actions{margin-top:16px}.result{text-align:center;padding:20px}.result .medal{width:90px;height:90px;border-radius:50%;display:grid;place-items:center;margin:0 auto 14px;background:var(--yellow-2);border:6px solid var(--yellow);font-family:Nunito;font-size:2rem;font-weight:900}.result h3{font-size:2rem}.result p{color:var(--muted);max-width:520px;margin:10px auto 20px}
+    .footer-note{padding:26px 0 46px;color:var(--muted);text-align:center;border-top:1px solid var(--line)}
+    @media(max-width:820px){.hero-grid,.balance-layout,.solver-layout,.ineq-layout,.story{grid-template-columns:1fr}.hero-visual{min-height:275px}.concepts{grid-template-columns:1fr}.rules{grid-template-columns:1fr 1fr}.quiz-shell{grid-template-columns:1fr}.quiz-side{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 16px}.quiz-side .score-big{grid-row:1/3;grid-column:2}.quiz-side .progress-track,.quiz-side .quiz-dots{grid-column:1/-1}.quiz-side p{margin:0}.quiz-dots{grid-template-columns:repeat(10,1fr)}.workspace-top{align-items:flex-start;flex-direction:column}.scale-live{height:240px}}
+    @media(max-width:560px){body{font-size:16px}.wrap{width:min(100% - 20px,1120px)}.hero{padding-top:24px}.hero-grid{gap:24px}.hero-visual{padding:16px;min-height:250px}.mini-scale{height:125px}.pivot{border-left-width:34px;border-right-width:34px;border-bottom-width:62px}.tray{font-size:.8rem}.section-head{align-items:start;flex-direction:column}.rules{grid-template-columns:1fr}.workspace-body{padding:14px}.balance-stage{padding:14px;min-height:345px}.scale-live{height:245px}.scale-pan{width:39%;padding-inline:5px}.scale-pan.left{left:-2%}.scale-pan.right{right:-2%}.x-block{font-size:.85rem;padding:3px 6px}.unit{width:19px;height:19px;font-size:.65rem}.form-grid{grid-template-columns:1fr 1fr 1fr}.operator{display:none}.ineq-form{grid-template-columns:1fr 1fr}.choices{grid-template-columns:1fr}.quiz-main{padding:20px 15px}.quiz-dots{gap:4px}.qdot{border-radius:5px}.hero-actions .btn{flex:1}.nav-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;overflow:visible}.nav-link{padding:6px 4px;text-align:center;font-size:.82rem;white-space:normal}.op-line{grid-template-columns:1fr}.btn{min-height:44px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19h16M12 4v13M6 8h12M7 8l-3 6h6L7 8Zm10 0-3 6h6l-3-6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Matematika Kelas VII</div>
+      <h1>Satu variabel,<br><span>banyak cara berpikir.</span></h1>
+      <p class="lead">Pelajari persamaan dan pertidaksamaan melalui neraca, penyelesaian bertahap, garis bilangan, dan kuis yang langsung memberi pembahasan.</p>
+      <div class="hero-actions"><a class="btn" href="#neraca">Mulai simulasi</a><a class="btn secondary" href="#kuis">Langsung ke kuis</a></div>
+    </div>
+    <div class="hero-visual" aria-label="Ilustrasi neraca seimbang untuk persamaan dua x ditambah empat sama dengan dua belas">
+      <div class="mini-board">
+        <div class="equation-large">2x + 4 <span class="equal-badge">=</span> 12</div>
+        <div class="mini-scale"><div class="beam"></div><div class="pivot"></div><div class="tray left">2x + 4</div><div class="tray right">12</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+<nav class="quick-nav" aria-label="Navigasi materi"><div class="wrap nav-row"><a class="nav-link" href="#materi">Konsep</a><a class="nav-link" href="#neraca">Neraca</a><a class="nav-link" href="#penyelesai">Langkah PLSV</a><a class="nav-link" href="#garis">Garis bilangan</a><a class="nav-link" href="#cerita">Soal cerita</a><a class="nav-link" href="#kuis">Kuis 10 soal</a></div></nav>
+<main id="materi">
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><span class="section-num">DASAR PEMIKIRAN</span><h2>Kenali dua bentuk linear</h2><p>Keduanya hanya memuat satu variabel berpangkat satu. Bedanya terletak pada tanda hubungan dan bentuk jawabannya.</p></div></div>
+      <div class="concepts">
+        <article class="concept eq"><h3>Persamaan Linear Satu Variabel</h3><p>Kalimat terbuka dengan tanda sama dengan. Nilai variabel membuat ruas kiri dan kanan bernilai sama.</p><span class="formula">ax + b = c, &nbsp;a ≠ 0</span></article>
+        <article class="concept ineq"><h3>Pertidaksamaan Linear Satu Variabel</h3><p>Kalimat terbuka dengan tanda &lt;, &gt;, ≤, atau ≥. Jawabannya biasanya berupa sekumpulan nilai.</p><span class="formula">ax + b &lt; c, &nbsp;a ≠ 0</span></article>
+      </div>
+      <div class="rules">
+        <div class="rule"><strong>Jaga kedua ruas</strong><span>Lakukan operasi yang sama pada ruas kiri dan kanan.</span></div>
+        <div class="rule"><strong>Tujuan: variabel sendiri</strong><span>Singkirkan konstanta, lalu koefisiennya.</span></div>
+        <div class="rule"><strong>Ingat tanda berbalik</strong><span>Jika PtLSV dikali atau dibagi bilangan negatif.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="neraca">
+    <div class="wrap">
+      <div class="section-head"><div><span class="section-num">SIMULASI 1</span><h2>Neraca kesetaraan</h2><p>Persamaan ibarat neraca seimbang. Tambah atau kurangi kedua ruas dengan bilangan yang sama, lalu sederhanakan sampai nilai x terlihat.</p></div></div>
+      <div class="workspace">
+        <div class="workspace-top"><div><h3>Mulai dari 2x + 4 = 12</h3><p>Setiap balok biru bernilai x dan setiap bulatan bernilai 1.</p></div><button class="btn secondary small" id="resetBalance">Ulangi</button></div>
+        <div class="workspace-body balance-layout">
+          <div class="balance-stage">
+            <div class="balance-readout" id="balanceEquation">2x + 4 = 12<small>Kedua ruas tetap seimbang saat x = 4</small></div>
+            <div class="scale-live" aria-live="polite"><div class="scale-beam"></div><div class="scale-base"></div><div class="scale-foot"></div><div class="scale-pan left" id="leftPan"></div><div class="scale-pan right" id="rightPan"></div></div>
+          </div>
+          <div class="controls">
+            <div class="control-card"><h3>Tambah atau kurangi kedua ruas</h3><div class="op-line"><input id="balanceDelta" type="number" min="-12" max="12" value="-4" aria-label="Bilangan yang ditambahkan ke kedua ruas"><button class="btn orange" id="applyDelta">Terapkan</button></div><p class="hint">Gunakan bilangan negatif untuk mengurangi. Contoh: −4 berarti kurangi 4 dari kedua ruas.</p></div>
+            <div class="control-card"><h3>Bagi kedua ruas</h3><div class="op-line"><input id="balanceDiv" type="number" min="2" max="12" value="2" aria-label="Pembagi kedua ruas"><button class="btn blue" id="applyDiv">Bagi</button></div><p class="hint">Pembagian hanya dapat dilakukan jika semua suku habis dibagi.</p></div>
+            <div class="status" id="balanceStatus" role="status">Coba kurangi kedua ruas dengan 4.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="penyelesai">
+    <div class="wrap">
+      <div class="section-head"><div><span class="section-num">SIMULASI 2</span><h2>Penyelesai PLSV langkah demi langkah</h2><p>Masukkan persamaan berbentuk ax + b = c. Buka satu langkah pada satu waktu dan amati alasan di balik setiap operasi.</p></div></div>
+      <div class="workspace"><div class="workspace-body solver-layout">
+        <div>
+          <div class="form-grid">
+            <div class="field"><label for="coefA">Koefisien a</label><input id="coefA" type="number" value="3"></div><div class="operator">x +</div>
+            <div class="field"><label for="coefB">Konstanta b</label><input id="coefB" type="number" value="5"></div><div class="operator">=</div>
+            <div class="field"><label for="coefC">Hasil c</label><input id="coefC" type="number" value="20"></div>
+          </div>
+          <div class="action-row" style="margin-top:14px"><button class="btn" id="prepareSolver">Siapkan langkah</button><button class="btn secondary" id="nextStep" disabled>Langkah berikutnya</button></div>
+          <p class="hint">Syarat: a tidak boleh 0. Hasil desimal akan ditampilkan hingga dua angka di belakang koma.</p>
+        </div>
+        <div class="steps" id="solverSteps"><div class="empty">Masukkan persamaan, lalu tekan <strong>Siapkan langkah</strong>.</div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <section id="garis">
+    <div class="wrap">
+      <div class="section-head"><div><span class="section-num">SIMULASI 3</span><h2>PtLSV di garis bilangan</h2><p>Atur pertidaksamaan ax + b ? c. Titik kosong berarti batas tidak ikut; titik penuh berarti batas ikut.</p></div></div>
+      <div class="workspace"><div class="workspace-body ineq-layout">
+        <div>
+          <div class="ineq-form">
+            <div class="field"><label for="ineqA">Koefisien a</label><input id="ineqA" type="number" value="2"></div>
+            <div class="field"><label for="ineqB">Konstanta b</label><input id="ineqB" type="number" value="3"></div>
+            <div class="field"><label for="ineqSign">Tanda</label><select id="ineqSign"><option value="<">&lt;</option><option value="<=">≤</option><option value=">">&gt;</option><option value=">=">≥</option></select></div>
+            <div class="field"><label for="ineqC">Nilai c</label><input id="ineqC" type="number" value="11"></div>
+            <div class="field wide"><button class="btn orange" id="drawIneq" style="width:100%">Tampilkan himpunan penyelesaian</button></div>
+          </div>
+          <p class="hint">Contoh saat ini: 2x + 3 &lt; 11. Coba ubah a menjadi negatif untuk melihat tanda berbalik.</p>
+        </div>
+        <div class="number-card">
+          <div class="inequality-result" id="ineqResult">x &lt; 4</div>
+          <div class="line-wrap" id="numberLine" aria-live="polite"></div>
+          <div class="legend"><span><i class="dot-open"></i>batas tidak termasuk</span><span><i class="dot-closed"></i>batas termasuk</span></div>
+          <div class="explain-box" id="ineqExplain">Kurangi kedua ruas dengan 3: 2x &lt; 8. Bagi kedua ruas dengan 2: x &lt; 4.</div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <section id="cerita">
+    <div class="wrap">
+      <div class="section-head"><div><span class="section-num">PENERAPAN</span><h2>Dari cerita menjadi model matematika</h2><p>Cari hal yang belum diketahui, ubah hubungan dalam cerita menjadi kalimat matematika, lalu selesaikan dan periksa maknanya.</p></div></div>
+      <div class="story">
+        <article class="story-card main"><h3>Contoh: biaya sewa sepeda</h3><p>Biaya awal sewa sepeda Rp5.000 dan biaya tiap jam Rp8.000. Dita membayar Rp29.000. Berapa jam Dita menyewa?</p><div class="example-flow"><div class="flow-row"><b>1</b><span>Misalkan lama sewa = x jam.</span></div><div class="flow-row"><b>2</b><span>Model: 8.000x + 5.000 = 29.000</span></div><div class="flow-row"><b>3</b><span>8.000x = 24.000, sehingga x = 3.</span></div><div class="flow-row"><b>4</b><span>Jadi, Dita menyewa sepeda selama <strong>3 jam</strong>.</span></div></div></article>
+        <article class="story-card"><h3>Empat langkah andal</h3><ol><li><strong>Tentukan variabel</strong> dan satuannya.</li><li><strong>Temukan kata kunci</strong>: jumlah, selisih, paling banyak, minimal.</li><li><strong>Buat model</strong> PLSV atau PtLSV.</li><li><strong>Periksa jawaban</strong> terhadap konteks cerita.</li></ol><div class="status" style="margin-top:14px">“Paling banyak” → ≤ &nbsp; • &nbsp; “sedikitnya” → ≥</div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="kuis">
+    <div class="wrap">
+      <div class="section-head"><div><span class="section-num">UJI PEMAHAMAN</span><h2>Kuis 10 soal</h2><p>Pilih satu jawaban. Setelah menjawab, pembahasan akan muncul sebelum kamu lanjut ke soal berikutnya.</p></div></div>
+      <div class="workspace quiz-shell">
+        <aside class="quiz-side"><div><h3>Perjalanan kuis</h3><p id="quizCount">Soal 1 dari 10</p></div><div class="score-big" id="scoreBig">0</div><div class="progress-track"><div class="progress-bar" id="progressBar"></div></div><div class="quiz-dots" id="quizDots"></div></aside>
+        <div class="quiz-main" id="quizMain"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer-note"><div class="wrap">Belajar matematika berarti menjaga keseimbangan, membaca tanda, dan menjelaskan alasan.</div></footer>
+<script>
+(function(){
+  'use strict';
+  function fmt(n){if(Math.abs(n-Math.round(n))<1e-9)return String(Math.round(n));return Number(n.toFixed(2)).toString().replace('.',',')}
+  function term(x,c){var parts=[];if(x!==0){if(x===1)parts.push('x');else if(x===-1)parts.push('−x');else parts.push(fmt(x)+'x')}if(c!==0){var abs=fmt(Math.abs(c));if(parts.length)parts.push(c>0?' + '+abs:' − '+abs);else parts.push(c>0?abs:'−'+abs)}return parts.length?parts.join(''):'0'}
+  function tokens(el,x,c){el.innerHTML='';for(var i=0;i<Math.abs(x);i++){var xb=document.createElement('span');xb.className='x-block';xb.textContent=x<0?'−x':'x';el.appendChild(xb)}for(var j=0;j<Math.min(Math.abs(c),16);j++){var u=document.createElement('span');u.className='unit'+(c<0?' neg':'');u.textContent=c<0?'−':'1';el.appendChild(u)}if(Math.abs(c)>16){var more=document.createElement('span');more.className='unit';more.textContent='+'+(Math.abs(c)-16);el.appendChild(more)}if(x===0&&c===0){var e=document.createElement('span');e.className='empty-pan';e.textContent='0';el.appendChild(e)}}
+  var bal={lx:2,lc:4,rx:0,rc:12};
+  function renderBalance(msg,warn){document.getElementById('balanceEquation').innerHTML=term(bal.lx,bal.lc)+' = '+term(bal.rx,bal.rc)+'<small>Kedua ruas tetap seimbang saat x = 4</small>';tokens(document.getElementById('leftPan'),bal.lx,bal.lc);tokens(document.getElementById('rightPan'),bal.rx,bal.rc);var s=document.getElementById('balanceStatus');s.textContent=msg||'Neraca tetap seimbang.';s.className='status'+(warn?' warn':'')}
+  document.getElementById('applyDelta').addEventListener('click',function(){var d=Number(document.getElementById('balanceDelta').value);if(!Number.isFinite(d)||Math.abs(d)>12){renderBalance('Masukkan bilangan antara −12 dan 12.',true);return}bal.lc+=d;bal.rc+=d;renderBalance((d>=0?'Menambah ':'Mengurangi ')+fmt(Math.abs(d))+' pada kedua ruas. Neraca tetap seimbang.')});
+  document.getElementById('applyDiv').addEventListener('click',function(){var d=Number(document.getElementById('balanceDiv').value);if(!Number.isInteger(d)||d<2){renderBalance('Pembagi harus bilangan bulat minimal 2.',true);return}if([bal.lx,bal.lc,bal.rx,bal.rc].some(function(v){return v%d!==0})){renderBalance('Belum semua suku habis dibagi '+d+'. Sederhanakan konstanta terlebih dahulu.',true);return}bal.lx/=d;bal.lc/=d;bal.rx/=d;bal.rc/=d;renderBalance('Membagi kedua ruas dengan '+d+'.'+(Math.abs(bal.lx-bal.rx)===1&&bal.lc===bal.rc?' Nilai x sudah terlihat!':''))});
+  document.getElementById('resetBalance').addEventListener('click',function(){bal={lx:2,lc:4,rx:0,rc:12};document.getElementById('balanceDelta').value=-4;document.getElementById('balanceDiv').value=2;renderBalance('Coba kurangi kedua ruas dengan 4.')});renderBalance('Coba kurangi kedua ruas dengan 4.');
+
+  var solverData=[],solverIndex=0;
+  function buildSolver(){var a=Number(document.getElementById('coefA').value),b=Number(document.getElementById('coefB').value),c=Number(document.getElementById('coefC').value),box=document.getElementById('solverSteps');if(!Number.isFinite(a)||!Number.isFinite(b)||!Number.isFinite(c)||a===0){box.innerHTML='<div class="status warn">Koefisien a harus berupa bilangan dan tidak boleh 0.</div>';document.getElementById('nextStep').disabled=true;return}var after=c-b,x=after/a;solverData=[{title:'Persamaan awal',desc:term(a,b)+' = '+fmt(c)},{title:(b>=0?'Kurangi ':'Tambah ')+fmt(Math.abs(b))+' pada kedua ruas',desc:term(a,0)+' = '+fmt(after)},{title:'Bagi kedua ruas dengan '+fmt(a),desc:'x = '+fmt(x)},{title:'Periksa jawaban',desc:term(a,b).replace('x','('+fmt(x)+')')+' = '+fmt(c)+' ✓'}];solverIndex=0;box.innerHTML='';document.getElementById('nextStep').disabled=false;showStep()}
+  function showStep(){if(solverIndex>=solverData.length){document.getElementById('nextStep').disabled=true;return}var d=solverData[solverIndex],el=document.createElement('div');el.className='step';el.innerHTML='<div class="step-n">'+(solverIndex+1)+'</div><div><strong>'+d.title+'</strong><span>'+d.desc+'</span></div>';document.getElementById('solverSteps').appendChild(el);solverIndex++;document.getElementById('nextStep').textContent=solverIndex===solverData.length?'Semua langkah terbuka':'Langkah berikutnya';if(solverIndex===solverData.length)document.getElementById('nextStep').disabled=true}
+  document.getElementById('prepareSolver').addEventListener('click',buildSolver);document.getElementById('nextStep').addEventListener('click',showStep);
+
+  function escSign(s){return s==='<'?'&lt;':s==='>'?'&gt;':s==='>='?'≥':'≤'}
+  function flip(s){return {'<':'>','>':'<','<=':'>=','>=':'<='}[s]}
+  function drawIneq(){var a=Number(document.getElementById('ineqA').value),b=Number(document.getElementById('ineqB').value),c=Number(document.getElementById('ineqC').value),sign=document.getElementById('ineqSign').value;if(!Number.isFinite(a)||!Number.isFinite(b)||!Number.isFinite(c)||a===0){document.getElementById('ineqExplain').innerHTML='<span style="color:var(--red)">Koefisien a harus berupa bilangan dan tidak boleh 0.</span>';return}var rhs=c-b,finalSign=a<0?flip(sign):sign,bound=rhs/a,included=finalSign.indexOf('=')>-1,right=finalSign.charAt(0)==='>';document.getElementById('ineqResult').innerHTML='x '+escSign(finalSign)+' '+fmt(bound);var low=Math.floor(bound)-5,high=Math.ceil(bound)+5,range=high-low;function px(v){return 45+(v-low)/range*510}var ticks='';for(var i=low;i<=high;i++){ticks+='<line x1="'+px(i)+'" y1="76" x2="'+px(i)+'" y2="88" stroke="currentColor" stroke-width="2"/><text x="'+px(i)+'" y="111" text-anchor="middle" fill="currentColor" font-size="14">'+i+'</text>'}var bx=px(bound),start=right?bx:32,end=right?568:bx,arrow=right?'568,76 552,67 552,85':'32,76 48,67 48,85';var dot=included?'<circle cx="'+bx+'" cy="76" r="8" fill="var(--orange)" stroke="var(--orange)" stroke-width="4"/>':'<circle cx="'+bx+'" cy="76" r="8" fill="var(--blue-2)" stroke="var(--orange)" stroke-width="4"/>';document.getElementById('numberLine').innerHTML='<svg viewBox="0 0 600 125" role="img" aria-label="Garis bilangan untuk x '+finalSign+' '+fmt(bound)+'"><line x1="32" y1="76" x2="568" y2="76" stroke="currentColor" stroke-width="3"/>'+ticks+'<line x1="'+start+'" y1="76" x2="'+end+'" y2="76" stroke="var(--orange)" stroke-width="7"/><polygon points="'+arrow+'" fill="var(--orange)"/>'+dot+'</svg>';var op1=(b>=0?'Kurangi ':'Tambah ')+fmt(Math.abs(b))+' pada kedua ruas: '+fmt(a)+'x '+escSign(sign)+' '+fmt(rhs)+'. ';var op2='Bagi kedua ruas dengan '+fmt(a)+': x '+escSign(finalSign)+' '+fmt(bound)+'.';if(a<0)op2+=' Karena dibagi bilangan negatif, tanda pertidaksamaan dibalik.';document.getElementById('ineqExplain').innerHTML=op1+op2}
+  document.getElementById('drawIneq').addEventListener('click',drawIneq);drawIneq();
+
+  var questions=[
+    {t:'PLSV',q:'Nilai x yang memenuhi 3x + 5 = 20 adalah …',o:['3','5','7','15'],a:1,e:'Kurangi kedua ruas dengan 5: 3x = 15. Bagi 3, sehingga x = 5.'},
+    {t:'PLSV',q:'Penyelesaian dari 4x − 7 = 13 adalah …',o:['4','5','6','20'],a:1,e:'Tambah kedua ruas dengan 7: 4x = 20. Maka x = 5.'},
+    {t:'PLSV',q:'Jika 5 − 2x = 11, nilai x adalah …',o:['−8','−3','3','8'],a:1,e:'Kurangi kedua ruas dengan 5: −2x = 6. Bagi dengan −2, diperoleh x = −3.'},
+    {t:'PLSV',q:'Persamaan yang memiliki penyelesaian x = 6 adalah …',o:['2x + 1 = 11','3x − 4 = 14','4x + 2 = 22','5x − 5 = 20'],a:1,e:'Substitusi x = 6: 3(6) − 4 = 18 − 4 = 14, sehingga persamaan benar.'},
+    {t:'PtLSV',q:'Himpunan penyelesaian 2x + 3 < 11 adalah …',o:['x < 4','x > 4','x ≤ 7','x ≥ 7'],a:0,e:'2x < 8, lalu bagi dengan 2. Diperoleh x < 4.'},
+    {t:'PtLSV',q:'Penyelesaian −3x ≥ 12 adalah …',o:['x ≥ −4','x ≤ −4','x ≥ 4','x ≤ 4'],a:1,e:'Bagi kedua ruas dengan −3. Karena pembaginya negatif, tanda ≥ berbalik menjadi ≤. Jadi x ≤ −4.'},
+    {t:'PtLSV',q:'Manakah bilangan yang memenuhi 4x − 1 > 11?',o:['2','3','4','−4'],a:2,e:'4x > 12 sehingga x > 3. Dari pilihan yang tersedia, 4 memenuhi.'},
+    {t:'Soal cerita',q:'Jumlah suatu bilangan dan 9 adalah 25. Bilangan itu adalah …',o:['14','16','25','34'],a:1,e:'Misalkan bilangan itu x. Modelnya x + 9 = 25, sehingga x = 16.'},
+    {t:'Soal cerita',q:'Tiket masuk Rp5.000 dan setiap permainan Rp3.000. Jika total Rp20.000, banyak permainan adalah …',o:['3','4','5','6'],a:2,e:'Model: 5.000 + 3.000x = 20.000. Jadi 3.000x = 15.000 dan x = 5 permainan.'},
+    {t:'Soal cerita',q:'Sebuah lift memuat paling banyak 600 kg. Jika sudah ada 420 kg dan tiap kotak 30 kg, kotak yang dapat ditambah paling banyak …',o:['5 kotak','6 kotak','7 kotak','8 kotak'],a:1,e:'Model: 420 + 30x ≤ 600. Maka 30x ≤ 180, sehingga x ≤ 6. Paling banyak 6 kotak.'}
+  ];
+  function shuffleArray(items){for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=items[i];items[i]=items[j];items[j]=tmp}return items}
+  function shuffleQuiz(){shuffleArray(questions);questions.forEach(function(q){var choices=q.o.map(function(text,index){return {text:text,correct:index===q.a}});shuffleArray(choices);q.o=choices.map(function(choice){return choice.text});q.a=choices.findIndex(function(choice){return choice.correct})})}
+  shuffleQuiz();
+  var qi=0,score=0,answered=false,marks=[];
+  function renderDots(){var box=document.getElementById('quizDots');box.innerHTML='';questions.forEach(function(_,i){var d=document.createElement('div');d.className='qdot'+(marks[i]===true?' done':marks[i]===false?' wrong':'');d.textContent=i+1;box.appendChild(d)})}
+  function renderQuiz(){var main=document.getElementById('quizMain');document.getElementById('scoreBig').textContent=score;document.getElementById('quizCount').textContent='Soal '+(qi+1)+' dari '+questions.length;document.getElementById('progressBar').style.width=(qi/questions.length*100)+'%';renderDots();if(qi>=questions.length){finishQuiz();return}var q=questions[qi];main.innerHTML='<div class="qtype">'+q.t+'</div><div class="question">'+q.q+'</div><div class="choices">'+q.o.map(function(o,i){return '<button class="choice" data-index="'+i+'">'+o+'</button>'}).join('')+'</div><div class="feedback" id="feedback"></div><div class="quiz-actions"><button class="btn" id="nextQuestion" disabled>'+(qi===questions.length-1?'Lihat nilai akhir':'Soal berikutnya')+'</button></div>';Array.prototype.forEach.call(main.querySelectorAll('.choice'),function(btn){btn.addEventListener('click',chooseAnswer)});document.getElementById('nextQuestion').addEventListener('click',function(){qi++;answered=false;renderQuiz()})}
+  function chooseAnswer(e){if(answered)return;answered=true;var pick=Number(e.currentTarget.dataset.index),q=questions[qi],correct=pick===q.a;if(correct)score+=10;marks[qi]=correct;Array.prototype.forEach.call(document.querySelectorAll('.choice'),function(btn){btn.disabled=true;var i=Number(btn.dataset.index);if(i===q.a)btn.classList.add('correct');else if(i===pick)btn.classList.add('incorrect')});var f=document.getElementById('feedback');f.className='feedback show';f.innerHTML='<strong>'+(correct?'Benar! +10 poin':'Belum tepat.')+'</strong>'+q.e;document.getElementById('scoreBig').textContent=score;document.getElementById('nextQuestion').disabled=false;document.getElementById('progressBar').style.width=((qi+1)/questions.length*100)+'%';renderDots()}
+  function finishQuiz(){document.getElementById('progressBar').style.width='100%';document.getElementById('quizCount').textContent='Kuis selesai';var msg=score>=80?'Pemahamanmu kuat. Pertahankan!':score>=60?'Bagus. Tinjau kembali soal yang masih keliru.':'Ayo coba lagi setelah mengulang simulasi.';document.getElementById('quizMain').innerHTML='<div class="result"><div class="medal">'+score+'</div><h3>Nilai akhir: '+score+'</h3><p>'+msg+' Kamu menjawab benar '+(score/10)+' dari 10 soal.</p><button class="btn orange" id="retryQuiz">Ulangi kuis</button></div>';document.getElementById('retryQuiz').addEventListener('click',function(){shuffleQuiz();qi=0;score=0;answered=false;marks=[];renderQuiz()})}
+  renderQuiz();
+})();
+</script>
+</body>
+</html>

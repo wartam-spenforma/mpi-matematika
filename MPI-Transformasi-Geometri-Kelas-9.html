@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Transformasi Geometri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#eef3f1;--paper:#ffffff;--paper-2:#f6f9f8;--ink:#14231f;--muted:#52645f;--line:#ccd8d4;
+      --teal:#087f73;--teal-soft:#d9f2ed;--coral:#e35d43;--coral-soft:#ffded6;--yellow:#f2bd43;--shadow:0 16px 45px rgba(23,54,47,.10);
+      --grid:#dce6e3;--axis:#657973;--focus:#ffbf47;
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--bg:#111816;--paper:#19231f;--paper-2:#202d28;--ink:#eef8f5;--muted:#afc1bb;--line:#384a44;
+      --teal:#46c8b8;--teal-soft:#143d37;--coral:#ff8268;--coral-soft:#4b2821;--yellow:#f3c65b;--shadow:0 18px 55px rgba(0,0,0,.32);--grid:#2d3c37;--axis:#8ba19a;}
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito Sans",sans-serif;line-height:1.45}
+    button,input,select{font:inherit;color:inherit}
+    button{cursor:pointer}
+    .shell{width:min(1200px,100%);margin:auto;padding:clamp(16px,3vw,34px)}
+    .intro{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;margin:8px 0 24px}
+    .intro h1{font-size:clamp(2rem,4.8vw,4.4rem);line-height:.98;letter-spacing:-.045em;margin:0 0 12px;max-width:840px;font-weight:800}
+    .intro h1 span{color:var(--coral)}
+    .intro p{font-size:clamp(1rem,1.7vw,1.2rem);margin:0;color:var(--muted);max-width:690px}
+    .mini-legend{display:flex;gap:14px;flex-wrap:wrap;padding-bottom:6px;font-weight:700;font-size:.9rem}
+    .mini-legend span{display:flex;align-items:center;gap:7px;white-space:nowrap}.dot{width:11px;height:11px;border-radius:50%;display:inline-block}.dot.a{background:var(--teal)}.dot.b{background:var(--coral)}
+    .mode-nav{display:flex;gap:8px;margin:0 0 18px;padding:5px;background:var(--paper);border:1px solid var(--line);border-radius:15px;width:max-content;max-width:100%;box-shadow:0 5px 18px rgba(20,35,31,.05)}
+    .mode-nav button{border:0;background:transparent;padding:11px 22px;border-radius:10px;font-weight:800;color:var(--muted)}
+    .mode-nav button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+    .panel{display:none}.panel.active{display:block}
+    .sim-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.8fr);gap:18px;align-items:start}
+    .card{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .plane-card{padding:clamp(12px,2vw,22px);border-radius:24px 10px 24px 10px}
+    .plane-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .plane-head h2,.controls h2{font-size:1.05rem;margin:0;font-weight:800}
+    .hint{font-size:.83rem;color:var(--muted);margin:0}.kbd{font-family:"IBM Plex Mono",monospace;background:var(--paper-2);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+    .plane-wrap{position:relative;width:100%;aspect-ratio:1/1;max-height:680px;border-radius:14px;overflow:hidden;background:var(--paper-2);touch-action:none}
+    #plane{width:100%;height:100%;display:block}
+    .point-label{font:700 15px "IBM Plex Mono",monospace;paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+    .coord-badge{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .coord-chip{font:600 .82rem "IBM Plex Mono",monospace;padding:7px 9px;border-radius:8px;background:var(--paper-2);border:1px solid var(--line)}
+    .coord-chip.original{color:var(--teal)}.coord-chip.image{color:var(--coral)}
+    .controls{border-radius:10px 24px 10px 24px;overflow:hidden}
+    .control-section{padding:18px;border-bottom:1px solid var(--line)}.control-section:last-child{border-bottom:0}
+    .section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.section-title h2{margin:0}.counter{font:600 .76rem "IBM Plex Mono",monospace;color:var(--muted)}
+    .preset-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+    .preset,.action,.transform-tab,.quiz-opt{border:1px solid var(--line);background:var(--paper-2);border-radius:10px;padding:9px 10px;font-weight:700}
+    .preset.active,.transform-tab.active{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+    .point-actions{display:flex;gap:8px;margin-top:9px}.action{flex:1}.action.danger{color:var(--coral)}
+    .transform-tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:14px}
+    .transform-tab{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 7px;font-size:.86rem}
+    .ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field.full{grid-column:1/-1}.field label{display:block;font-size:.78rem;color:var(--muted);font-weight:800;margin:0 0 5px}
+    input[type="number"],select,input[type="text"]{width:100%;border:1px solid var(--line);background:var(--paper-2);border-radius:9px;padding:10px 11px;outline:none}
+    input:focus,select:focus,button:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 60%,transparent);outline-offset:2px}
+    input[type="range"]{width:100%;accent-color:var(--teal);margin:6px 0}
+    .formula{font:600 .84rem "IBM Plex Mono",monospace;background:var(--paper-2);padding:12px;border-radius:9px;color:var(--muted);margin-top:12px}
+    .coord-editor{display:grid;gap:7px}.coord-row{display:grid;grid-template-columns:30px 1fr 1fr;gap:7px;align-items:center}.coord-row b{font-family:"IBM Plex Mono",monospace;color:var(--teal)}
+    .coord-row input{padding:7px 8px}
+    .tip{background:var(--teal-soft);color:var(--ink);padding:12px 14px;border-radius:10px;font-size:.87rem}.tip strong{color:var(--teal)}
+    .quiz-wrap{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:18px;align-items:start}
+    .quiz-card{padding:clamp(18px,3vw,34px);border-radius:24px 10px 24px 10px;min-height:470px}
+    .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}.quiz-progress{height:8px;background:var(--paper-2);border-radius:99px;overflow:hidden;flex:1}.quiz-progress i{height:100%;display:block;background:var(--teal);width:10%;transition:width .25s}.q-count{font:600 .82rem "IBM Plex Mono",monospace;color:var(--muted);white-space:nowrap}
+    .topic-tag{display:inline-block;padding:5px 9px;border-radius:7px;background:var(--coral-soft);color:var(--coral);font-weight:800;font-size:.78rem;margin-bottom:11px}
+    #questionText{font-size:clamp(1.25rem,2.6vw,1.7rem);line-height:1.28;margin:0 0 20px;max-width:780px}
+    .options{display:grid;gap:9px}.quiz-opt{text-align:left;font-weight:700;padding:13px 14px}.quiz-opt:hover{border-color:var(--teal)}.quiz-opt.selected{background:var(--teal-soft);border-color:var(--teal)}.quiz-opt.correct{background:#d7f2df;border-color:#2d8a48;color:#17642e}.quiz-opt.wrong{background:var(--coral-soft);border-color:var(--coral);color:var(--coral)}
+    @media(prefers-color-scheme:dark){.quiz-opt.correct{background:#183e26;color:#7de49a}}
+    .feedback{display:none;margin-top:18px;padding:15px;border-radius:10px;background:var(--paper-2);border:1px solid var(--line)}.feedback.show{display:block}.feedback strong{display:block;margin-bottom:4px}.feedback.ok strong{color:#278047}.feedback.no strong{color:var(--coral)}
+    .quiz-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}.primary,.secondary{border:0;padding:11px 18px;border-radius:10px;font-weight:800}.primary{background:var(--coral);color:white}.primary:disabled{opacity:.45;cursor:not-allowed}.secondary{background:var(--paper-2);border:1px solid var(--line)}
+    .score-card{padding:20px;border-radius:10px 22px 10px 22px;position:sticky;top:16px}.score-card h3{margin:0 0 12px}.score-ring{width:130px;height:130px;margin:10px auto 18px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--teal) 0%,var(--paper-2) 0)}.score-ring div{width:98px;height:98px;border-radius:50%;background:var(--paper);display:grid;place-items:center;text-align:center}.score-ring b{font:700 1.75rem "IBM Plex Mono",monospace;display:block}.score-ring small{color:var(--muted)}
+    .score-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{background:var(--paper-2);padding:11px;border-radius:9px;text-align:center}.stat b{display:block;font:700 1.1rem "IBM Plex Mono",monospace}.stat span{font-size:.76rem;color:var(--muted)}
+    .final{display:none;text-align:center;padding:30px 10px}.final.show{display:block}.final .big{font-size:clamp(3.3rem,8vw,6rem);line-height:1;font-weight:800;color:var(--teal);letter-spacing:-.05em}.final h2{font-size:1.6rem;margin:12px 0 6px}.final p{color:var(--muted);max-width:500px;margin:0 auto 22px}
+    .footnote{text-align:center;color:var(--muted);font-size:.82rem;padding:28px 0 8px}
+    @media(max-width:860px){.sim-layout,.quiz-wrap{grid-template-columns:1fr}.score-card{position:static;display:grid;grid-template-columns:auto 1fr;align-items:center}.score-card h3{grid-column:1/-1}.score-ring{width:100px;height:100px;margin:0 14px 0 0}.score-ring div{width:75px;height:75px}.intro{grid-template-columns:1fr}.mini-legend{padding:0}.controls{order:-1}.control-section.coord-edit-section{display:none}}
+    @media(max-width:520px){.shell{padding:14px}.intro{margin-top:4px}.intro h1{font-size:2.45rem}.mode-nav{width:100%}.mode-nav button{flex:1;padding:10px}.plane-card{border-radius:18px 8px}.plane-head{align-items:flex-start;flex-direction:column}.controls{border-radius:8px 18px}.control-section{padding:15px}.transform-tabs{grid-template-columns:1fr 1fr}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.quiz-card{min-height:530px;border-radius:18px 8px}.quiz-actions{justify-content:stretch}.quiz-actions button{flex:1}.score-card{display:block}.score-ring{margin:0 auto 14px}.hint .kbd{display:none}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="intro">
+      <div>
+        <h1>Gerakkan titik.<br><span>Lihat transformasinya.</span></h1>
+        <p>Jelajahi translasi, refleksi, rotasi, dan dilatasi pada bidang Kartesius—lalu uji pemahamanmu.</p>
+      </div>
+      <div class="mini-legend"><span><i class="dot a"></i>Bangun awal</span><span><i class="dot b"></i>Bayangan</span></div>
+    </header>
+
+    <nav class="mode-nav" aria-label="Pilih bagian">
+      <button id="tabSim" aria-selected="true">Simulasi</button>
+      <button id="tabQuiz" aria-selected="false">Kuis 10 soal</button>
+    </nav>
+
+    <section id="simPanel" class="panel active" aria-label="Simulasi transformasi">
+      <div class="sim-layout">
+        <article class="card plane-card">
+          <div class="plane-head"><h2>Bidang koordinat</h2><p class="hint">Seret titik berwarna hijau <span class="kbd">A</span> <span class="kbd">B</span> <span class="kbd">C</span></p></div>
+          <div class="plane-wrap"><svg id="plane" viewBox="0 0 600 600" role="img" aria-label="Bidang koordinat Kartesius interaktif"></svg></div>
+          <div id="coordBadges" class="coord-badge" aria-live="polite"></div>
+        </article>
+
+        <aside class="card controls">
+          <section class="control-section">
+            <div class="section-title"><h2>Bentuk awal</h2><span id="pointCounter" class="counter">3 titik</span></div>
+            <div class="preset-row">
+              <button class="preset" data-preset="point">Titik</button><button class="preset active" data-preset="triangle">Segitiga</button><button class="preset" data-preset="quad">Segiempat</button>
+            </div>
+            <div class="point-actions"><button id="addPoint" class="action">+ Tambah titik</button><button id="removePoint" class="action danger">− Hapus terakhir</button></div>
+          </section>
+
+          <section class="control-section">
+            <div class="section-title"><h2>Pilih transformasi</h2></div>
+            <div class="transform-tabs">
+              <button class="transform-tab active" data-transform="translate"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M15 8l4 4-4 4"/></svg>Translasi</button>
+              <button class="transform-tab" data-transform="reflect"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3v18M4 7l5-2v14l-5-2zM20 7l-5-2v14l5-2z"/></svg>Refleksi</button>
+              <button class="transform-tab" data-transform="rotate"><svg class="ico" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 1-2.3-5.7M20 4v7h-7"/></svg>Rotasi</button>
+              <button class="transform-tab" data-transform="dilate"><svg class="ico" viewBox="0 0 24 24"><path d="M8 8h8v8H8zM4 4h16v16H4z"/></svg>Dilatasi</button>
+            </div>
+            <div id="transformFields"></div>
+            <div id="formula" class="formula"></div>
+          </section>
+
+          <section class="control-section coord-edit-section">
+            <div class="section-title"><h2>Koordinat bangun awal</h2><span class="counter">dapat diedit</span></div>
+            <div id="coordEditor" class="coord-editor"></div>
+          </section>
+          <section class="control-section"><div class="tip"><strong>Coba ini:</strong> Geser satu titik, lalu perhatikan mana yang tetap: bentuk, ukuran, atau orientasinya?</div></section>
+        </aside>
+      </div>
+    </section>
+
+    <section id="quizPanel" class="panel" aria-label="Kuis transformasi">
+      <div class="quiz-wrap">
+        <article class="card quiz-card">
+          <div id="quizPlay">
+            <div class="quiz-top"><div class="quiz-progress" aria-label="Progres kuis"><i id="progressBar"></i></div><span id="qCount" class="q-count">1 / 10</span></div>
+            <span id="topicTag" class="topic-tag">Translasi</span>
+            <h2 id="questionText"></h2>
+            <div id="answerArea"></div>
+            <div id="feedback" class="feedback" aria-live="polite"></div>
+            <div class="quiz-actions"><button id="checkBtn" class="primary" disabled>Periksa jawaban</button><button id="nextBtn" class="primary" style="display:none">Soal berikutnya</button></div>
+          </div>
+          <div id="finalScreen" class="final">
+            <div id="finalScore" class="big">0</div><h2 id="finalTitle">Kuis selesai!</h2><p id="finalMessage"></p><button id="retryBtn" class="primary">Ulangi kuis</button>
+          </div>
+        </article>
+        <aside class="card score-card">
+          <h3>Skor sementara</h3>
+          <div id="scoreRing" class="score-ring"><div><span><b id="scoreValue">0</b><small>poin</small></span></div></div>
+          <div class="score-stats"><div class="stat"><b id="correctStat">0</b><span>Benar</span></div><div class="stat"><b id="answeredStat">0</b><span>Dijawab</span></div></div>
+        </aside>
+      </div>
+    </section>
+    <p class="footnote">Petunjuk: koordinat dibulatkan maksimal dua angka desimal.</p>
+  </main>
+<script>
+(function(){
+  'use strict';
+  var svg=document.getElementById('plane'), NS='http://www.w3.org/2000/svg';
+  var state={points:[{x:-4,y:-2},{x:1,y:4},{x:4,y:-3}],transform:'translate',params:{dx:3,dy:2,axis:'x',angle:90,cx:0,cy:0,scale:2},drag:null};
+  var COLORS={orig:getCss('--teal'),image:getCss('--coral'),grid:getCss('--grid'),axis:getCss('--axis'),paper:getCss('--paper')};
+  function getCss(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+  function E(name,attrs){var e=document.createElementNS(NS,name);Object.keys(attrs||{}).forEach(function(k){e.setAttribute(k,attrs[k])});return e}
+  function sx(x){return 300+x*27} function sy(y){return 300-y*27} function cx(px){return (px-300)/27} function cy(py){return (300-py)/27}
+  function nice(n){var v=Math.abs(n)<.0001?0:Math.round(n*100)/100;return String(v)}
+  function transform(p){var q={x:p.x,y:p.y},a,h=state.params.cx,k=state.params.cy;
+    if(state.transform==='translate'){q.x=p.x+state.params.dx;q.y=p.y+state.params.dy}
+    if(state.transform==='reflect'){
+      if(state.params.axis==='x'){q.y=-p.y} if(state.params.axis==='y'){q.x=-p.x} if(state.params.axis==='yx'){q={x:p.y,y:p.x}} if(state.params.axis==='ynx'){q={x:-p.y,y:-p.x}} if(state.params.axis==='origin'){q={x:-p.x,y:-p.y}}
+    }
+    if(state.transform==='rotate'){a=state.params.angle*Math.PI/180;q.x=h+(p.x-h)*Math.cos(a)-(p.y-k)*Math.sin(a);q.y=k+(p.x-h)*Math.sin(a)+(p.y-k)*Math.cos(a)}
+    if(state.transform==='dilate'){q.x=h+state.params.scale*(p.x-h);q.y=k+state.params.scale*(p.y-k)}
+    return {x:Math.round(q.x*100)/100,y:Math.round(q.y*100)/100}
+  }
+  function draw(){
+    COLORS={orig:getCss('--teal'),image:getCss('--coral'),grid:getCss('--grid'),axis:getCss('--axis'),paper:getCss('--paper')}; svg.innerHTML='';
+    var defs=E('defs');var pat=E('pattern',{id:'smallGrid',width:27,height:27,patternUnits:'userSpaceOnUse'});pat.appendChild(E('path',{d:'M 27 0 L 0 0 0 27',fill:'none',stroke:COLORS.grid,'stroke-width':'1'}));defs.appendChild(pat);svg.appendChild(defs);
+    svg.appendChild(E('rect',{width:600,height:600,fill:'url(#smallGrid)'}));
+    svg.appendChild(E('line',{x1:30,y1:300,x2:570,y2:300,stroke:COLORS.axis,'stroke-width':2}));svg.appendChild(E('line',{x1:300,y1:30,x2:300,y2:570,stroke:COLORS.axis,'stroke-width':2}));
+    svg.appendChild(E('path',{d:'M570 300l-9-5v10z M300 30l-5 9h10z',fill:COLORS.axis}));
+    for(var i=-10;i<=10;i++){if(i===0)continue;var tx=E('text',{x:sx(i),y:318,'text-anchor':'middle',fill:COLORS.axis,'font-size':10,'font-family':'IBM Plex Mono'});tx.textContent=i;svg.appendChild(tx);var ty=E('text',{x:290,y:sy(i)+4,'text-anchor':'end',fill:COLORS.axis,'font-size':10,'font-family':'IBM Plex Mono'});ty.textContent=i;svg.appendChild(ty)}
+    var tps=state.points.map(transform),closed=state.points.length>2;
+    if(state.points.length>1){svg.appendChild(E('polyline',{points:tps.map(function(p){return sx(p.x)+','+sy(p.y)}).join(' ')+(closed?' '+sx(tps[0].x)+','+sy(tps[0].y):''),fill:closed?COLORS.image+'22':'none',stroke:COLORS.image,'stroke-width':3,'stroke-dasharray':'7 5','stroke-linejoin':'round'}));svg.appendChild(E('polyline',{points:state.points.map(function(p){return sx(p.x)+','+sy(p.y)}).join(' ')+(closed?' '+sx(state.points[0].x)+','+sy(state.points[0].y):''),fill:closed?COLORS.orig+'24':'none',stroke:COLORS.orig,'stroke-width':3,'stroke-linejoin':'round'}))}
+    tps.forEach(function(p,i){drawPoint(p,i,true)});state.points.forEach(function(p,i){drawPoint(p,i,false)}); updateBadges(tps);updateEditor();
+  }
+  function drawPoint(p,i,isImage){var g=E('g',{'data-index':i,'data-image':isImage?'1':'0',style:isImage?'':'cursor:grab'});var c=E('circle',{cx:sx(p.x),cy:sy(p.y),r:isImage?7:9,fill:isImage?COLORS.image:COLORS.orig,stroke:COLORS.paper,'stroke-width':3});g.appendChild(c);var t=E('text',{x:sx(p.x)+11,y:sy(p.y)-10,fill:isImage?COLORS.image:COLORS.orig,class:'point-label'});t.textContent=String.fromCharCode(65+i)+(isImage?'′':'');g.appendChild(t);svg.appendChild(g)}
+  function updateBadges(tps){var box=document.getElementById('coordBadges');box.innerHTML='';state.points.forEach(function(p,i){var o=document.createElement('span');o.className='coord-chip original';o.textContent=String.fromCharCode(65+i)+'('+nice(p.x)+', '+nice(p.y)+')';box.appendChild(o);var im=document.createElement('span');im.className='coord-chip image';im.textContent=String.fromCharCode(65+i)+'′('+nice(tps[i].x)+', '+nice(tps[i].y)+')';box.appendChild(im)}) ;document.getElementById('pointCounter').textContent=state.points.length+' titik'}
+  function updateEditor(){var box=document.getElementById('coordEditor');if(document.activeElement&&box.contains(document.activeElement))return;box.innerHTML='';state.points.forEach(function(p,i){var r=document.createElement('div');r.className='coord-row';r.innerHTML='<b>'+String.fromCharCode(65+i)+'</b><input type="number" step="1" min="-10" max="10" value="'+nice(p.x)+'" aria-label="Koordinat x titik '+String.fromCharCode(65+i)+'"><input type="number" step="1" min="-10" max="10" value="'+nice(p.y)+'" aria-label="Koordinat y titik '+String.fromCharCode(65+i)+'">';var ins=r.querySelectorAll('input');ins[0].addEventListener('change',function(){state.points[i].x=clamp(+this.value);draw()});ins[1].addEventListener('change',function(){state.points[i].y=clamp(+this.value);draw()});box.appendChild(r)})}
+  function clamp(n){return Math.max(-10,Math.min(10,isFinite(n)?n:0))}
+  svg.addEventListener('pointerdown',function(e){var g=e.target.closest('g[data-index]');if(!g||g.getAttribute('data-image')==='1')return;state.drag=+g.getAttribute('data-index');svg.setPointerCapture(e.pointerId);e.preventDefault()});
+  svg.addEventListener('pointermove',function(e){if(state.drag===null)return;var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var q=pt.matrixTransform(svg.getScreenCTM().inverse());state.points[state.drag]={x:clamp(Math.round(cx(q.x))),y:clamp(Math.round(cy(q.y)))};draw()});
+  svg.addEventListener('pointerup',function(){state.drag=null});svg.addEventListener('pointercancel',function(){state.drag=null});
+  document.querySelectorAll('.preset').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('active')});b.classList.add('active');var p=b.dataset.preset;if(p==='point')state.points=[{x:-3,y:2}];if(p==='triangle')state.points=[{x:-4,y:-2},{x:1,y:4},{x:4,y:-3}];if(p==='quad')state.points=[{x:-4,y:-3},{x:-3,y:3},{x:3,y:4},{x:4,y:-2}];draw()})});
+  document.getElementById('addPoint').onclick=function(){if(state.points.length>=6)return;state.points.push({x:Math.min(8,-4+state.points.length*2),y:Math.max(-8,3-state.points.length)});document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('active')});draw()};
+  document.getElementById('removePoint').onclick=function(){if(state.points.length>1){state.points.pop();document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('active')});draw()}};
+  document.querySelectorAll('.transform-tab').forEach(function(b){b.onclick=function(){state.transform=b.dataset.transform;document.querySelectorAll('.transform-tab').forEach(function(x){x.classList.toggle('active',x===b)});renderFields();draw()}});
+  function field(label,id,val,step){return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" aria-label="'+label+'" type="number" step="'+(step||1)+'" value="'+val+'"></div>'}
+  function renderFields(){var box=document.getElementById('transformFields'),f=document.getElementById('formula');
+    if(state.transform==='translate'){box.innerHTML='<div class="fields">'+field('Geser horizontal (a)','dx',state.params.dx)+field('Geser vertikal (b)','dy',state.params.dy)+'</div>';f.textContent="(x, y) → (x + a, y + b)"}
+    if(state.transform==='reflect'){box.innerHTML='<div class="fields"><div class="field full"><label for="axis">Cermin terhadap</label><select id="axis"><option value="x">Sumbu x</option><option value="y">Sumbu y</option><option value="yx">Garis y = x</option><option value="ynx">Garis y = −x</option><option value="origin">Titik asal O(0,0)</option></select></div></div>';document.getElementById('axis').value=state.params.axis;f.textContent='Pilih cermin untuk melihat aturan koordinat.'}
+    if(state.transform==='rotate'){box.innerHTML='<div class="fields">'+field('Sudut (derajat)','angle',state.params.angle)+field('Pusat x (h)','cx',state.params.cx)+field('Pusat y (k)','cy',state.params.cy)+'</div>';f.textContent='Sudut positif berlawanan arah jarum jam.'}
+    if(state.transform==='dilate'){box.innerHTML='<div class="fields">'+field('Faktor skala (k)','scale',state.params.scale,.5)+field('Pusat x (a)','cx',state.params.cx)+field('Pusat y (b)','cy',state.params.cy)+'</div>';f.textContent="P′ = Pusat + k(P − Pusat)"}
+    box.querySelectorAll('input,select').forEach(function(el){el.addEventListener('input',function(){var key=el.id;state.params[key]=el.tagName==='SELECT'?el.value:(isFinite(+el.value)?+el.value:0);draw();updateFormula()})});updateFormula()
+  }
+  function updateFormula(){var f=document.getElementById('formula'),p=state.params;if(state.transform==='translate')f.textContent='(x, y) → (x '+(p.dx>=0?'+ ':'− ')+Math.abs(p.dx)+', y '+(p.dy>=0?'+ ':'− ')+Math.abs(p.dy)+')';if(state.transform==='reflect'){var m={x:'(x, y) → (x, −y)',y:'(x, y) → (−x, y)',yx:'(x, y) → (y, x)',ynx:'(x, y) → (−y, −x)',origin:'(x, y) → (−x, −y)'};f.textContent=m[p.axis]}}
+  renderFields();draw();
+  var mo=window.matchMedia('(prefers-color-scheme: dark)');if(mo.addEventListener)mo.addEventListener('change',draw);
+
+  var tabSim=document.getElementById('tabSim'),tabQuiz=document.getElementById('tabQuiz');
+  function switchPanel(quiz){tabSim.setAttribute('aria-selected',!quiz);tabQuiz.setAttribute('aria-selected',quiz);document.getElementById('simPanel').classList.toggle('active',!quiz);document.getElementById('quizPanel').classList.toggle('active',quiz)}
+  tabSim.onclick=function(){switchPanel(false)};tabQuiz.onclick=function(){switchPanel(true)};
+
+  var questionBank=[
+    {topic:'Translasi',q:'Titik A(−2, 3) ditranslasikan oleh vektor (4, −1). Koordinat A′ adalah …',opts:['(2, 2)','(−6, 2)','(2, 4)','(−2, 6)'],ans:0,exp:'Tambahkan vektor pada koordinat: A′ = (−2 + 4, 3 − 1) = (2, 2).'},
+    {topic:'Refleksi',q:'Bayangan titik P(5, −2) terhadap sumbu x adalah …',opts:['(−5, −2)','(5, 2)','(−5, 2)','(2, 5)'],ans:1,exp:'Refleksi terhadap sumbu x mempertahankan x dan mengubah tanda y: (x, y) → (x, −y).'},
+    {topic:'Rotasi',q:'Titik B(3, 1) dirotasi 90° berlawanan arah jarum jam terhadap O(0,0). Tentukan B′.',type:'input',answers:['(-1,3)','−1,3'],exp:'Rotasi 90° berlawanan arah jarum jam memakai aturan (x, y) → (−y, x), jadi B′ = (−1, 3).'},
+    {topic:'Dilatasi',q:'Titik C(−2, 4) didilatasi berpusat di O dengan faktor skala ½. Koordinat C′ adalah …',opts:['(−4, 8)','(−1, 2)','(1, −2)','(−2, 2)'],ans:1,exp:'Kalikan setiap koordinat dengan ½: C′ = (½·−2, ½·4) = (−1, 2).'},
+    {topic:'Refleksi',q:'Titik Q(−3, 6) dicerminkan terhadap garis y = x. Tentukan Q′.',type:'input',answers:['(6,-3)','6,-3'],exp:'Refleksi terhadap y = x menukar posisi koordinat: (x, y) → (y, x), jadi Q′ = (6, −3).'},
+    {topic:'Rotasi',q:'Rotasi 180° terhadap titik asal memetakan R(−4, 2) menjadi …',opts:['(4, −2)','(−2, 4)','(4, 2)','(−4, −2)'],ans:0,exp:'Rotasi 180° terhadap O memakai aturan (x, y) → (−x, −y). Maka R′ = (4, −2).'},
+    {topic:'Translasi',q:'Agar titik S(1, −3) berpindah ke S′(−2, 5), vektor translasinya adalah …',opts:['(−3, 8)','(3, −8)','(−1, 2)','(−3, 2)'],ans:0,exp:'Vektor = S′ − S = (−2 − 1, 5 − (−3)) = (−3, 8).'},
+    {topic:'Dilatasi',q:'Titik D(2, −1) didilatasi berpusat di O sehingga D′(6, −3). Faktor skalanya adalah …',type:'input',answers:['3','k=3'],exp:'D′ = kD. Karena 6 = k·2 dan −3 = k·(−1), diperoleh k = 3.'},
+    {topic:'Refleksi',q:'Transformasi manakah yang memetakan (x, y) menjadi (−x, −y)?',opts:['Refleksi terhadap sumbu x','Refleksi terhadap sumbu y','Refleksi terhadap titik asal','Refleksi terhadap y = x'],ans:2,exp:'Refleksi terhadap titik asal mengubah tanda kedua koordinat: (x, y) → (−x, −y).'},
+    {topic:'Konsep',q:'Sifat apa yang selalu dipertahankan oleh translasi, refleksi, dan rotasi?',opts:['Ukuran dan bentuk bangun','Letak bangun','Arah hadap bangun','Jarak bangun dari titik asal'],ans:0,exp:'Ketiganya adalah transformasi isometri: panjang, sudut, ukuran, dan bentuk tetap. Letak atau orientasi dapat berubah.'}
+  ];
+  function shuffledCopy(items){
+    var copy=items.slice();
+    for(var i=copy.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),temp=copy[i];copy[i]=copy[j];copy[j]=temp}
+    return copy;
+  }
+  function prepareQuestions(){
+    return shuffledCopy(questionBank).map(function(source){
+      var q={topic:source.topic,q:source.q,exp:source.exp};
+      if(source.type){q.type=source.type;q.answers=source.answers.slice()}
+      if(source.opts){
+        var choices=shuffledCopy(source.opts.map(function(text,index){return {text:text,correct:index===source.ans}}));
+        q.opts=choices.map(function(choice){return choice.text});
+        q.ans=choices.map(function(choice){return choice.correct}).indexOf(true);
+      }
+      return q;
+    });
+  }
+  var questions=prepareQuestions();
+  var qi=0,selected=null,correct=0,answered=0,locked=false;
+  var qText=document.getElementById('questionText'),area=document.getElementById('answerArea'),feedback=document.getElementById('feedback'),check=document.getElementById('checkBtn'),next=document.getElementById('nextBtn');
+  function renderQuestion(){var q=questions[qi];selected=null;locked=false;check.disabled=true;check.style.display='inline-block';next.style.display='none';feedback.className='feedback';feedback.innerHTML='';document.getElementById('topicTag').textContent=q.topic;document.getElementById('qCount').textContent=(qi+1)+' / '+questions.length;document.getElementById('progressBar').style.width=((qi+1)/questions.length*100)+'%';qText.textContent=q.q;area.innerHTML='';
+    if(q.type==='input'){var wrap=document.createElement('div');wrap.className='field';wrap.innerHTML='<label for="fillAnswer">Ketik jawabanmu</label><input id="fillAnswer" aria-label="Ketik jawabanmu" type="text" inputmode="text" placeholder="Contoh: (2, −3)" autocomplete="off">';area.appendChild(wrap);var inp=document.getElementById('fillAnswer');inp.oninput=function(){selected=this.value;check.disabled=!this.value.trim()};inp.onkeydown=function(e){if(e.key==='Enter'&&!check.disabled)check.click()}}
+    else {var opts=document.createElement('div');opts.className='options';q.opts.forEach(function(txt,i){var b=document.createElement('button');b.className='quiz-opt';b.textContent=txt;b.onclick=function(){if(locked)return;selected=i;opts.querySelectorAll('button').forEach(function(x,j){x.classList.toggle('selected',j===i)});check.disabled=false};opts.appendChild(b)});area.appendChild(opts)}
+  }
+  function normalize(s){return String(s).toLowerCase().replace(/−/g,'-').replace(/[()\s]/g,'').replace(/;/g,',')}
+  check.onclick=function(){if(locked)return;locked=true;var q=questions[qi],ok=q.type==='input'?q.answers.some(function(a){return normalize(a)===normalize(selected)}):selected===q.ans;answered++;if(ok)correct++;feedback.className='feedback show '+(ok?'ok':'no');feedback.innerHTML='<strong>'+(ok?'Tepat!':'Belum tepat.')+'</strong><span>'+q.exp+'</span>';if(q.opts){area.querySelectorAll('.quiz-opt').forEach(function(b,i){b.classList.remove('selected');if(i===q.ans)b.classList.add('correct');else if(i===selected)b.classList.add('wrong')})}check.style.display='none';next.style.display='inline-block';next.textContent=qi===questions.length-1?'Lihat nilai akhir':'Soal berikutnya';updateScore()};
+  next.onclick=function(){if(qi<questions.length-1){qi++;renderQuestion()}else showFinal()};
+  function updateScore(){var val=correct*10;document.getElementById('scoreValue').textContent=val;document.getElementById('correctStat').textContent=correct;document.getElementById('answeredStat').textContent=answered;document.getElementById('scoreRing').style.background='conic-gradient(var(--teal) '+val+'%, var(--paper-2) 0)'}
+  function showFinal(){document.getElementById('quizPlay').style.display='none';document.getElementById('finalScreen').classList.add('show');var val=correct*10;document.getElementById('finalScore').textContent=val;var title=val>=80?'Hebat, konsepnya kuat!':val>=60?'Bagus, teruskan latihan!':'Ayo coba sekali lagi!';document.getElementById('finalTitle').textContent=title;document.getElementById('finalMessage').textContent='Kamu menjawab '+correct+' dari '+questions.length+' soal dengan benar. Baca kembali pembahasan untuk menguatkan bagian yang belum tepat.'}
+  document.getElementById('retryBtn').onclick=function(){questions=prepareQuestions();qi=0;selected=null;correct=0;answered=0;locked=false;document.getElementById('quizPlay').style.display='block';document.getElementById('finalScreen').classList.remove('show');updateScore();renderQuestion()};
+  renderQuestion();
+})();
+</script>
+</body>
+</html>

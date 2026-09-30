@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0d6b67" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Perbandingan</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,650;6..72,750&display=swap');
+    :root{
+      color-scheme:light dark;
+      --bg:#f5f3ec; --surface:#fffdf8; --surface-2:#e9f2ef; --ink:#173330; --muted:#536864;
+      --line:#cbd9d5; --teal:#0d6b67; --teal-2:#0a504e; --mint:#b9dfd5; --orange:#e76f3d;
+      --orange-soft:#f9d8c7; --gold:#dca82f; --red:#b83a3a; --green:#176c47; --shadow:0 16px 42px rgba(29,64,59,.11);
+      --r-lg:26px; --r-md:16px; --r-sm:10px;
+    }
+    @media (prefers-color-scheme:dark){
+      :root{--bg:#0f1c1b;--surface:#172825;--surface-2:#1d3531;--ink:#eff8f4;--muted:#b5c9c3;--line:#38534d;--teal:#61c5ba;--teal-2:#9addd5;--mint:#24544d;--orange:#ff9365;--orange-soft:#573426;--gold:#f0c95b;--red:#ff8787;--green:#71d29f;--shadow:0 18px 46px rgba(0,0,0,.28)}
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.55}
+    button,input{font:inherit}
+    button{color:inherit}
+    button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+    .wrap{width:min(1120px,calc(100% - 32px));margin-inline:auto}
+    .hero{padding:44px 0 26px;position:relative;overflow:hidden}
+    .hero::after{content:"";position:absolute;right:-80px;top:-80px;width:310px;height:310px;border-radius:50%;border:42px solid var(--mint);opacity:.55;z-index:-1}
+    .hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:36px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--teal-2);font-weight:700;font-size:.88rem;margin-bottom:10px}
+    .eyebrow::before{content:"";width:32px;height:3px;background:var(--orange);border-radius:9px}
+    h1,h2,h3{font-family:"Newsreader",serif;line-height:1.07;margin:0}
+    h1{font-size:clamp(2.5rem,7vw,5.2rem);letter-spacing:-.045em;max-width:760px}
+    h1 em{color:var(--teal);font-style:normal}
+    .lead{font-size:clamp(1.05rem,2vw,1.25rem);max-width:670px;color:var(--muted);margin:20px 0 22px}
+    .goal-row{display:flex;flex-wrap:wrap;gap:9px}
+    .goal{padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:.86rem;font-weight:600}
+    .hero-visual{position:relative;min-height:245px;display:grid;place-items:center}
+    .ratio-card{width:min(100%,310px);background:var(--teal);color:#fff;padding:26px;border-radius:31px 31px 31px 8px;box-shadow:var(--shadow);transform:rotate(2deg)}
+    .ratio-card .nums{display:flex;align-items:center;justify-content:center;gap:15px;font-family:"Newsreader";font-size:4rem;font-weight:750}
+    .ratio-card .dot{color:#ffd178;font-size:2.6rem}
+    .ratio-card p{margin:6px 0 0;text-align:center;color:#e1f6f2}
+    .balance{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin-top:15px;height:46px}
+    .bar{width:58px;background:#ffd178;border-radius:8px 8px 2px 2px}
+    .bar.a{height:28px}.bar.b{height:42px}
+    .section-nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-block:1px solid var(--line)}
+    .nav-inner{display:flex;gap:8px;padding:10px 0;overflow-x:auto;scrollbar-width:none}
+    .nav-inner::-webkit-scrollbar{display:none}
+    .nav-btn{border:0;background:transparent;padding:10px 15px;border-radius:999px;font-weight:700;white-space:nowrap;cursor:pointer}
+    .nav-btn.active{background:var(--ink);color:var(--surface)}
+    main{padding:34px 0 72px}
+    .panel{display:none}.panel.active{display:block}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:22px}
+    .section-head h2{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.025em}
+    .section-head p{max-width:520px;color:var(--muted);margin:0}
+    .concept-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 34px}
+    .concept{background:var(--surface);border:1px solid var(--line);padding:18px;border-radius:var(--r-md);min-height:128px}
+    .concept strong{display:block;color:var(--teal-2);font-size:1rem;margin-bottom:6px}
+    .concept span{font-size:.9rem;color:var(--muted)}
+    .concept .formula{font-family:"Newsreader";font-size:1.6rem;color:var(--ink);margin-top:10px}
+    .sim-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+    .sim-tab{border:1px solid var(--line);background:var(--surface);padding:11px 15px;border-radius:var(--r-sm);font-weight:700;cursor:pointer}
+    .sim-tab.active{background:var(--teal);border-color:var(--teal);color:#fff}
+    .simulator{display:none;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+    .simulator.active{display:grid;grid-template-columns:minmax(280px,.9fr) minmax(320px,1.1fr)}
+    .controls{padding:28px;background:var(--surface-2)}
+    .workspace{padding:28px;min-width:0}
+    .simulator h3{font-size:1.75rem;margin-bottom:6px}
+    .helper{color:var(--muted);font-size:.93rem;margin:0 0 24px}
+    .control{margin:22px 0}
+    .label-row{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:8px;font-weight:700}
+    .value-chip{background:var(--ink);color:var(--surface);padding:4px 10px;border-radius:999px;font-variant-numeric:tabular-nums;font-size:.9rem}
+    input[type="range"]{width:100%;accent-color:var(--orange);cursor:pointer}
+    .result-box{background:var(--surface);border-radius:var(--r-md);padding:18px;margin-top:22px}
+    .result-box small{color:var(--muted)}
+    .big-number{display:block;font-family:"Newsreader";font-weight:750;font-size:2.2rem;color:var(--teal-2);line-height:1.1;margin-top:5px}
+    .equation{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:var(--surface-2);padding:19px;border-radius:var(--r-md);font-family:"Newsreader";font-size:1.5rem;font-weight:650}
+    .eq-box{background:var(--surface);border:1px solid var(--line);padding:8px 13px;border-radius:9px;min-width:56px;text-align:center}
+    .bars{height:150px;display:flex;align-items:end;justify-content:center;gap:34px;margin:20px auto 6px;max-width:420px}
+    .bar-wrap{display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%;flex:1;max-width:115px}
+    .vbar{width:100%;border-radius:14px 14px 3px 3px;min-height:10px;transition:height .3s ease;background:var(--teal)}
+    .vbar.orange{background:var(--orange)}
+    .bar-label{font-size:.8rem;font-weight:700;margin-top:7px;text-align:center}
+    .table-title{font-weight:700;margin:24px 0 8px}
+    .value-table{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    .trow{display:grid;grid-template-columns:1fr 1fr 1fr}
+    .trow span{padding:9px 10px;border-bottom:1px solid var(--line);font-size:.88rem;text-align:center}
+    .trow:last-child span{border-bottom:0}.trow.head{background:var(--ink);color:var(--surface);font-weight:700}
+    .trow.current{background:var(--orange-soft);font-weight:700}
+    .scale-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+    .field label{display:block;font-size:.86rem;font-weight:700;margin-bottom:6px}
+    .field input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+    .scale-road{margin:26px 0 10px;position:relative;padding-top:48px}
+    .scale-road::before{content:"";display:block;height:10px;background:repeating-linear-gradient(90deg,var(--teal) 0 18px,transparent 18px 27px);border-block:2px solid var(--teal)}
+    .pin{position:absolute;top:0;width:38px;height:38px;border-radius:50% 50% 50% 4px;background:var(--orange);transform:rotate(-45deg);display:grid;place-items:center;color:#fff;font-weight:700}
+    .pin span{transform:rotate(45deg)}
+    .pin.left{left:0}.pin.right{right:0}
+    .scale-note{font-size:.86rem;color:var(--muted);text-align:center}
+    .quiz-shell{display:grid;grid-template-columns:240px 1fr;gap:22px;align-items:start}
+    .quiz-side{background:var(--ink);color:var(--surface);padding:22px;border-radius:var(--r-lg);position:sticky;top:74px}
+    .quiz-side h3{font-size:1.55rem;margin-bottom:9px}.quiz-side p{font-size:.9rem;opacity:.8}
+    .progress-track{height:9px;background:color-mix(in srgb,var(--surface) 22%,transparent);border-radius:20px;overflow:hidden;margin:18px 0 8px}
+    .progress-bar{height:100%;width:0;background:var(--gold);transition:width .25s}
+    .progress-text{font-size:.85rem;font-weight:700}
+    .score-mini{margin-top:24px;border-top:1px solid color-mix(in srgb,var(--surface) 20%,transparent);padding-top:18px}
+    .score-mini strong{font-size:2rem;font-family:"Newsreader";display:block}
+    .quiz-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(22px,4vw,38px);min-height:430px;box-shadow:var(--shadow)}
+    .quiz-intro{display:grid;place-items:center;text-align:center;min-height:350px}
+    .quiz-intro .number-mark{font-family:"Newsreader";font-size:4.7rem;line-height:1;color:var(--orange)}
+    .quiz-intro h3{font-size:2rem;margin:7px 0}.quiz-intro p{max-width:490px;color:var(--muted)}
+    .primary,.secondary{border:0;border-radius:11px;padding:12px 18px;font-weight:700;cursor:pointer}
+    .primary{background:var(--orange);color:#fff}.primary:hover{background:color-mix(in srgb,var(--orange) 86%,black)}
+    .secondary{background:var(--surface-2);color:var(--teal-2);border:1px solid var(--line)}
+    .question-kicker{color:var(--teal-2);font-weight:700;font-size:.87rem;margin-bottom:10px}
+    .question-text{font-family:"Newsreader";font-size:clamp(1.45rem,3vw,2rem);font-weight:650;line-height:1.25;margin:0 0 22px}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .option{border:1px solid var(--line);background:var(--surface);border-radius:13px;padding:15px 16px;text-align:left;cursor:pointer;font-weight:600;min-height:56px}
+    .option:hover:not(:disabled){border-color:var(--teal);background:var(--surface-2)}
+    .option.correct{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--surface));color:var(--green)}
+    .option.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--surface));color:var(--red)}
+    .option:disabled{cursor:default}
+    .feedback{display:none;margin-top:20px;padding:18px;background:var(--surface-2);border-radius:13px}
+    .feedback.show{display:block}.feedback strong{display:block;margin-bottom:4px}.feedback p{margin:0;color:var(--muted)}
+    .next-row{display:flex;justify-content:flex-end;margin-top:16px}
+    .final{text-align:center;padding:16px 0}.score-ring{width:160px;height:160px;border-radius:50%;margin:8px auto 20px;display:grid;place-items:center;background:conic-gradient(var(--teal) var(--score-angle),var(--surface-2) 0);position:relative}
+    .score-ring::before{content:"";position:absolute;inset:13px;background:var(--surface);border-radius:50%}
+    .score-ring span{position:relative;font-family:"Newsreader";font-size:2.6rem;font-weight:750}
+    .final h3{font-size:2.2rem}.final p{color:var(--muted);max-width:480px;margin:10px auto 22px}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:380px;margin:0 auto 22px}
+    .summary-grid div{background:var(--surface-2);padding:14px;border-radius:12px}.summary-grid strong{display:block;font-size:1.5rem}
+    .tip{margin-top:28px;padding:18px 20px;border:1px dashed var(--teal);border-radius:14px;color:var(--muted)}
+    .tip strong{color:var(--teal-2)}
+    @media(max-width:800px){
+      .hero{padding-top:28px}.hero-grid{grid-template-columns:1fr}.hero-visual{display:none}.concept-strip{grid-template-columns:1fr 1fr}
+      .section-head{display:block}.section-head p{margin-top:10px}.simulator.active{grid-template-columns:1fr}.quiz-shell{grid-template-columns:1fr}
+      .quiz-side{position:static;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}.quiz-side p{display:none}.score-mini{margin:0;padding:0;border:0;text-align:right}.progress-track{grid-column:1/-1;margin:0}.progress-text{grid-column:1/-1}
+    }
+    @media(max-width:560px){
+      .wrap{width:min(100% - 22px,1120px)}h1{font-size:2.75rem}.concept-strip{grid-template-columns:1fr}.concept{min-height:0}.controls,.workspace{padding:20px}.scale-form,.options{grid-template-columns:1fr}.trow span{font-size:.78rem;padding:8px 4px}.quiz-card{padding:20px;min-height:0}.quiz-side{border-radius:18px}.bars{gap:18px}.section-nav{top:0}.hero::after{display:none}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.vbar,.progress-bar{transition:none}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Matematika Kelas VII</div>
+        <h1>Bandingkan, ubah, lalu <em>temukan polanya.</em></h1>
+        <p class="lead">Geser nilainya, amati hubungan antarbesaran, hitung skala, lalu uji pemahamanmu lewat 10 soal acak.</p>
+        <div class="goal-row" aria-label="Topik pembelajaran">
+          <span class="goal">Rasio</span><span class="goal">Senilai</span><span class="goal">Berbalik nilai</span><span class="goal">Skala</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="ratio-card">
+          <div class="nums"><span>2</span><span class="dot">:</span><span>3</span></div>
+          <p>Dua besaran, satu hubungan</p>
+          <div class="balance"><span class="bar a"></span><span class="bar b"></span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="section-nav" aria-label="Bagian pembelajaran">
+    <div class="wrap nav-inner">
+      <button class="nav-btn active" data-panel="simulasi">Simulasi</button>
+      <button class="nav-btn" data-panel="kuis">Kuis 10 Soal</button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section id="simulasi" class="panel active">
+      <div class="section-head">
+        <h2>Laboratorium perbandingan</h2>
+        <p>Nilai yang kamu ubah akan langsung mengubah model, hasil, dan tabel. Perhatikan apa yang tetap pada setiap jenis perbandingan.</p>
+      </div>
+
+      <div class="concept-strip">
+        <div class="concept"><strong>Rasio</strong><span>Membandingkan dua besaran sejenis.</span><div class="formula">a : b</div></div>
+        <div class="concept"><strong>Senilai</strong><span>Satu naik, yang lain ikut naik dengan faktor tetap.</span><div class="formula">y ÷ x = k</div></div>
+        <div class="concept"><strong>Berbalik nilai</strong><span>Satu naik, yang lain turun. Hasil kalinya tetap.</span><div class="formula">x × y = k</div></div>
+        <div class="concept"><strong>Skala</strong><span>Perbandingan jarak pada peta dengan jarak sebenarnya.</span><div class="formula">1 : n</div></div>
+      </div>
+
+      <div class="sim-tabs" role="tablist" aria-label="Pilih simulasi">
+        <button class="sim-tab active" role="tab" aria-selected="true" data-sim="direct">Perbandingan Senilai</button>
+        <button class="sim-tab" role="tab" aria-selected="false" data-sim="inverse">Berbalik Nilai</button>
+        <button class="sim-tab" role="tab" aria-selected="false" data-sim="scale">Kalkulator Skala</button>
+      </div>
+
+      <article id="direct" class="simulator active">
+        <div class="controls">
+          <h3>Belanja buku tulis</h3>
+          <p class="helper">Harga total senilai dengan jumlah buku. Semakin banyak buku, semakin besar harganya.</p>
+          <div class="control">
+            <div class="label-row"><label for="bookQty">Jumlah buku</label><span class="value-chip" id="bookQtyVal">4 buku</span></div>
+            <input id="bookQty" type="range" min="1" max="10" value="4" />
+          </div>
+          <div class="control">
+            <div class="label-row"><label for="bookPrice">Harga per buku</label><span class="value-chip" id="bookPriceVal">Rp5.000</span></div>
+            <input id="bookPrice" type="range" min="2000" max="10000" step="1000" value="5000" />
+          </div>
+          <div class="result-box"><small>Harga total</small><span class="big-number" id="bookTotal">Rp20.000</span></div>
+        </div>
+        <div class="workspace">
+          <div class="equation" aria-live="polite"><span class="eq-box" id="eqQty">4</span><span>×</span><span class="eq-box" id="eqPrice">Rp5.000</span><span>=</span><span class="eq-box" id="eqTotal">Rp20.000</span></div>
+          <div class="bars" aria-hidden="true">
+            <div class="bar-wrap"><div class="vbar" id="qtyBar"></div><span class="bar-label">Jumlah</span></div>
+            <div class="bar-wrap"><div class="vbar orange" id="totalBar"></div><span class="bar-label">Harga total</span></div>
+          </div>
+          <div class="table-title">Tabel nilai — rasio harga ÷ jumlah selalu tetap</div>
+          <div class="value-table" id="directTable"></div>
+        </div>
+      </article>
+
+      <article id="inverse" class="simulator">
+        <div class="controls">
+          <h3>Tim mengecat dinding</h3>
+          <p class="helper">Untuk pekerjaan yang sama, lebih banyak pekerja berarti waktu yang dibutuhkan lebih singkat.</p>
+          <div class="control">
+            <div class="label-row"><label for="workers">Jumlah pekerja</label><span class="value-chip" id="workersVal">6 orang</span></div>
+            <input id="workers" type="range" min="1" max="12" value="6" />
+          </div>
+          <div class="control">
+            <div class="label-row"><label for="workload">Beban pekerjaan</label><span class="value-chip" id="workloadVal">72 jam-orang</span></div>
+            <input id="workload" type="range" min="24" max="120" step="12" value="72" />
+          </div>
+          <div class="result-box"><small>Waktu penyelesaian</small><span class="big-number" id="workTime">12 jam</span></div>
+        </div>
+        <div class="workspace">
+          <div class="equation" aria-live="polite"><span class="eq-box" id="eqWorkers">6</span><span>×</span><span class="eq-box" id="eqTime">12 jam</span><span>=</span><span class="eq-box" id="eqLoad">72</span></div>
+          <div class="bars" aria-hidden="true">
+            <div class="bar-wrap"><div class="vbar" id="workersBar"></div><span class="bar-label">Pekerja</span></div>
+            <div class="bar-wrap"><div class="vbar orange" id="timeBar"></div><span class="bar-label">Waktu</span></div>
+          </div>
+          <div class="table-title">Tabel nilai — pekerja × waktu selalu tetap</div>
+          <div class="value-table" id="inverseTable"></div>
+        </div>
+      </article>
+
+      <article id="scale" class="simulator">
+        <div class="controls">
+          <h3>Dari peta ke jarak nyata</h3>
+          <p class="helper">Pada skala 1 : n, setiap 1 cm pada peta mewakili n cm di keadaan sebenarnya.</p>
+          <div class="scale-form">
+            <div class="field"><label for="scaleDenom">Penyebut skala (n)</label><input id="scaleDenom" type="number" min="1" step="1000" value="250000" inputmode="numeric" /></div>
+            <div class="field"><label for="mapDistance">Jarak pada peta (cm)</label><input id="mapDistance" type="number" min="0" step="0.1" value="4" inputmode="decimal" /></div>
+          </div>
+          <div class="result-box"><small>Jarak sebenarnya</small><span class="big-number" id="realDistance">10 km</span></div>
+        </div>
+        <div class="workspace">
+          <div class="equation" aria-live="polite"><span class="eq-box" id="eqMap">4 cm</span><span>×</span><span class="eq-box" id="eqScale">250.000</span><span>=</span><span class="eq-box" id="eqReal">1.000.000 cm</span></div>
+          <div class="scale-road" aria-hidden="true"><div class="pin left"><span>P</span></div><div class="pin right"><span>Q</span></div></div>
+          <p class="scale-note" id="scaleNote">Pada peta 4 cm · dalam keadaan sebenarnya 10 km</p>
+          <div class="table-title">Jejak konversi satuan</div>
+          <div class="value-table" id="scaleTable"></div>
+          <div class="tip"><strong>Ingat:</strong> samakan satuan sebelum membandingkan. 1 m = 100 cm dan 1 km = 100.000 cm.</div>
+        </div>
+      </article>
+    </section>
+
+    <section id="kuis" class="panel">
+      <div class="section-head">
+        <h2>Tantangan perbandingan</h2>
+        <p>Soal dan pilihan jawaban diacak setiap kali dimulai. Pilih satu jawaban, baca pembahasannya, lalu lanjutkan.</p>
+      </div>
+      <div class="quiz-shell">
+        <aside class="quiz-side">
+          <div><h3>Perjalananmu</h3><p>Kerjakan tanpa terburu-buru. Pembahasan muncul setelah kamu menjawab.</p></div>
+          <div class="score-mini"><span>Skor sementara</span><strong id="miniScore">0</strong></div>
+          <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="progress-text" id="progressText">Belum dimulai</div>
+        </aside>
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-intro">
+            <div>
+              <div class="number-mark">10</div>
+              <h3>Siap menguji pemahaman?</h3>
+              <p>Setiap jawaban benar bernilai 10. Tidak ada pengurangan nilai untuk jawaban yang belum tepat.</p>
+              <button class="primary" id="startQuiz">Mulai Kuis</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<script>
+(function(){
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
+  const fmt = (n) => new Intl.NumberFormat('id-ID', {maximumFractionDigits:2}).format(n);
+  const rupiah = (n) => 'Rp' + new Intl.NumberFormat('id-ID').format(n);
+
+  $$('.nav-btn').forEach(btn => btn.addEventListener('click', () => {
+    $$('.nav-btn').forEach(b => b.classList.toggle('active', b === btn));
+    $$('.panel').forEach(p => p.classList.toggle('active', p.id === btn.dataset.panel));
+    window.scrollTo({top: document.querySelector('.section-nav').offsetTop, behavior:'smooth'});
+  }));
+
+  $$('.sim-tab').forEach(btn => btn.addEventListener('click', () => {
+    $$('.sim-tab').forEach(b => { b.classList.toggle('active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true':'false'); });
+    $$('.simulator').forEach(s => s.classList.toggle('active', s.id === btn.dataset.sim));
+  }));
+
+  function renderDirect(){
+    const q=+$('[id="bookQty"]').value, p=+$('[id="bookPrice"]').value, total=q*p;
+    $('#bookQtyVal').textContent=q+' buku'; $('#bookPriceVal').textContent=rupiah(p); $('#bookTotal').textContent=rupiah(total);
+    $('#eqQty').textContent=q; $('#eqPrice').textContent=rupiah(p); $('#eqTotal').textContent=rupiah(total);
+    $('#qtyBar').style.height=(25+q*10)+'px'; $('#totalBar').style.height=(25+(total/100000)*100)+'px';
+    let html='<div class="trow head"><span>Buku</span><span>Harga</span><span>Harga ÷ Buku</span></div>';
+    for(let i=1;i<=5;i++){ const books=i*2; html+='<div class="trow '+(books===q?'current':'')+'"><span>'+books+'</span><span>'+rupiah(books*p)+'</span><span>'+rupiah(p)+'</span></div>'; }
+    if(q%2===1) html+='<div class="trow current"><span>'+q+'</span><span>'+rupiah(total)+'</span><span>'+rupiah(p)+'</span></div>';
+    $('#directTable').innerHTML=html;
+  }
+  $('#bookQty').addEventListener('input',renderDirect); $('#bookPrice').addEventListener('input',renderDirect); renderDirect();
+
+  function renderInverse(){
+    const w=+$('#workers').value, load=+$('#workload').value, t=load/w;
+    $('#workersVal').textContent=w+' orang'; $('#workloadVal').textContent=load+' jam-orang'; $('#workTime').textContent=fmt(t)+' jam';
+    $('#eqWorkers').textContent=w; $('#eqTime').textContent=fmt(t)+' jam'; $('#eqLoad').textContent=load;
+    $('#workersBar').style.height=(25+w*9)+'px'; $('#timeBar').style.height=Math.min(140,25+t*5)+'px';
+    const vals=[1,2,3,4,6,8,12]; let html='<div class="trow head"><span>Pekerja</span><span>Waktu</span><span>Hasil kali</span></div>';
+    vals.forEach(n=>{html+='<div class="trow '+(n===w?'current':'')+'"><span>'+n+'</span><span>'+fmt(load/n)+' jam</span><span>'+load+'</span></div>';});
+    if(!vals.includes(w)) html+='<div class="trow current"><span>'+w+'</span><span>'+fmt(t)+' jam</span><span>'+load+'</span></div>';
+    $('#inverseTable').innerHTML=html;
+  }
+  $('#workers').addEventListener('input',renderInverse); $('#workload').addEventListener('input',renderInverse); renderInverse();
+
+  function renderScale(){
+    let n=Math.max(1,Number($('#scaleDenom').value)||1), map=Math.max(0,Number($('#mapDistance').value)||0), cm=n*map, m=cm/100, km=cm/100000;
+    const final = km>=1 ? fmt(km)+' km' : fmt(m)+' m';
+    $('#realDistance').textContent=final; $('#eqMap').textContent=fmt(map)+' cm'; $('#eqScale').textContent=fmt(n); $('#eqReal').textContent=fmt(cm)+' cm';
+    $('#scaleNote').textContent='Pada peta '+fmt(map)+' cm · dalam keadaan sebenarnya '+final;
+    $('#scaleTable').innerHTML='<div class="trow head"><span>Sentimeter</span><span>Meter</span><span>Kilometer</span></div><div class="trow current"><span>'+fmt(cm)+' cm</span><span>'+fmt(m)+' m</span><span>'+fmt(km)+' km</span></div>';
+  }
+  $('#scaleDenom').addEventListener('input',renderScale); $('#mapDistance').addEventListener('input',renderScale); renderScale();
+
+  const questionBank=[
+    {topic:'Rasio',q:'Bentuk paling sederhana dari rasio 18 : 24 adalah …',options:['3 : 4','6 : 8','9 : 12','4 : 3'],answer:'3 : 4',why:'FPB dari 18 dan 24 adalah 6. Membagi keduanya dengan 6 menghasilkan 3 : 4.'},
+    {topic:'Rasio bagian terhadap keseluruhan',q:'Di kelas terdapat 12 siswa laki-laki dan 18 siswa perempuan. Rasio siswa laki-laki terhadap seluruh siswa adalah …',options:['2 : 5','2 : 3','3 : 5','5 : 2'],answer:'2 : 5',why:'Jumlah seluruh siswa 12 + 18 = 30. Rasio 12 : 30 disederhanakan menjadi 2 : 5.'},
+    {topic:'Perbandingan senilai',q:'Harga 5 buku tulis adalah Rp20.000. Harga 8 buku tulis dengan harga satuan yang sama adalah …',options:['Rp32.000','Rp28.000','Rp30.000','Rp40.000'],answer:'Rp32.000',why:'Harga satu buku Rp20.000 ÷ 5 = Rp4.000. Maka 8 buku berharga 8 × Rp4.000 = Rp32.000.'},
+    {topic:'Perbandingan senilai',q:'Sebuah mobil menempuh 180 km dalam 3 jam dengan kecepatan tetap. Dalam 5 jam, jarak yang ditempuh adalah …',options:['300 km','240 km','270 km','360 km'],answer:'300 km',why:'Kecepatan mobil 180 ÷ 3 = 60 km/jam. Dalam 5 jam, jaraknya 60 × 5 = 300 km.'},
+    {topic:'Perbandingan berbalik nilai',q:'Enam pekerja menyelesaikan pekerjaan dalam 12 hari. Jika dikerjakan 8 pekerja dengan kemampuan sama, waktu yang diperlukan adalah …',options:['9 hari','16 hari','10 hari','6 hari'],answer:'9 hari',why:'Beban kerja tetap: 6 × 12 = 72 hari-orang. Dengan 8 pekerja, waktunya 72 ÷ 8 = 9 hari.'},
+    {topic:'Skala',q:'Pada peta berskala 1 : 250.000, jarak dua kota 4 cm. Jarak sebenarnya adalah …',options:['10 km','1 km','100 km','625 km'],answer:'10 km',why:'Jarak sebenarnya = 4 × 250.000 = 1.000.000 cm = 10 km.'},
+    {topic:'Skala',q:'Jarak sebenarnya dua tempat 15 km. Jika skala peta 1 : 300.000, jarak pada peta adalah …',options:['5 cm','4 cm','45 cm','0,5 cm'],answer:'5 cm',why:'15 km = 1.500.000 cm. Jarak peta = 1.500.000 ÷ 300.000 = 5 cm.'},
+    {topic:'Penerapan rasio',q:'Rasio gula terhadap tepung dalam resep adalah 2 : 5. Jika tepung yang dipakai 750 gram, gula yang diperlukan adalah …',options:['300 gram','375 gram','250 gram','1.875 gram'],answer:'300 gram',why:'Lima bagian tepung = 750 gram, jadi satu bagian = 150 gram. Gula dua bagian = 2 × 150 = 300 gram.'},
+    {topic:'Perbandingan berbalik nilai',q:'Empat keran identik mengisi bak dalam 6 jam. Jika hanya 3 keran yang digunakan, waktu yang diperlukan adalah …',options:['8 jam','4,5 jam','9 jam','2 jam'],answer:'8 jam',why:'Hasil kali banyak keran dan waktu tetap: 4 × 6 = 24. Dengan 3 keran, waktu = 24 ÷ 3 = 8 jam.'},
+    {topic:'Konsep perbandingan',q:'Manakah situasi yang menunjukkan perbandingan berbalik nilai?',options:['Semakin banyak pekerja, semakin singkat waktu kerja','Semakin banyak barang, semakin besar harga total','Semakin lama menabung, semakin banyak uang terkumpul','Semakin banyak bensin, semakin jauh jarak tempuh'],answer:'Semakin banyak pekerja, semakin singkat waktu kerja',why:'Pada berbalik nilai, satu besaran bertambah sementara besaran lain berkurang secara sebanding. Pekerja dan waktu untuk pekerjaan yang sama memenuhi pola itu.'}
+  ];
+  let quiz=[],idx=0,score=0,answered=false;
+  const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+
+  function startQuiz(){quiz=shuffle(questionBank).map(item=>({...item,options:shuffle(item.options)}));idx=0;score=0;answered=false;renderQuestion();}
+  function updateProgress(){
+    const done=idx+(answered?1:0); $('#progressBar').style.width=(done/quiz.length*100)+'%';
+    $('#progressText').textContent='Soal '+Math.min(idx+1,quiz.length)+' dari '+quiz.length; $('#miniScore').textContent=score;
+  }
+  function renderQuestion(){
+    answered=false; const item=quiz[idx]; updateProgress();
+    $('#quizCard').innerHTML='<div class="question-kicker">'+item.topic+' · Soal '+(idx+1)+'</div><p class="question-text">'+item.q+'</p><div class="options" id="options"></div><div class="feedback" id="feedback" aria-live="polite"></div><div class="next-row" id="nextRow"></div>';
+    item.options.forEach(opt=>{const b=document.createElement('button');b.className='option';b.textContent=opt;b.addEventListener('click',()=>answer(opt,b));$('#options').appendChild(b);});
+  }
+  function answer(choice,button){
+    if(answered)return;answered=true;const item=quiz[idx],correct=choice===item.answer;if(correct)score+=10;
+    $$('.option').forEach(b=>{b.disabled=true;if(b.textContent===item.answer)b.classList.add('correct');});if(!correct)button.classList.add('wrong');
+    $('#feedback').classList.add('show');$('#feedback').innerHTML='<strong>'+(correct?'Tepat!':'Belum tepat.')+'</strong><p>'+item.why+'</p>';
+    const next=document.createElement('button');next.className='primary';next.textContent=idx===quiz.length-1?'Lihat Nilai Akhir':'Soal Berikutnya';next.addEventListener('click',()=>{idx++;if(idx<quiz.length)renderQuestion();else renderFinal();});$('#nextRow').appendChild(next);updateProgress();
+  }
+  function renderFinal(){
+    $('#progressBar').style.width='100%';$('#progressText').textContent='Selesai · 10 dari 10';$('#miniScore').textContent=score;
+    const correct=score/10;let title=score>=80?'Hebat, pemahamanmu kuat!':score>=60?'Bagus, teruskan latihanmu!':'Mari coba lagi dengan tenang.';
+    let note=score>=80?'Kamu sudah mampu mengenali dan menghitung berbagai bentuk perbandingan.':score>=60?'Tinjau kembali pembahasan soal yang belum tepat, terutama jenis hubungan antarbesaran.':'Kembali ke simulasi, ubah beberapa nilai, lalu perhatikan pola yang tetap.';
+    $('#quizCard').innerHTML='<div class="final"><div class="score-ring" style="--score-angle:'+(score*3.6)+'deg"><span>'+score+'</span></div><h3>'+title+'</h3><p>'+note+'</p><div class="summary-grid"><div><strong>'+correct+'</strong>Benar</div><div><strong>'+(10-correct)+'</strong>Perlu ditinjau</div></div><button class="primary" id="retryQuiz">Acak & Ulangi Kuis</button> <button class="secondary" id="backSim">Kembali ke Simulasi</button></div>';
+    $('#retryQuiz').addEventListener('click',startQuiz);$('#backSim').addEventListener('click',()=>document.querySelector('[data-panel="simulasi"]').click());
+  }
+  $('#startQuiz').addEventListener('click',startQuiz);
+})();
+</script>
+</body>
+</html>

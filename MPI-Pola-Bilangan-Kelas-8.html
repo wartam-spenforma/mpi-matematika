@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#101820" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet" />
+  <title>Media Interaktif Pola Bilangan</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f5ef;
+      --surface: #fffefa;
+      --surface-2: #eeeae0;
+      --ink: #14232b;
+      --muted: #53656c;
+      --line: #d9d5ca;
+      --orange: #ef6a3a;
+      --orange-deep: #b93f1c;
+      --orange-soft: #fde0d4;
+      --teal: #087e78;
+      --teal-deep: #075c59;
+      --teal-soft: #ccece7;
+      --yellow: #f3c64e;
+      --red: #b93632;
+      --red-soft: #f9d8d5;
+      --green: #15735d;
+      --green-soft: #d4eee5;
+      --shadow: 0 12px 30px rgba(24, 42, 49, .09);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 11px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101820;
+        --surface: #18242c;
+        --surface-2: #22313a;
+        --ink: #f3f0e8;
+        --muted: #b6c3c7;
+        --line: #354650;
+        --orange: #ff8051;
+        --orange-deep: #ff9c78;
+        --orange-soft: #4a2b24;
+        --teal: #42c4b9;
+        --teal-deep: #70d8d0;
+        --teal-soft: #173d3d;
+        --yellow: #ffd76b;
+        --red: #ff9189;
+        --red-soft: #492724;
+        --green: #6ed6b5;
+        --green-soft: #173a32;
+        --shadow: 0 14px 34px rgba(0, 0, 0, .22);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Nunito Sans", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    button, input[type="range"] { touch-action: manipulation; }
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(350px, .95fr);
+      gap: 44px;
+      align-items: center;
+      min-height: 440px;
+      padding: 58px 0 34px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: var(--teal-deep);
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 4px; background: var(--teal); border-radius: 999px; }
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(2.55rem, 6.5vw, 5rem);
+      line-height: .98;
+      letter-spacing: -.055em;
+      font-weight: 900;
+    }
+    .hero p { max-width: 650px; margin: 22px 0 28px; font-size: 1.14rem; color: var(--muted); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      min-height: 48px;
+      padding: 12px 20px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .16s ease, background .16s ease, color .16s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:focus-visible, .choice:focus-visible, .tab:focus-visible, input:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    .btn-primary { background: var(--orange); color: #1d1714; }
+    .btn-secondary { background: var(--surface-2); color: var(--ink); }
+    .btn-small { min-height: 40px; padding: 9px 15px; }
+    .hero-visual {
+      position: relative;
+      min-height: 330px;
+      display: grid;
+      place-items: center;
+    }
+    .number-orbit {
+      width: min(390px, 90vw);
+      aspect-ratio: 1;
+      border-radius: 48% 52% 46% 54% / 45% 48% 52% 55%;
+      background: var(--teal);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transform: rotate(-2deg);
+    }
+    .number-orbit::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 2px dashed rgba(255,255,255,.55);
+      border-radius: 50%;
+    }
+    .orbit-center {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 126px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--yellow);
+      color: #18242c;
+      font-family: "DM Mono", monospace;
+      font-size: 2.2rem;
+      font-weight: 500;
+      box-shadow: 0 12px 0 rgba(24, 42, 49, .2);
+    }
+    .orb {
+      position: absolute;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #fffefa;
+      color: #14232b;
+      font-family: "DM Mono", monospace;
+      font-weight: 500;
+      font-size: 1.25rem;
+      box-shadow: 0 7px 0 rgba(24, 42, 49, .22);
+    }
+    .o1 { top: 29px; left: 50%; transform: translateX(-50%) rotate(3deg); }
+    .o2 { right: 33px; top: 45%; transform: translateY(-50%) rotate(7deg); }
+    .o3 { bottom: 29px; left: 50%; transform: translateX(-50%) rotate(-4deg); }
+    .o4 { left: 33px; top: 45%; transform: translateY(-50%) rotate(-8deg); }
+    .match-mini { position: absolute; width: 92px; height: 92px; right: -5px; bottom: 8px; }
+    .match-mini i { position: absolute; display: block; width: 72px; height: 9px; border-radius: 999px; background: #e0ad5f; }
+    .match-mini i::after { content:""; position:absolute; right:-2px; top:-3px; width:15px; height:15px; border-radius:50%; background:#c5422c; }
+    .match-mini i:nth-child(1) { left: 10px; top: 10px; transform: rotate(45deg); }
+    .match-mini i:nth-child(2) { right: 7px; top: 11px; transform: rotate(135deg); }
+    .match-mini i:nth-child(3) { left: 10px; bottom: 14px; transform: rotate(-45deg); }
+    .match-mini i:nth-child(4) { right: 7px; bottom: 14px; transform: rotate(-135deg); }
+    .jump-nav {
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      display: flex;
+      width: max-content;
+      max-width: calc(100% - 24px);
+      margin: 0 auto 46px;
+      padding: 6px;
+      gap: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .jump-nav a { padding: 10px 16px; border-radius: 999px; color: var(--muted); text-decoration: none; font-weight: 800; }
+    .jump-nav a:hover, .jump-nav a:focus-visible { background: var(--surface-2); color: var(--ink); outline: none; }
+    section { scroll-margin-top: 88px; }
+    .section-head { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 18px; align-items: start; margin-bottom: 24px; }
+    .section-num { font: 500 1.05rem "DM Mono", monospace; color: var(--orange-deep); padding-top: 7px; }
+    h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.04; letter-spacing: -.04em; }
+    .section-head p { margin: 10px 0 0; color: var(--muted); max-width: 680px; font-size: 1.05rem; }
+    .simulation { padding: 28px 0 80px; }
+    .sim-grid { display: grid; grid-template-columns: minmax(0, 1.16fr) minmax(310px, .84fr); gap: 22px; align-items: stretch; }
+    .panel { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .match-panel { border-radius: var(--radius-lg) var(--radius-sm) var(--radius-lg) var(--radius-lg); padding: 24px; }
+    .panel h3 { margin: 0; font-size: 1.35rem; letter-spacing: -.02em; }
+    .panel-sub { margin: 5px 0 20px; color: var(--muted); }
+    .match-stage {
+      min-height: 255px;
+      padding: 20px 10px;
+      border-radius: 15px;
+      background-color: var(--surface-2);
+      background-image: radial-gradient(var(--line) 1.2px, transparent 1.2px);
+      background-size: 18px 18px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    #matchSvg { width: 100%; height: 215px; overflow: visible; }
+    #matchSvg line { stroke: #e5ad55; stroke-width: 9; stroke-linecap: round; }
+    #matchSvg circle { fill: #b83b28; }
+    .stage-controls { margin-top: 18px; display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .round-btn { width: 46px; height: 46px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface-2); font-size: 1.4rem; cursor: pointer; }
+    .round-btn:disabled { opacity: .35; cursor: not-allowed; }
+    input[type="range"] { width: 100%; accent-color: var(--orange); }
+    .match-result { border-radius: var(--radius-sm) var(--radius-lg) var(--radius-lg) var(--radius-lg); padding: 24px; display: flex; flex-direction: column; }
+    .stage-tag { display: inline-flex; align-self: flex-start; padding: 5px 10px; border-radius: 999px; background: var(--orange-soft); color: var(--orange-deep); font-weight: 900; }
+    .big-number { margin: 18px 0 0; font: 500 clamp(4.2rem, 10vw, 7rem)/1 "DM Mono", monospace; letter-spacing: -.08em; color: var(--orange-deep); }
+    .match-result .unit { margin: 0 0 20px; font-weight: 800; }
+    .rule-card { margin-top: auto; padding: 16px; background: var(--surface-2); border-radius: 15px; }
+    .rule-card strong { display: block; margin-bottom: 5px; }
+    .formula { font: 500 1.05rem/1.55 "DM Mono", monospace; }
+    .sequence-lab { margin-top: 22px; border-radius: var(--radius-lg); overflow: hidden; }
+    .lab-top { padding: 24px 24px 0; display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; }
+    .tabs { display: inline-flex; padding: 4px; background: var(--surface-2); border-radius: 999px; gap: 4px; }
+    .tab { border: 0; background: transparent; border-radius: 999px; padding: 8px 14px; font-weight: 800; color: var(--muted); cursor: pointer; }
+    .tab.active { background: var(--teal); color: #fff; }
+    .lab-body { display: grid; grid-template-columns: minmax(285px, .7fr) minmax(0, 1.3fr); gap: 24px; padding: 24px; }
+    .input-grid { display: grid; gap: 14px; }
+    label { display: grid; gap: 6px; color: var(--muted); font-weight: 800; }
+    .input-hint { font-size: .82rem; font-weight: 600; }
+    input[type="number"] {
+      width: 100%;
+      min-height: 46px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "DM Mono", monospace;
+    }
+    .sequence-display { min-width: 0; padding: 20px; border-radius: 16px; background: var(--surface-2); }
+    .terms { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 54px; }
+    .term { padding: 9px 12px; border-radius: 9px; background: var(--surface); border: 1px solid var(--line); font: 500 1rem "DM Mono", monospace; }
+    .arrow { color: var(--teal-deep); font-weight: 900; }
+    .lab-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+    .metric { padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+    .metric span { display: block; color: var(--muted); font-size: .86rem; font-weight: 800; }
+    .metric strong { display: block; margin-top: 4px; font: 500 1.12rem "DM Mono", monospace; word-break: break-word; }
+    .calc-panel { margin-top: 22px; border-radius: var(--radius-sm) var(--radius-lg) var(--radius-lg) var(--radius-lg); padding: 24px; }
+    .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 12px; align-items: end; margin-top: 18px; }
+    .calc-output { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .calc-answer { padding: 18px; background: var(--teal-soft); border-radius: 14px; }
+    .calc-answer span { display: block; color: var(--teal-deep); font-weight: 900; }
+    .calc-answer strong { display: block; margin-top: 3px; font: 500 1.8rem "DM Mono", monospace; }
+    .formula-note { margin: 14px 0 0; color: var(--muted); font-size: .9rem; }
+    .quiz-section { padding: 72px 0 100px; background: var(--ink); color: var(--bg); }
+    @media (prefers-color-scheme: dark) {
+      .quiz-section { background: #e8e4da; color: #13232b; }
+    }
+    .quiz-section .section-num { color: #ff9b76; }
+    .quiz-section .section-head p { color: color-mix(in srgb, currentColor 72%, transparent); }
+    .quiz-card { width: min(860px, 100%); margin: 34px auto 0; padding: clamp(22px, 5vw, 44px); background: var(--surface); color: var(--ink); border-radius: 10px 34px 34px 34px; box-shadow: 0 22px 60px rgba(0,0,0,.24); }
+    .quiz-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+    .progress-wrap { flex: 1; display: flex; align-items: center; gap: 12px; }
+    .progress { height: 10px; flex: 1; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+    .progress > div { height: 100%; width: 0; background: var(--orange); transition: width .25s ease; }
+    .progress-label { font: 500 .85rem "DM Mono", monospace; color: var(--muted); white-space: nowrap; }
+    .score-badge { padding: 7px 12px; border-radius: 999px; background: var(--teal-soft); color: var(--teal-deep); font-weight: 900; white-space: nowrap; }
+    .quiz-topic { margin: 0 0 10px; color: var(--orange-deep); font-weight: 900; }
+    .question { margin: 0 0 24px; font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.25; letter-spacing: -.025em; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .choice {
+      min-height: 62px;
+      padding: 14px 16px;
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--ink);
+      text-align: left;
+      font-weight: 800;
+      cursor: pointer;
+      transition: border .14s ease, background .14s ease, transform .14s ease;
+    }
+    .choice:hover:not(:disabled) { border-color: var(--teal); transform: translateY(-1px); }
+    .choice.selected { border-color: var(--teal); background: var(--teal-soft); }
+    .choice.correct { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+    .choice.wrong { border-color: var(--red); background: var(--red-soft); color: var(--red); }
+    .choice:disabled { cursor: default; }
+    .quiz-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 24px; }
+    .feedback { display: none; margin-top: 20px; padding: 16px 18px; border-radius: 13px; background: var(--surface-2); }
+    .feedback.show { display: block; }
+    .feedback strong { display: block; margin-bottom: 4px; }
+    .feedback p { margin: 0; color: var(--muted); }
+    .quiz-start, .quiz-end { text-align: center; padding: 20px 0 10px; }
+    .quiz-start h3, .quiz-end h3 { margin: 0 0 10px; font-size: clamp(1.8rem, 5vw, 2.7rem); letter-spacing: -.035em; }
+    .quiz-start p, .quiz-end p { max-width: 560px; margin: 0 auto 24px; color: var(--muted); }
+    .result-ring { width: 156px; height: 156px; margin: 0 auto 20px; display: grid; place-items: center; border-radius: 50%; background: var(--teal-soft); border: 12px solid var(--teal); }
+    .result-ring strong { font: 500 2.5rem "DM Mono", monospace; color: var(--teal-deep); }
+    .result-detail { margin-bottom: 24px; font-weight: 800; }
+    .hidden { display: none !important; }
+    .quick-notes { padding: 72px 0 90px; }
+    .note-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .note { padding: 22px; border-top: 5px solid var(--orange); background: var(--surface); box-shadow: var(--shadow); }
+    .note:nth-child(2) { border-top-color: var(--teal); }
+    .note:nth-child(3) { border-top-color: var(--yellow); }
+    .note h3 { margin: 0 0 9px; }
+    .note p { margin: 0; color: var(--muted); }
+    .note .formula { margin-top: 12px; color: var(--ink); }
+    footer { padding: 24px 0 calc(28px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); color: var(--muted); text-align: center; font-size: .9rem; }
+    @media (max-width: 840px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 42px; gap: 24px; }
+      .hero-visual { min-height: 290px; }
+      .number-orbit { width: min(320px, 82vw); }
+      .orb { width: 50px; height: 50px; }
+      .sim-grid, .lab-body { grid-template-columns: 1fr; }
+      .calc-grid { grid-template-columns: 1fr 1fr; }
+      .calc-grid .btn { grid-column: 1 / -1; }
+      .note-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 22px, 1180px); }
+      .hero { padding-top: 28px; }
+      h1 { font-size: clamp(2.55rem, 13.5vw, 4.2rem); }
+      .hero p { font-size: 1rem; }
+      .hero-visual { min-height: 255px; }
+      .number-orbit { width: 268px; }
+      .number-orbit::before { inset: 21px; }
+      .orbit-center { width: 98px; font-size: 1.7rem; }
+      .orb { width: 43px; height: 43px; border-radius: 10px; font-size: 1rem; }
+      .o1 { top: 20px; } .o2 { right: 21px; } .o3 { bottom: 20px; } .o4 { left: 21px; }
+      .match-mini { right: -3px; bottom: -2px; transform: scale(.78); }
+      .jump-nav { margin-bottom: 36px; overflow: hidden; }
+      .jump-nav a { padding: 9px 12px; font-size: .9rem; }
+      .section-head { grid-template-columns: 1fr; gap: 0; }
+      .section-num { padding: 0 0 5px; }
+      .match-panel, .match-result, .calc-panel { padding: 18px; }
+      .match-stage { min-height: 214px; padding: 10px 3px; }
+      #matchSvg { height: 195px; }
+      .stage-controls { grid-template-columns: auto minmax(0, 1fr) auto; }
+      .lab-top { padding: 18px 18px 0; display: grid; }
+      .lab-body { padding: 18px; }
+      .tabs { width: 100%; }
+      .tab { flex: 1; padding-inline: 9px; }
+      .lab-summary, .calc-output { grid-template-columns: 1fr; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .calc-grid .btn { grid-column: auto; }
+      .choices { grid-template-columns: 1fr; }
+      .quiz-card { padding: 20px 16px; border-radius: 8px 24px 24px 24px; }
+      .quiz-top { align-items: flex-start; }
+      .progress-wrap { display: grid; gap: 6px; }
+      .quiz-actions { align-items: stretch; flex-direction: column-reverse; }
+      .quiz-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <main>
+    <div class="wrap hero">
+      <div>
+        <p class="eyebrow">Matematika kelas VIII</p>
+        <h1>Temukan aturan di balik setiap pola.</h1>
+        <p>Geser, ubah angka, dan uji dugaanmu. Pelajari pola susunan benda, barisan, serta deret aritmetika dan geometri lewat percobaan langsung.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-jump="#simulasi">Mulai simulasi</button>
+          <button class="btn btn-secondary" data-jump="#kuis">Langsung ke kuis</button>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Ilustrasi pola bilangan 2, 5, 8, 11 mengelilingi rumus tambah 3">
+        <div class="number-orbit" aria-hidden="true">
+          <div class="orbit-center">+3</div>
+          <div class="orb o1">2</div><div class="orb o2">5</div><div class="orb o3">8</div><div class="orb o4">11</div>
+        </div>
+        <div class="match-mini" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+
+    <nav class="jump-nav" aria-label="Navigasi materi">
+      <a href="#simulasi">Simulasi</a>
+      <a href="#kalkulator">Kalkulator</a>
+      <a href="#kuis">Kuis</a>
+      <a href="#ringkasan">Rumus</a>
+    </nav>
+
+    <section id="simulasi" class="simulation">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-num">01 / Eksplorasi</div>
+          <div><h2>Bangun pola, lalu baca aturannya.</h2><p>Mulai dari benda konkret. Setiap persegi baru berbagi satu sisi, sehingga cukup menambah tiga batang korek api.</p></div>
+        </div>
+
+        <div class="sim-grid">
+          <article class="panel match-panel">
+            <h3>Pola persegi berantai</h3>
+            <p class="panel-sub">Geser tahap atau gunakan tombol panah.</p>
+            <div class="match-stage">
+              <svg id="matchSvg" viewBox="0 0 620 220" role="img" aria-labelledby="matchTitle matchDesc">
+                <title id="matchTitle">Pola batang korek api</title>
+                <desc id="matchDesc">Susunan persegi berantai yang berubah sesuai tahap.</desc>
+              </svg>
+            </div>
+            <div class="stage-controls">
+              <button id="prevStage" class="round-btn" aria-label="Tahap sebelumnya">−</button>
+              <input id="stageRange" type="range" min="1" max="8" value="4" aria-label="Pilih tahap pola" />
+              <button id="nextStage" class="round-btn" aria-label="Tahap berikutnya">+</button>
+            </div>
+          </article>
+
+          <aside class="panel match-result" aria-live="polite">
+            <span class="stage-tag" id="stageTag">Tahap ke-4</span>
+            <div class="big-number" id="matchCount">13</div>
+            <p class="unit">batang korek api</p>
+            <div class="rule-card">
+              <strong>Apa yang tetap?</strong>
+              <div class="formula">U<sub>n</sub> = 4 + (n − 1) × 3</div>
+              <div class="formula">U<sub>n</sub> = 3n + 1</div>
+            </div>
+          </aside>
+        </div>
+
+        <article class="panel sequence-lab">
+          <div class="lab-top">
+            <div><h3>Laboratorium barisan</h3><p class="panel-sub">Ubah nilai, amati pola suku dan jumlahnya.</p></div>
+            <div class="tabs" role="tablist" aria-label="Jenis barisan">
+              <button class="tab active" id="arithTab" role="tab" aria-selected="true">Aritmetika</button>
+              <button class="tab" id="geoTab" role="tab" aria-selected="false">Geometri</button>
+            </div>
+          </div>
+          <div class="lab-body">
+            <div class="input-grid">
+              <label>Suku pertama (a)
+                <input id="seqA" type="number" value="2" min="-50" max="50" step="1" aria-label="Suku pertama generator barisan" />
+              </label>
+              <label><span id="stepLabel">Beda (b)</span>
+                <input id="seqStep" type="number" value="3" min="-10" max="10" step="1" aria-label="Beda atau rasio generator barisan" />
+                <span class="input-hint" id="stepHint">Selisih antarsuku</span>
+              </label>
+              <label>Banyak suku yang ditampilkan
+                <input id="seqN" type="number" value="6" min="2" max="10" step="1" aria-label="Banyak suku yang ditampilkan" />
+              </label>
+            </div>
+            <div class="sequence-display">
+              <div class="terms" id="terms" aria-live="polite"></div>
+              <div class="lab-summary">
+                <div class="metric"><span>Aturan suku ke-n</span><strong id="ruleFormula">Uₙ = 2 + (n−1)3</strong></div>
+                <div class="metric"><span>Jumlah suku ditampilkan</span><strong id="sumValue">S₆ = 57</strong></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="kalkulator" class="panel calc-panel">
+          <h3>Kalkulator suku ke-n & jumlah n suku</h3>
+          <p class="panel-sub">Hasil berubah otomatis saat nilai diubah.</p>
+          <div class="calc-grid">
+            <label>Jenis
+              <select id="calcType">
+                <option value="arith">Aritmetika</option>
+                <option value="geo">Geometri</option>
+              </select>
+            </label>
+            <label>Suku pertama (a)<input id="calcA" type="number" value="5" step="1" aria-label="Suku pertama kalkulator" /></label>
+            <label><span id="calcStepLabel">Beda (b)</span><input id="calcStep" type="number" value="4" step="1" aria-label="Beda atau rasio kalkulator" /></label>
+            <label>Nilai n<input id="calcN" type="number" value="8" min="1" max="50" step="1" aria-label="Nilai n kalkulator" /></label>
+            <button id="calcBtn" class="btn btn-primary">Hitung</button>
+          </div>
+          <div id="calcMessage" class="formula-note" role="status"></div>
+          <div class="calc-output">
+            <div class="calc-answer"><span>Suku ke-n</span><strong id="nthResult">33</strong></div>
+            <div class="calc-answer"><span>Jumlah n suku</span><strong id="sumResult">152</strong></div>
+          </div>
+          <p class="formula-note" id="calcFormula">Uₙ = a + (n−1)b &nbsp; • &nbsp; Sₙ = n/2 × (2a + (n−1)b)</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="kuis" class="quiz-section">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-num">02 / Tantangan</div>
+          <div><h2>Uji pola pikirmu.</h2><p>Sepuluh soal, urutan selalu berbeda. Pilih jawaban tanpa label huruf, lalu baca pembahasannya.</p></div>
+        </div>
+
+        <div class="quiz-card" id="quizCard">
+          <div id="quizStart" class="quiz-start">
+            <h3>Siap memulai?</h3>
+            <p>Soal dan pilihan jawaban akan diacak. Setiap jawaban benar bernilai 10 poin.</p>
+            <button id="startQuiz" class="btn btn-primary">Mulai 10 soal</button>
+          </div>
+
+          <div id="quizPlay" class="hidden">
+            <div class="quiz-top">
+              <div class="progress-wrap"><div class="progress"><div id="progressBar"></div></div><span id="progressLabel" class="progress-label">1 / 10</span></div>
+              <div class="score-badge">Skor <span id="scoreValue">0</span></div>
+            </div>
+            <p id="quizTopic" class="quiz-topic"></p>
+            <h3 id="questionText" class="question"></h3>
+            <div id="choices" class="choices"></div>
+            <div id="feedback" class="feedback" aria-live="polite">
+              <strong id="feedbackTitle"></strong>
+              <p id="feedbackText"></p>
+            </div>
+            <div class="quiz-actions">
+              <button id="restartQuiz" class="btn btn-secondary btn-small">Acak ulang</button>
+              <button id="checkAnswer" class="btn btn-primary" disabled>Periksa jawaban</button>
+              <button id="nextQuestion" class="btn btn-primary hidden">Soal berikutnya</button>
+            </div>
+          </div>
+
+          <div id="quizEnd" class="quiz-end hidden">
+            <div class="result-ring"><strong id="finalScore">0</strong></div>
+            <h3 id="resultTitle">Latihan selesai!</h3>
+            <p id="resultText"></p>
+            <div class="result-detail" id="resultDetail"></div>
+            <button id="retryQuiz" class="btn btn-primary">Ulangi dengan urutan baru</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ringkasan" class="quick-notes">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-num">03 / Ringkasan</div>
+          <div><h2>Tiga ide yang perlu diingat.</h2><p>Kenali jenis pola lebih dulu, lalu pilih rumus yang tepat.</p></div>
+        </div>
+        <div class="note-grid">
+          <article class="note"><h3>Pola susunan benda</h3><p>Cari bagian awal dan pertambahan yang selalu sama dari satu tahap ke tahap berikutnya.</p><div class="formula">Contoh: 4, 7, 10, 13, …</div></article>
+          <article class="note"><h3>Barisan & deret aritmetika</h3><p>Barisan mempunyai beda tetap. Deret adalah hasil penjumlahan suku-sukunya.</p><div class="formula">Uₙ = a + (n−1)b<br>Sₙ = n/2 (2a + (n−1)b)</div></article>
+          <article class="note"><h3>Barisan & deret geometri</h3><p>Barisan mempunyai rasio tetap. Setiap suku diperoleh dengan mengalikan rasio.</p><div class="formula">Uₙ = arⁿ⁻¹<br>Sₙ = a(rⁿ−1)/(r−1), r ≠ 1</div></article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">Belajar pola berarti belajar melihat hubungan, bukan sekadar menghafal angka.</div></footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var stage = 4;
+      var stageRange = document.getElementById("stageRange");
+      var matchSvg = document.getElementById("matchSvg");
+      var prevStage = document.getElementById("prevStage");
+      var nextStage = document.getElementById("nextStage");
+
+      function addMatch(x1, y1, x2, y2) {
+        var ns = "http://www.w3.org/2000/svg";
+        var line = document.createElementNS(ns, "line");
+        line.setAttribute("x1", x1); line.setAttribute("y1", y1); line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+        matchSvg.appendChild(line);
+        var c = document.createElementNS(ns, "circle");
+        c.setAttribute("cx", x2); c.setAttribute("cy", y2); c.setAttribute("r", "6.3");
+        matchSvg.appendChild(c);
+      }
+
+      function renderMatches() {
+        while (matchSvg.children.length > 2) matchSvg.removeChild(matchSvg.lastChild);
+        var size = Math.min(72, 490 / stage);
+        var totalW = stage * size;
+        var startX = (620 - totalW) / 2;
+        var top = 70;
+        for (var i = 0; i < stage; i++) {
+          var x = startX + i * size;
+          addMatch(x, top, x + size, top);
+          addMatch(x, top + size, x + size, top + size);
+          if (i === 0) addMatch(x, top, x, top + size);
+          addMatch(x + size, top, x + size, top + size);
+        }
+        document.getElementById("stageTag").textContent = "Tahap ke-" + stage;
+        document.getElementById("matchCount").textContent = 3 * stage + 1;
+        stageRange.value = stage;
+        prevStage.disabled = stage === 1;
+        nextStage.disabled = stage === 8;
+        matchSvg.setAttribute("aria-label", "Tahap ke-" + stage + ", terdiri atas " + stage + " persegi berantai dan " + (3 * stage + 1) + " batang korek api.");
+      }
+      stageRange.addEventListener("input", function () { stage = Number(stageRange.value); renderMatches(); });
+      prevStage.addEventListener("click", function () { if (stage > 1) { stage--; renderMatches(); } });
+      nextStage.addEventListener("click", function () { if (stage < 8) { stage++; renderMatches(); } });
+      renderMatches();
+
+      var seqType = "arith";
+      var seqA = document.getElementById("seqA");
+      var seqStep = document.getElementById("seqStep");
+      var seqN = document.getElementById("seqN");
+      var arithTab = document.getElementById("arithTab");
+      var geoTab = document.getElementById("geoTab");
+
+      function safeNum(input, fallback, min, max) {
+        var value = Number(input.value);
+        if (!Number.isFinite(value)) value = fallback;
+        if (typeof min === "number") value = Math.max(min, value);
+        if (typeof max === "number") value = Math.min(max, value);
+        return value;
+      }
+      function formatNum(value) {
+        if (!Number.isFinite(value)) return "—";
+        if (Math.abs(value) >= 1000000) return value.toExponential(2).replace("e+", " × 10^");
+        return Number.isInteger(value) ? String(value) : String(Number(value.toFixed(3)));
+      }
+      function renderSequence() {
+        var a = safeNum(seqA, 2, -50, 50);
+        var step = safeNum(seqStep, seqType === "arith" ? 3 : 2, -10, 10);
+        var n = Math.round(safeNum(seqN, 6, 2, 10));
+        var vals = [];
+        for (var i = 0; i < n; i++) vals.push(seqType === "arith" ? a + i * step : a * Math.pow(step, i));
+        var terms = document.getElementById("terms");
+        terms.innerHTML = "";
+        vals.forEach(function (v, idx) {
+          var term = document.createElement("span"); term.className = "term"; term.textContent = formatNum(v); terms.appendChild(term);
+          if (idx < vals.length - 1) { var arrow = document.createElement("span"); arrow.className = "arrow"; arrow.textContent = "→"; terms.appendChild(arrow); }
+        });
+        var sum = vals.reduce(function (acc, v) { return acc + v; }, 0);
+        if (seqType === "arith") {
+          document.getElementById("ruleFormula").textContent = "Uₙ = " + formatNum(a) + " + (n−1)(" + formatNum(step) + ")";
+        } else {
+          document.getElementById("ruleFormula").textContent = "Uₙ = " + formatNum(a) + " × (" + formatNum(step) + ")ⁿ⁻¹";
+        }
+        document.getElementById("sumValue").textContent = "S" + n + " = " + formatNum(sum);
+      }
+      function setSeqType(type) {
+        seqType = type;
+        var arith = type === "arith";
+        arithTab.classList.toggle("active", arith); arithTab.setAttribute("aria-selected", String(arith));
+        geoTab.classList.toggle("active", !arith); geoTab.setAttribute("aria-selected", String(!arith));
+        document.getElementById("stepLabel").textContent = arith ? "Beda (b)" : "Rasio (r)";
+        document.getElementById("stepHint").textContent = arith ? "Selisih antarsuku" : "Pengali antarsuku";
+        seqStep.value = arith ? "3" : "2";
+        renderSequence();
+      }
+      arithTab.addEventListener("click", function () { setSeqType("arith"); });
+      geoTab.addEventListener("click", function () { setSeqType("geo"); });
+      [seqA, seqStep, seqN].forEach(function (el) { el.addEventListener("input", renderSequence); });
+      renderSequence();
+
+      var calcType = document.getElementById("calcType");
+      var calcA = document.getElementById("calcA");
+      var calcStep = document.getElementById("calcStep");
+      var calcN = document.getElementById("calcN");
+      function calculate() {
+        var type = calcType.value;
+        var a = Number(calcA.value), s = Number(calcStep.value), n = Math.round(Number(calcN.value));
+        var msg = document.getElementById("calcMessage");
+        if (!Number.isFinite(a) || !Number.isFinite(s) || !Number.isFinite(n) || n < 1 || n > 50) {
+          document.getElementById("nthResult").textContent = "—";
+          document.getElementById("sumResult").textContent = "—";
+          msg.textContent = "Masukkan angka yang valid. Nilai n harus 1–50.";
+          return;
+        }
+        var un, sn;
+        if (type === "arith") {
+          un = a + (n - 1) * s;
+          sn = n / 2 * (2 * a + (n - 1) * s);
+          document.getElementById("calcFormula").textContent = "Uₙ = a + (n−1)b  •  Sₙ = n/2 × (2a + (n−1)b)";
+        } else {
+          un = a * Math.pow(s, n - 1);
+          sn = s === 1 ? a * n : a * (Math.pow(s, n) - 1) / (s - 1);
+          document.getElementById("calcFormula").textContent = s === 1 ? "Saat r = 1, semua suku sama dan Sₙ = na." : "Uₙ = arⁿ⁻¹  •  Sₙ = a(rⁿ−1)/(r−1)";
+        }
+        document.getElementById("nthResult").textContent = formatNum(un);
+        document.getElementById("sumResult").textContent = formatNum(sn);
+        msg.textContent = "Dihitung untuk n = " + n + ".";
+      }
+      calcType.addEventListener("change", function () {
+        var geo = calcType.value === "geo";
+        document.getElementById("calcStepLabel").textContent = geo ? "Rasio (r)" : "Beda (b)";
+        calcStep.value = geo ? "2" : "4";
+        calculate();
+      });
+      document.getElementById("calcBtn").addEventListener("click", calculate);
+      [calcA, calcStep, calcN].forEach(function (el) { el.addEventListener("input", calculate); });
+      calculate();
+
+      var questions = [
+        { topic: "Pola susunan benda", q: "Pola batang korek api membentuk persegi berantai: 4, 7, 10, 13, …. Berapa banyak batang pada tahap ke-8?", options: [25, 22, 28, 24], answer: 25, exp: "Setiap tahap bertambah 3. U₈ = 4 + (8−1) × 3 = 4 + 21 = 25." },
+        { topic: "Pola bilangan", q: "Manakah tiga suku berikutnya dari 2, 6, 12, 20, …?", options: ["30, 42, 56", "28, 38, 50", "30, 40, 52", "24, 30, 36"], answer: "30, 42, 56", exp: "Selisihnya 4, 6, 8, lalu 10, 12, 14. Jadi suku berikutnya 30, 42, dan 56." },
+        { topic: "Barisan aritmetika", q: "Barisan 7, 12, 17, 22, … mempunyai beda …", options: [5, 4, 6, 7], answer: 5, exp: "Beda diperoleh dari 12 − 7 = 5. Selisih ini tetap untuk setiap dua suku berurutan." },
+        { topic: "Barisan aritmetika", q: "Suku ke-15 dari barisan 3, 7, 11, 15, … adalah …", options: [59, 55, 63, 61], answer: 59, exp: "a = 3 dan b = 4. U₁₅ = 3 + (15−1) × 4 = 3 + 56 = 59." },
+        { topic: "Deret aritmetika", q: "Jumlah 10 suku pertama dari 2 + 5 + 8 + 11 + … adalah …", options: [155, 145, 165, 175], answer: 155, exp: "a = 2, b = 3. S₁₀ = 10/2 × (2×2 + 9×3) = 5 × 31 = 155." },
+        { topic: "Barisan geometri", q: "Rasio dari barisan 3, 6, 12, 24, … adalah …", options: [2, 3, 6, 4], answer: 2, exp: "Rasio adalah hasil bagi dua suku berurutan: 6 ÷ 3 = 2." },
+        { topic: "Barisan geometri", q: "Suku ke-6 dari barisan 2, 6, 18, 54, … adalah …", options: [486, 162, 324, 729], answer: 486, exp: "a = 2 dan r = 3. U₆ = 2 × 3⁵ = 2 × 243 = 486." },
+        { topic: "Deret geometri", q: "Jumlah 5 suku pertama dari 1 + 2 + 4 + 8 + … adalah …", options: [31, 30, 32, 63], answer: 31, exp: "Lima sukunya 1, 2, 4, 8, 16. Jumlahnya 1 + 2 + 4 + 8 + 16 = 31." },
+        { topic: "Membedakan pola", q: "Barisan yang termasuk geometri adalah …", options: ["5, 10, 20, 40", "4, 8, 12, 16", "2, 5, 8, 11", "12, 10, 8, 6"], answer: "5, 10, 20, 40", exp: "Setiap suku dikali 2, sehingga rasionya tetap. Tiga pilihan lain memiliki beda tetap." },
+        { topic: "Penerapan", q: "Sebuah koloni bakteri berjumlah 5 dan membelah dua setiap jam. Banyak bakteri setelah 4 kali pembelahan adalah …", options: [80, 40, 20, 160], answer: 80, exp: "Nilai awal 5 dikali 2 sebanyak 4 kali: 5 × 2⁴ = 5 × 16 = 80." }
+      ];
+      var quizOrder = [], current = 0, score = 0, selected = null, checked = false;
+      var quizStart = document.getElementById("quizStart"), quizPlay = document.getElementById("quizPlay"), quizEnd = document.getElementById("quizEnd");
+      function shuffled(arr) {
+        var copy = arr.slice();
+        for (var i = copy.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = copy[i]; copy[i] = copy[j]; copy[j] = t; }
+        return copy;
+      }
+      function startQuiz() {
+        quizOrder = shuffled(questions);
+        current = 0; score = 0; selected = null; checked = false;
+        quizStart.classList.add("hidden"); quizEnd.classList.add("hidden"); quizPlay.classList.remove("hidden");
+        document.getElementById("scoreValue").textContent = "0";
+        showQuestion();
+      }
+      function showQuestion() {
+        var item = quizOrder[current]; selected = null; checked = false;
+        document.getElementById("quizTopic").textContent = item.topic;
+        document.getElementById("questionText").textContent = item.q;
+        document.getElementById("progressLabel").textContent = (current + 1) + " / " + questions.length;
+        document.getElementById("progressBar").style.width = ((current + 1) / questions.length * 100) + "%";
+        document.getElementById("feedback").classList.remove("show");
+        var choices = document.getElementById("choices"); choices.innerHTML = "";
+        shuffled(item.options).forEach(function (option) {
+          var button = document.createElement("button");
+          button.className = "choice"; button.textContent = option; button.dataset.value = String(option);
+          button.addEventListener("click", function () {
+            if (checked) return;
+            Array.prototype.forEach.call(choices.children, function (c) { c.classList.remove("selected"); });
+            button.classList.add("selected"); selected = option;
+            document.getElementById("checkAnswer").disabled = false;
+          });
+          choices.appendChild(button);
+        });
+        document.getElementById("checkAnswer").classList.remove("hidden");
+        document.getElementById("checkAnswer").disabled = true;
+        document.getElementById("nextQuestion").classList.add("hidden");
+      }
+      function checkAnswer() {
+        if (selected === null || checked) return;
+        checked = true;
+        var item = quizOrder[current];
+        var correct = String(selected) === String(item.answer);
+        if (correct) score += 10;
+        document.getElementById("scoreValue").textContent = score;
+        Array.prototype.forEach.call(document.getElementById("choices").children, function (button) {
+          button.disabled = true;
+          if (button.dataset.value === String(item.answer)) button.classList.add("correct");
+          else if (button.dataset.value === String(selected)) button.classList.add("wrong");
+        });
+        document.getElementById("feedbackTitle").textContent = correct ? "Tepat!" : "Belum tepat.";
+        document.getElementById("feedbackText").textContent = item.exp;
+        document.getElementById("feedback").classList.add("show");
+        document.getElementById("checkAnswer").classList.add("hidden");
+        var nextBtn = document.getElementById("nextQuestion");
+        nextBtn.textContent = current === questions.length - 1 ? "Lihat nilai akhir" : "Soal berikutnya";
+        nextBtn.classList.remove("hidden");
+      }
+      function nextQuestion() {
+        if (current < questions.length - 1) { current++; showQuestion(); }
+        else finishQuiz();
+      }
+      function finishQuiz() {
+        quizPlay.classList.add("hidden"); quizEnd.classList.remove("hidden");
+        document.getElementById("finalScore").textContent = score;
+        var title = score >= 80 ? "Hebat, pola sudah terbaca!" : score >= 60 ? "Bagus, teruskan latihan." : "Ayo coba sekali lagi.";
+        var text = score >= 80 ? "Kamu sudah kuat dalam mengenali dan menghitung pola." : score >= 60 ? "Pemahamanmu sudah berkembang. Periksa kembali pembahasan yang terasa sulit." : "Gunakan simulasi di atas, lalu ulangi kuis dengan urutan baru.";
+        document.getElementById("resultTitle").textContent = title;
+        document.getElementById("resultText").textContent = text;
+        document.getElementById("resultDetail").textContent = (score / 10) + " jawaban benar dari 10 soal";
+      }
+      document.getElementById("startQuiz").addEventListener("click", startQuiz);
+      document.getElementById("retryQuiz").addEventListener("click", startQuiz);
+      document.getElementById("restartQuiz").addEventListener("click", startQuiz);
+      document.getElementById("checkAnswer").addEventListener("click", checkAnswer);
+      document.getElementById("nextQuestion").addEventListener("click", nextQuestion);
+
+      Array.prototype.forEach.call(document.querySelectorAll("[data-jump]"), function (button) {
+        button.addEventListener("click", function () { document.querySelector(button.dataset.jump).scrollIntoView({ behavior: "smooth" }); });
+      });
+    })();
+  </script>
+</body>
+</html>

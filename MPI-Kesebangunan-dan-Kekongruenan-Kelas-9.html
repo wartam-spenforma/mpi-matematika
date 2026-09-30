@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Kesebangunan dan Kekongruenan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: #f5f7f2;
+      --surface: #ffffff;
+      --surface-2: #e9efe9;
+      --ink: #13251f;
+      --muted: #52655e;
+      --line: #c9d5ce;
+      --green: #087f5b;
+      --green-2: #d8f3e8;
+      --orange: #ed6a2c;
+      --orange-2: #ffeadf;
+      --blue: #1677a6;
+      --blue-2: #dceff7;
+      --yellow: #f3c852;
+      --danger: #b83b32;
+      --shadow: 0 16px 50px rgba(22, 47, 38, .10);
+      --radius: 22px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #101815;
+        --surface: #18231f;
+        --surface-2: #22302b;
+        --ink: #eef8f2;
+        --muted: #afc2b9;
+        --line: #354b42;
+        --green: #55d3a8;
+        --green-2: #173f33;
+        --orange: #ff9361;
+        --orange-2: #49291f;
+        --blue: #64bce5;
+        --blue-2: #16394a;
+        --yellow: #ffd769;
+        --danger: #ff8c84;
+        --shadow: 0 16px 50px rgba(0, 0, 0, .28);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Public Sans", sans-serif;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .hero {
+      padding: 58px 0 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(310px, .9fr);
+      gap: 42px;
+      align-items: center;
+    }
+    .chapter {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--green);
+      font-weight: 800;
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .chapter::before { content: ""; width: 30px; height: 3px; background: currentColor; border-radius: 9px; }
+    h1 {
+      margin: 0 0 18px;
+      max-width: 760px;
+      font-size: clamp(2.35rem, 6vw, 5.6rem);
+      line-height: .96;
+      letter-spacing: -.055em;
+      font-weight: 800;
+    }
+    h1 .versus { color: var(--orange); font-family: "IBM Plex Mono", monospace; font-size: .7em; letter-spacing: -.05em; }
+    .lead { max-width: 680px; font-size: clamp(1rem, 2vw, 1.18rem); color: var(--muted); margin: 0 0 24px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 17px;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--green); color: #fff; }
+    @media (prefers-color-scheme: dark) { .btn-primary { color: #0e1b16; } }
+    .btn-secondary { background: var(--surface); border: 1px solid var(--line); box-shadow: 0 5px 18px rgba(22, 47, 38, .06); }
+    .hero-visual {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 34px 14px 34px 14px;
+      min-height: 330px;
+      position: relative;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero-visual svg { display: block; width: 100%; height: 330px; }
+    .hero-note {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      padding: 10px 13px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    .guide-strip {
+      margin-bottom: 42px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .guide-item { padding: 18px 20px; display: flex; gap: 12px; align-items: center; }
+    .guide-item + .guide-item { border-left: 1px solid var(--line); }
+    .guide-num { font: 600 .76rem "IBM Plex Mono", monospace; color: var(--green); }
+    .guide-item strong { display: block; font-size: .95rem; }
+    .guide-item span:last-child { color: var(--muted); font-size: .83rem; }
+    .sticky-nav {
+      position: sticky;
+      top: 8px;
+      z-index: 20;
+      width: max-content;
+      max-width: calc(100% - 32px);
+      margin: 0 auto 38px;
+      padding: 6px;
+      display: flex;
+      gap: 4px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(12, 36, 28, .10);
+      backdrop-filter: blur(12px);
+    }
+    .sticky-nav a {
+      padding: 9px 13px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .sticky-nav a:hover { background: var(--surface-2); }
+    section { scroll-margin-top: 90px; }
+    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 18px; }
+    .section-label { margin: 0 0 5px; color: var(--green); font: 600 .78rem "IBM Plex Mono", monospace; }
+    h2 { margin: 0; font-size: clamp(1.65rem, 4vw, 2.8rem); letter-spacing: -.035em; line-height: 1.08; }
+    .section-head p { max-width: 480px; margin: 0; color: var(--muted); }
+    .lab {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 70px;
+    }
+    .lab-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); }
+    .stage { padding: 28px; background-image: radial-gradient(var(--line) .8px, transparent .8px); background-size: 18px 18px; min-width: 0; }
+    .stage-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+    .segmented { display: inline-flex; background: var(--surface-2); padding: 4px; border-radius: 11px; }
+    .segmented button { border: 0; background: transparent; padding: 8px 12px; border-radius: 8px; font-size: .83rem; font-weight: 800; cursor: pointer; }
+    .segmented button.active { background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+    .live-badge { color: var(--green); background: var(--green-2); border-radius: 99px; padding: 7px 10px; font-size: .76rem; font-weight: 800; }
+    .diagram { width: 100%; height: auto; min-height: 360px; display: block; }
+    .control-panel { padding: 26px; border-left: 1px solid var(--line); }
+    .control-panel h3, .concept h3 { margin: 0 0 6px; font-size: 1.12rem; }
+    .control-panel > p { margin: 0 0 24px; color: var(--muted); font-size: .9rem; }
+    .control { margin: 0 0 22px; }
+    .control label { display: flex; justify-content: space-between; gap: 12px; font-weight: 700; font-size: .88rem; margin-bottom: 9px; }
+    .value { font-family: "IBM Plex Mono", monospace; color: var(--green); }
+    input[type="range"] { width: 100%; accent-color: var(--green); cursor: pointer; }
+    .ratio-list { display: grid; gap: 9px; margin: 20px 0; }
+    .ratio-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; background: var(--surface-2); border-radius: 9px; font-size: .84rem; }
+    .ratio-row code { color: var(--green); font: 600 .82rem "IBM Plex Mono", monospace; }
+    .finding { padding: 14px; background: var(--green-2); border-radius: 12px; font-size: .88rem; }
+    .finding strong { display: block; color: var(--green); margin-bottom: 3px; }
+    .concept-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: -42px auto 70px; }
+    .concept { padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+    .concept .mono { display: block; color: var(--orange); font: 600 .86rem "IBM Plex Mono", monospace; margin-bottom: 10px; }
+    .concept p { color: var(--muted); margin: 0; font-size: .9rem; }
+    .match-status {
+      padding: 11px 14px;
+      border-radius: 10px;
+      background: var(--orange-2);
+      color: var(--orange);
+      font-weight: 800;
+      font-size: .86rem;
+    }
+    .match-status.done { background: var(--green-2); color: var(--green); }
+    .button-row { display: flex; gap: 9px; flex-wrap: wrap; }
+    .mini-btn { border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 9px 11px; font-weight: 800; cursor: pointer; font-size: .82rem; }
+    .hint { margin-top: 12px; color: var(--muted); font-size: .82rem; min-height: 2.5em; }
+    .application-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(310px, .8fr); gap: 18px; margin-bottom: 76px; }
+    .shadow-card, .formula-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .shadow-card { padding: 24px; }
+    .shadow-card svg { display: block; width: 100%; height: auto; }
+    .formula-card { padding: 26px; }
+    .formula-card h3 { margin: 0 0 4px; }
+    .formula-card > p { margin: 0 0 22px; color: var(--muted); font-size: .9rem; }
+    .formula {
+      margin: 20px 0;
+      padding: 18px;
+      background: var(--blue-2);
+      border-radius: 12px;
+      color: var(--blue);
+      text-align: center;
+      font: 600 clamp(.9rem, 2.4vw, 1.06rem) "IBM Plex Mono", monospace;
+    }
+    .answer { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
+    .answer span { color: var(--muted); font-size: .88rem; }
+    .answer strong { color: var(--green); font: 600 clamp(1.7rem, 4vw, 2.7rem) "IBM Plex Mono", monospace; }
+    .quiz-wrap { margin-bottom: 76px; }
+    .quiz-shell { display: grid; grid-template-columns: 220px minmax(0, 1fr); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); min-height: 520px; }
+    .quiz-side { padding: 26px 20px; background: var(--green); color: #fff; }
+    @media (prefers-color-scheme: dark) { .quiz-side { color: #0e1b16; } }
+    .quiz-side p { margin: 0 0 18px; opacity: .86; font-size: .86rem; }
+    .score-ring { width: 112px; height: 112px; margin: 20px auto 24px; border: 8px solid color-mix(in srgb, white 30%, transparent); border-radius: 50%; display: grid; place-items: center; text-align: center; }
+    .score-ring strong { display: block; font: 600 2rem "IBM Plex Mono", monospace; line-height: 1; }
+    .score-ring span { font-size: .7rem; font-weight: 800; }
+    .dots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .dot { aspect-ratio: 1; border-radius: 50%; border: 2px solid color-mix(in srgb, white 45%, transparent); display: grid; place-items: center; font-size: .68rem; font-weight: 800; }
+    .dot.current { background: #fff; color: #087f5b; }
+    .dot.correct { background: var(--yellow); color: #2b250c; border-color: var(--yellow); }
+    .dot.wrong { background: #ffb09a; color: #47170d; border-color: #ffb09a; }
+    .quiz-main { padding: clamp(24px, 5vw, 48px); display: flex; flex-direction: column; }
+    .quiz-meta { color: var(--green); font: 600 .8rem "IBM Plex Mono", monospace; margin-bottom: 16px; }
+    .question { margin: 0 0 26px; font-size: clamp(1.25rem, 3vw, 1.7rem); line-height: 1.34; }
+    .options { display: grid; gap: 10px; }
+    .option { position: relative; display: block; }
+    .option input { position: absolute; opacity: 0; }
+    .option span { display: block; padding: 14px 16px; border: 1px solid var(--line); border-radius: 11px; cursor: pointer; transition: background .15s, border .15s; }
+    .option input:checked + span { border-color: var(--green); background: var(--green-2); }
+    .option input:disabled + span { cursor: default; }
+    .option.correct span { border-color: var(--green); background: var(--green-2); }
+    .option.wrong span { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, var(--surface)); }
+    .feedback { display: none; margin-top: 18px; padding: 15px; border-radius: 11px; background: var(--surface-2); font-size: .9rem; }
+    .feedback.show { display: block; }
+    .feedback strong { display: block; margin-bottom: 4px; }
+    .quiz-actions { margin-top: auto; padding-top: 24px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .quiz-actions .btn { min-width: 130px; }
+    .result { display: none; margin: auto; max-width: 560px; text-align: center; }
+    .result.show { display: block; }
+    .result-mark { width: 94px; height: 94px; border-radius: 30% 70% 60% 40%; background: var(--green-2); display: grid; place-items: center; margin: 0 auto 22px; color: var(--green); font: 600 1.75rem "IBM Plex Mono", monospace; }
+    .result h3 { margin: 0 0 8px; font-size: 2rem; }
+    .result p { color: var(--muted); margin: 0 0 24px; }
+    .summary-band { margin: 0 0 40px; padding: 28px; background: var(--ink); color: var(--paper); border-radius: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: center; }
+    .summary-band h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+    .summary-list { display: grid; gap: 10px; }
+    .summary-line { display: grid; grid-template-columns: 46px 1fr; gap: 12px; align-items: center; font-size: .9rem; }
+    .summary-line b { font: 600 .78rem "IBM Plex Mono", monospace; color: var(--yellow); }
+    footer { color: var(--muted); padding: 0 0 44px; text-align: center; font-size: .82rem; }
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: 1fr; padding-top: 38px; }
+      .hero-visual { min-height: 280px; }
+      .hero-visual svg { height: 280px; }
+      .guide-strip { grid-template-columns: 1fr; }
+      .guide-item + .guide-item { border-left: 0; border-top: 1px solid var(--line); }
+      .section-head { display: block; }
+      .section-head p { margin-top: 10px; }
+      .lab-grid, .application-grid { grid-template-columns: 1fr; }
+      .control-panel { border-left: 0; border-top: 1px solid var(--line); }
+      .concept-row { grid-template-columns: 1fr; margin-top: -44px; }
+      .quiz-shell { grid-template-columns: 1fr; }
+      .quiz-side { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
+      .quiz-side p { margin: 0; }
+      .score-ring { width: 76px; height: 76px; border-width: 6px; margin: 0; grid-row: span 2; }
+      .score-ring strong { font-size: 1.35rem; }
+      .dots { grid-column: 1 / -1; grid-template-columns: repeat(10, 1fr); }
+      .summary-band { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 20px, 1180px); }
+      .hero { gap: 24px; }
+      h1 { font-size: clamp(2.25rem, 13vw, 3.7rem); }
+      .hero-actions .btn { flex: 1; }
+      .sticky-nav { top: 6px; max-width: calc(100% - 16px); width: calc(100% - 16px); overflow: hidden; }
+      .sticky-nav a { flex: 1; text-align: center; padding: 9px 5px; font-size: .72rem; }
+      .stage, .control-panel, .shadow-card, .formula-card { padding: 18px; }
+      .stage-top { align-items: flex-start; flex-direction: column; }
+      .diagram { min-height: 300px; }
+      .concept-row { margin-bottom: 58px; }
+      .quiz-main { padding: 24px 18px; min-height: 560px; }
+      .option span { padding-right: 12px; }
+      .quiz-actions { align-items: stretch; flex-direction: column; }
+      .quiz-actions .btn { width: 100%; }
+      .summary-band { padding: 22px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <header class="shell hero">
+    <div>
+      <div class="chapter">Matematika kelas IX</div>
+      <h1>Kesebangunan <span class="versus">≠</span><br>Kekongruenan</h1>
+      <p class="lead">Ubah ukuran, cocokkan bangun, lalu buktikan sendiri. Kesebangunan menjaga <b>bentuk</b>; kekongruenan menjaga <b>bentuk dan ukuran</b>.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#simulasi">Mulai simulasi <span aria-hidden="true">→</span></a>
+        <a class="btn btn-secondary" href="#kuis">Langsung ke kuis</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-label="Ilustrasi dua segitiga sebangun dengan ukuran berbeda">
+      <svg viewBox="0 0 460 330" role="img" aria-hidden="true">
+        <defs>
+          <pattern id="heroGrid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 L 0 0 0 28" fill="none" stroke="var(--line)" stroke-width="1"/></pattern>
+        </defs>
+        <rect width="460" height="330" fill="url(#heroGrid)"/>
+        <polygon points="46,242 126,242 66,162" fill="var(--blue-2)" stroke="var(--blue)" stroke-width="4" stroke-linejoin="round"/>
+        <polygon points="202,242 362,242 242,82" fill="var(--orange-2)" stroke="var(--orange)" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M56 242 A18 18 0 0 1 59 226" fill="none" stroke="var(--blue)" stroke-width="2"/>
+        <path d="M218 242 A24 24 0 0 1 223 221" fill="none" stroke="var(--orange)" stroke-width="2"/>
+        <text x="72" y="267" fill="var(--ink)" font-family="IBM Plex Mono" font-size="14">4 cm</text>
+        <text x="267" y="267" fill="var(--ink)" font-family="IBM Plex Mono" font-size="14">8 cm</text>
+        <path d="M177 118 C203 97, 214 97, 237 111" fill="none" stroke="var(--green)" stroke-width="3" stroke-dasharray="6 6"/>
+        <path d="M230 103 l9 9 -13 3" fill="none" stroke="var(--green)" stroke-width="3"/>
+      </svg>
+      <div class="hero-note">rasio sisi = 1 : 2</div>
+    </div>
+  </header>
+
+  <div class="shell guide-strip" aria-label="Alur belajar">
+    <div class="guide-item"><span class="guide-num">01</span><div><strong>Amati</strong><span>Ubah bangun pada simulasi</span></div></div>
+    <div class="guide-item"><span class="guide-num">02</span><div><strong>Temukan</strong><span>Bandingkan sisi dan sudut</span></div></div>
+    <div class="guide-item"><span class="guide-num">03</span><div><strong>Uji</strong><span>Selesaikan 10 soal</span></div></div>
+  </div>
+
+  <nav class="sticky-nav" aria-label="Navigasi materi">
+    <a href="#simulasi">Sebangun</a>
+    <a href="#kongruen">Kongruen</a>
+    <a href="#penerapan">Penerapan</a>
+    <a href="#kuis">Kuis</a>
+  </nav>
+
+  <main class="shell">
+    <section id="simulasi">
+      <div class="section-head">
+        <div><p class="section-label">LAB 01 / KESERUPAAN BENTUK</p><h2>Bangun sebangun</h2></div>
+        <p>Gerakkan faktor skala. Perhatikan bahwa ukuran berubah, tetapi sudut dan rasio sisi bersesuaian tetap teratur.</p>
+      </div>
+      <div class="lab">
+        <div class="lab-grid">
+          <div class="stage">
+            <div class="stage-top">
+              <div class="segmented" role="group" aria-label="Pilih jenis bangun">
+                <button id="shapeTriangle" class="active" type="button">Segitiga</button>
+                <button id="shapeQuad" type="button">Segiempat</button>
+              </div>
+              <span class="live-badge">Diperbarui langsung</span>
+            </div>
+            <svg id="similaritySvg" class="diagram" viewBox="0 0 700 390" role="img" aria-label="Dua bangun yang dibandingkan">
+              <g opacity=".45" stroke="var(--line)" stroke-width="1">
+                <path d="M0 50H700M0 100H700M0 150H700M0 200H700M0 250H700M0 300H700M0 350H700"/>
+                <path d="M50 0V390M100 0V390M150 0V390M200 0V390M250 0V390M300 0V390M350 0V390M400 0V390M450 0V390M500 0V390M550 0V390M600 0V390M650 0V390"/>
+              </g>
+              <g id="shapeA"></g><g id="shapeB"></g>
+            </svg>
+          </div>
+          <aside class="control-panel">
+            <h3>Ubah ukuran bangun B</h3>
+            <p>Bangun B selalu mengikuti faktor skala terhadap bangun A.</p>
+            <div class="control">
+              <label for="scaleRange"><span>Faktor skala</span><output id="scaleOutput" class="value">1,50×</output></label>
+              <input id="scaleRange" type="range" min="0.6" max="2" value="1.5" step="0.1" />
+            </div>
+            <div class="ratio-list" id="ratioList" aria-live="polite"></div>
+            <div class="finding"><strong>Temuan</strong><span id="similarityFinding">Semua perbandingan sisi bersesuaian sama, sedangkan sudut-sudutnya tetap sama besar.</span></div>
+          </aside>
+        </div>
+      </div>
+      <div class="concept-row" aria-label="Syarat kesebangunan">
+        <article class="concept"><span class="mono">SISI ↔ SISI</span><h3>Perbandingan senilai</h3><p>Rasio semua pasangan sisi yang bersesuaian harus sama.</p></article>
+        <article class="concept"><span class="mono">SUDUT ↔ SUDUT</span><h3>Sudut sama besar</h3><p>Setiap sudut bertemu dengan sudut bersesuaian yang besarnya sama.</p></article>
+        <article class="concept"><span class="mono">KHUSUS SEGITIGA</span><h3>AA, SSS, atau SAS</h3><p>Dua sudut sama; tiga sisi sebanding; atau dua sisi sebanding dan sudut apit sama.</p></article>
+      </div>
+    </section>
+
+    <section id="kongruen">
+      <div class="section-head">
+        <div><p class="section-label">LAB 02 / TEPAT BERTUMPUK</p><h2>Uji kekongruenan</h2></div>
+        <p>Geser dan putar segitiga jingga sampai menutupi segitiga biru. Ukuran tidak boleh berubah.</p>
+      </div>
+      <div class="lab">
+        <div class="lab-grid">
+          <div class="stage">
+            <div class="stage-top">
+              <span id="matchStatus" class="match-status">Belum tepat bertumpuk</span>
+              <span class="live-badge">Bisa diseret</span>
+            </div>
+            <svg id="matchSvg" class="diagram" viewBox="0 0 700 390" role="img" aria-label="Permainan mencocokkan dua segitiga kongruen">
+              <g opacity=".45" stroke="var(--line)" stroke-width="1">
+                <path d="M0 50H700M0 100H700M0 150H700M0 200H700M0 250H700M0 300H700M0 350H700"/>
+                <path d="M50 0V390M100 0V390M150 0V390M200 0V390M250 0V390M300 0V390M350 0V390M400 0V390M450 0V390M500 0V390M550 0V390M600 0V390M650 0V390"/>
+              </g>
+              <g transform="translate(430 195)">
+                <polygon points="-95,70 95,70 -55,-90" fill="var(--blue-2)" stroke="var(--blue)" stroke-width="4" stroke-linejoin="round"/>
+                <text x="0" y="108" text-anchor="middle" fill="var(--blue)" font-family="Public Sans" font-weight="700" font-size="15">TARGET</text>
+              </g>
+              <g id="movingShape" transform="translate(180 170) rotate(-55)" style="cursor:grab;touch-action:none">
+                <polygon points="-95,70 95,70 -55,-90" fill="var(--orange-2)" fill-opacity=".85" stroke="var(--orange)" stroke-width="4" stroke-linejoin="round"/>
+                <circle cx="0" cy="17" r="7" fill="var(--orange)"/>
+              </g>
+            </svg>
+          </div>
+          <aside class="control-panel">
+            <h3>Transformasi kaku</h3>
+            <p>Translasi dan rotasi memindahkan bangun tanpa mengubah panjang sisi maupun sudut.</p>
+            <div class="control"><label for="moveX"><span>Posisi mendatar</span><output id="xOutput" class="value">180</output></label><input id="moveX" type="range" min="100" max="600" value="180" step="1" /></div>
+            <div class="control"><label for="moveY"><span>Posisi tegak</span><output id="yOutput" class="value">170</output></label><input id="moveY" type="range" min="90" max="300" value="170" step="1" /></div>
+            <div class="control"><label for="rotate"><span>Rotasi</span><output id="rotateOutput" class="value">−55°</output></label><input id="rotate" type="range" min="-180" max="180" value="-55" step="1" /></div>
+            <div class="button-row"><button id="hintBtn" type="button" class="mini-btn">Beri petunjuk</button><button id="resetMatch" type="button" class="mini-btn">Ulangi posisi</button></div>
+            <div id="matchHint" class="hint" aria-live="polite"></div>
+            <div class="finding"><strong>Syarat kongruen</strong>Bangun memiliki bentuk dan ukuran yang sama. Untuk segitiga: SSS, SAS, ASA/AAS, atau RHS.</div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="penerapan">
+      <div class="section-head">
+        <div><p class="section-label">LAB 03 / BAYANGAN MATAHARI</p><h2>Mengukur tanpa memanjat</h2></div>
+        <p>Tinggi benda dapat ditemukan dari dua segitiga sebangun yang terbentuk oleh benda, bayangan, dan sinar matahari.</p>
+      </div>
+      <div class="application-grid">
+        <div class="shadow-card">
+          <svg id="shadowSvg" viewBox="0 0 700 420" role="img" aria-label="Ilustrasi pengukuran tinggi pohon menggunakan bayangan">
+            <rect x="0" y="0" width="700" height="420" rx="16" fill="var(--blue-2)"/>
+            <circle cx="90" cy="82" r="34" fill="var(--yellow)"/>
+            <line x1="50" y1="355" x2="650" y2="355" stroke="var(--ink)" stroke-width="4"/>
+            <g id="treeGraphic">
+              <rect x="503" y="170" width="20" height="185" rx="4" fill="#8b5738"/>
+              <circle cx="513" cy="132" r="72" fill="var(--green)"/>
+              <circle cx="470" cy="158" r="46" fill="var(--green)"/>
+              <circle cx="554" cy="160" r="48" fill="var(--green)"/>
+            </g>
+            <line id="treeRay" x1="513" y1="78" x2="225" y2="355" stroke="var(--orange)" stroke-width="3" stroke-dasharray="8 7"/>
+            <line id="treeShadow" x1="513" y1="355" x2="225" y2="355" stroke="var(--orange)" stroke-width="8" stroke-linecap="round"/>
+            <g id="poleGraphic"><line x1="160" y1="267" x2="160" y2="355" stroke="var(--blue)" stroke-width="8"/><circle cx="160" cy="264" r="9" fill="var(--blue)"/></g>
+            <line id="poleRay" x1="160" y1="264" x2="95" y2="355" stroke="var(--orange)" stroke-width="3" stroke-dasharray="8 7"/>
+            <line id="poleShadow" x1="160" y1="355" x2="95" y2="355" stroke="var(--blue)" stroke-width="8" stroke-linecap="round"/>
+            <text id="treeShadowLabel" x="369" y="387" fill="var(--ink)" text-anchor="middle" font-family="IBM Plex Mono" font-size="15">8 m</text>
+            <text id="poleShadowLabel" x="128" y="387" fill="var(--ink)" text-anchor="middle" font-family="IBM Plex Mono" font-size="15">2 m</text>
+            <text id="poleHeightLabel" x="145" y="307" fill="var(--blue)" text-anchor="end" font-family="IBM Plex Mono" font-size="15">1,5 m</text>
+            <text id="treeHeightLabel" x="540" y="245" fill="var(--green)" font-family="IBM Plex Mono" font-size="15">? m</text>
+          </svg>
+        </div>
+        <aside class="formula-card">
+          <h3>Eksperimen bayangan</h3>
+          <p>Atur data pengukuran, lalu baca tinggi pohon hasil perbandingan.</p>
+          <div class="control"><label for="poleHeight"><span>Tinggi tongkat</span><output id="poleHeightOut" class="value">1,5 m</output></label><input id="poleHeight" type="range" min="0.5" max="2.5" value="1.5" step="0.1" /></div>
+          <div class="control"><label for="poleShadowInput"><span>Bayangan tongkat</span><output id="poleShadowOut" class="value">2,0 m</output></label><input id="poleShadowInput" type="range" min="0.5" max="4" value="2" step="0.1" /></div>
+          <div class="control"><label for="treeShadowInput"><span>Bayangan pohon</span><output id="treeShadowOut" class="value">8,0 m</output></label><input id="treeShadowInput" type="range" min="2" max="14" value="8" step="0.5" /></div>
+          <div id="shadowFormula" class="formula">tinggi pohon = 1,5 / 2,0 × 8,0</div>
+          <div class="answer"><span>Tinggi pohon</span><strong id="treeAnswer">6,0 m</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="kuis" class="quiz-wrap">
+      <div class="section-head">
+        <div><p class="section-label">UJI PEMAHAMAN / 10 SOAL</p><h2>Kuis tantangan</h2></div>
+        <p>Pilih satu jawaban. Pembahasan muncul setelah jawaban diperiksa, dan nilai akhir dihitung otomatis.</p>
+      </div>
+      <div class="quiz-shell">
+        <aside class="quiz-side">
+          <div><strong>Skor sementara</strong><p>10 poin per jawaban benar</p></div>
+          <div class="score-ring"><div><strong id="scoreNow">0</strong><span>/ 100</span></div></div>
+          <div id="quizDots" class="dots" aria-label="Kemajuan kuis"></div>
+        </aside>
+        <div class="quiz-main">
+          <div id="quizContent">
+            <div id="quizMeta" class="quiz-meta">SOAL 01 / 10</div>
+            <h3 id="questionText" class="question"></h3>
+            <div id="options" class="options"></div>
+            <div id="feedback" class="feedback" aria-live="polite"></div>
+            <div class="quiz-actions">
+              <span id="answerPrompt" class="hint">Pilih jawaban terlebih dahulu.</span>
+              <button id="quizButton" class="btn btn-primary" type="button">Periksa jawaban</button>
+            </div>
+          </div>
+          <div id="result" class="result">
+            <div id="resultMark" class="result-mark">0</div>
+            <h3 id="resultTitle">Kuis selesai!</h3>
+            <p id="resultText"></p>
+            <button id="restartQuiz" type="button" class="btn btn-primary">Ulangi kuis</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary-band" aria-label="Ringkasan materi">
+      <h2>Satu bentuk, dua gagasan.</h2>
+      <div class="summary-list">
+        <div class="summary-line"><b>≈</b><span><strong>Sebangun:</strong> bentuk sama, ukuran boleh berbeda.</span></div>
+        <div class="summary-line"><b>≅</b><span><strong>Kongruen:</strong> bentuk dan ukuran sama.</span></div>
+        <div class="summary-line"><b>→</b><span>Setiap bangun kongruen pasti sebangun dengan faktor skala 1.</span></div>
+      </div>
+    </section>
+  </main>
+  <footer class="shell">Matematika Kelas IX · Kesebangunan dan Kekongruenan</footer>
+
+  <script>
+    (function () {
+      const ns = 'http://www.w3.org/2000/svg';
+      const fmt = (n, digits) => Number(n).toFixed(digits == null ? 1 : digits).replace('.', ',');
+      const svgEl = (tag, attrs, text) => {
+        const el = document.createElementNS(ns, tag);
+        Object.keys(attrs || {}).forEach(k => el.setAttribute(k, attrs[k]));
+        if (text != null) el.textContent = text;
+        return el;
+      };
+
+      // Similarity lab
+      let activeShape = 'triangle';
+      const scaleRange = document.getElementById('scaleRange');
+      const shapeA = document.getElementById('shapeA');
+      const shapeB = document.getElementById('shapeB');
+      const ratioList = document.getElementById('ratioList');
+      const baseData = {
+        triangle: { points: [[0, 120], [160, 120], [0, 0]], lengths: [4, 5, 3], labels: ['AB', 'BC', 'CA'], angles: ['90°', '37°', '53°'] },
+        quad: { points: [[0, 110], [160, 110], [130, 0], [30, 0]], lengths: [4, 3, 2.5, 3], labels: ['AB', 'BC', 'CD', 'DA'], angles: ['74°', '74°', '106°', '106°'] }
+      };
+      function drawShape(group, data, originX, originY, scale, color, fill, suffix) {
+        group.innerHTML = '';
+        const pts = data.points.map(p => [originX + p[0] * scale, originY + p[1] * scale]);
+        group.appendChild(svgEl('polygon', { points: pts.map(p => p.join(',')).join(' '), fill, stroke: color, 'stroke-width': 4, 'stroke-linejoin': 'round' }));
+        pts.forEach((p, i) => {
+          group.appendChild(svgEl('circle', { cx: p[0], cy: p[1], r: 5, fill: color }));
+          group.appendChild(svgEl('text', { x: p[0] + (i === 0 ? -18 : 10), y: p[1] + (i < 2 ? 23 : -10), fill: 'var(--ink)', 'font-family': 'IBM Plex Mono', 'font-size': 14, 'font-weight': 600 }, String.fromCharCode(65 + i) + suffix));
+        });
+        const bounds = pts.reduce((a,p) => ({ minX: Math.min(a.minX,p[0]), maxX: Math.max(a.maxX,p[0]), minY: Math.min(a.minY,p[1]), maxY: Math.max(a.maxY,p[1]) }), {minX:999,maxX:0,minY:999,maxY:0});
+        group.appendChild(svgEl('text', { x: (bounds.minX+bounds.maxX)/2, y: bounds.maxY + 54, fill: color, 'text-anchor': 'middle', 'font-family': 'Public Sans', 'font-size': 15, 'font-weight': 800 }, 'Bangun ' + (suffix ? 'B' : 'A')));
+      }
+      function renderSimilarity() {
+        const k = Number(scaleRange.value);
+        const data = baseData[activeShape];
+        const visualScaleA = activeShape === 'triangle' ? .8 : .75;
+        const visualScaleB = visualScaleA * k;
+        drawShape(shapeA, data, 65, 185, visualScaleA, 'var(--blue)', 'var(--blue-2)', '');
+        drawShape(shapeB, data, 375, 185, visualScaleB, 'var(--orange)', 'var(--orange-2)', "′");
+        document.getElementById('scaleOutput').value = fmt(k, 2) + '×';
+        ratioList.innerHTML = data.lengths.slice(0, 3).map((len, i) => {
+          const b = len * k;
+          return '<div class="ratio-row"><span>' + data.labels[i] + "′ / " + data.labels[i] + '</span><code>' + fmt(b) + ' / ' + fmt(len) + ' = ' + fmt(k,2) + '</code></div>';
+        }).join('') + '<div class="ratio-row"><span>Sudut bersesuaian</span><code>' + data.angles.slice(0,3).join(' · ') + '</code></div>';
+      }
+      scaleRange.addEventListener('input', renderSimilarity);
+      document.getElementById('shapeTriangle').addEventListener('click', function () { activeShape='triangle'; this.classList.add('active'); document.getElementById('shapeQuad').classList.remove('active'); renderSimilarity(); });
+      document.getElementById('shapeQuad').addEventListener('click', function () { activeShape='quad'; this.classList.add('active'); document.getElementById('shapeTriangle').classList.remove('active'); renderSimilarity(); });
+      renderSimilarity();
+
+      // Congruence matching lab
+      const movingShape = document.getElementById('movingShape');
+      const xRange = document.getElementById('moveX');
+      const yRange = document.getElementById('moveY');
+      const rotRange = document.getElementById('rotate');
+      const target = { x: 430, y: 195, r: 0 };
+      function renderMatch() {
+        const x = Number(xRange.value), y = Number(yRange.value), r = Number(rotRange.value);
+        movingShape.setAttribute('transform', 'translate(' + x + ' ' + y + ') rotate(' + r + ')');
+        document.getElementById('xOutput').value = x;
+        document.getElementById('yOutput').value = y;
+        document.getElementById('rotateOutput').value = (r < 0 ? '−' + Math.abs(r) : r) + '°';
+        const matched = Math.abs(x-target.x) <= 5 && Math.abs(y-target.y) <= 5 && Math.abs(r-target.r) <= 3;
+        const status = document.getElementById('matchStatus');
+        status.textContent = matched ? 'Tepat! Kedua bangun kongruen' : 'Belum tepat bertumpuk';
+        status.classList.toggle('done', matched);
+      }
+      [xRange,yRange,rotRange].forEach(el => el.addEventListener('input', renderMatch));
+      let dragging = false;
+      function svgPoint(evt) {
+        const svg = document.getElementById('matchSvg');
+        const rect = svg.getBoundingClientRect();
+        const clientX = evt.clientX, clientY = evt.clientY;
+        return { x: (clientX - rect.left) * 700 / rect.width, y: (clientY - rect.top) * 390 / rect.height };
+      }
+      movingShape.addEventListener('pointerdown', function(e){ dragging=true; movingShape.setPointerCapture(e.pointerId); movingShape.style.cursor='grabbing'; });
+      movingShape.addEventListener('pointermove', function(e){ if(!dragging) return; const p=svgPoint(e); xRange.value=Math.max(100,Math.min(600,p.x)); yRange.value=Math.max(90,Math.min(300,p.y)); renderMatch(); });
+      movingShape.addEventListener('pointerup', function(e){ dragging=false; movingShape.releasePointerCapture(e.pointerId); movingShape.style.cursor='grab'; });
+      document.getElementById('hintBtn').addEventListener('click', function(){ document.getElementById('matchHint').textContent='Arahkan pusat jingga ke (430, 195), lalu atur rotasi menjadi 0°.'; });
+      document.getElementById('resetMatch').addEventListener('click', function(){ xRange.value=180; yRange.value=170; rotRange.value=-55; document.getElementById('matchHint').textContent=''; renderMatch(); });
+      renderMatch();
+
+      // Shadow application
+      const ph = document.getElementById('poleHeight');
+      const ps = document.getElementById('poleShadowInput');
+      const ts = document.getElementById('treeShadowInput');
+      function renderShadow() {
+        const poleH=Number(ph.value), poleS=Number(ps.value), treeS=Number(ts.value), treeH=poleH/poleS*treeS;
+        document.getElementById('poleHeightOut').value=fmt(poleH)+' m';
+        document.getElementById('poleShadowOut').value=fmt(poleS)+' m';
+        document.getElementById('treeShadowOut').value=fmt(treeS)+' m';
+        document.getElementById('shadowFormula').textContent='tinggi pohon = '+fmt(poleH)+' / '+fmt(poleS)+' × '+fmt(treeS);
+        document.getElementById('treeAnswer').textContent=fmt(treeH)+' m';
+        document.getElementById('poleHeightLabel').textContent=fmt(poleH)+' m';
+        document.getElementById('poleShadowLabel').textContent=fmt(poleS)+' m';
+        document.getElementById('treeShadowLabel').textContent=fmt(treeS)+' m';
+        document.getElementById('treeHeightLabel').textContent=fmt(treeH)+' m';
+      }
+      [ph,ps,ts].forEach(el=>el.addEventListener('input',renderShadow));
+      renderShadow();
+
+      // Quiz
+      const questionBank = [
+        {q:'Dua bangun datar dikatakan sebangun jika …',o:['luasnya sama','sisi bersesuaian sama panjang','sudut bersesuaian sama besar dan sisi bersesuaian sebanding','kelilingnya sama'],a:2,e:'Kesebangunan mensyaratkan bentuk yang sama: sudut bersesuaian sama besar dan semua sisi bersesuaian memiliki rasio yang sama.'},
+        {q:'Segitiga dengan sisi 3 cm, 4 cm, dan 5 cm diperbesar dengan faktor 2. Panjang sisi-sisi bayangannya adalah …',o:['5 cm, 6 cm, 7 cm','6 cm, 8 cm, 10 cm','6 cm, 7 cm, 8 cm','9 cm, 12 cm, 15 cm'],a:1,e:'Kalikan setiap sisi dengan faktor skala 2: 3×2=6, 4×2=8, dan 5×2=10.'},
+        {q:'Dua segitiga sebangun. Sisi 4 cm bersesuaian dengan 6 cm, sedangkan sisi x bersesuaian dengan 9 cm. Nilai x adalah …',o:['5 cm','6 cm','7 cm','8 cm'],a:1,e:'Gunakan perbandingan 4/6 = x/9, sehingga x = 9×4/6 = 6 cm.'},
+        {q:'Jika tiga pasang sisi dua segitiga sama panjang, kriteria kongruen yang digunakan adalah …',o:['AA','SSS','SAS','AAS'],a:1,e:'SSS (sisi–sisi–sisi) berarti ketiga pasangan sisi bersesuaian sama panjang.'},
+        {q:'Dua segitiga memiliki tiga pasang sudut yang sama besar, tetapi ukurannya berbeda. Kedua segitiga itu …',o:['pasti kongruen','sebangun, belum tentu kongruen','tidak sebangun','memiliki luas sama'],a:1,e:'Kesamaan sudut menjamin bentuk yang sama (sebangun), tetapi ukuran dan panjang sisi dapat berbeda.'},
+        {q:'Tongkat setinggi 1,5 m memiliki bayangan 2 m. Pada saat yang sama, bayangan pohon 8 m. Tinggi pohon adalah …',o:['4 m','6 m','8 m','12 m'],a:1,e:'Tinggi pohon = 1,5/2 × 8 = 6 meter.'},
+        {q:'Persegi panjang 4 cm × 6 cm dan 6 cm × 9 cm adalah …',o:['sebangun dengan faktor skala 1,5','kongruen','sebangun dengan faktor skala 2','tidak sebangun'],a:0,e:'6/4 = 9/6 = 1,5. Kedua pasangan sisi memiliki perbandingan yang sama.'},
+        {q:'Dua segitiga memiliki dua sisi bersesuaian sama panjang dan sudut apit sama besar. Kriteria kongruennya adalah …',o:['AA','SSS','SAS','RHS'],a:2,e:'SAS adalah sisi–sudut–sisi. Sudut yang diketahui harus diapit oleh dua sisi yang diketahui.'},
+        {q:'Sebuah bangun diperbesar dengan faktor skala 3. Luas bangun baru menjadi … kali luas semula.',o:['3','6','9','12'],a:2,e:'Luas berubah menurut kuadrat faktor skala: 3² = 9 kali.'},
+        {q:'Pernyataan yang selalu benar adalah …',o:['semua bangun sebangun pasti kongruen','semua bangun kongruen pasti sebangun','bangun sebangun selalu sama luas','bangun kongruen boleh berbeda ukuran'],a:1,e:'Bangun kongruen pasti sebangun dengan faktor skala 1, tetapi bangun sebangun belum tentu kongruen.'}
+      ];
+      let questions=[];
+      let qIndex=0, score=0, answered=false, states=[];
+      const qText=document.getElementById('questionText'), optionsEl=document.getElementById('options'), feedback=document.getElementById('feedback'), quizBtn=document.getElementById('quizButton');
+      function shuffle(items){
+        const result=items.slice();
+        for(let i=result.length-1;i>0;i--){
+          const j=Math.floor(Math.random()*(i+1));
+          [result[i],result[j]]=[result[j],result[i]];
+        }
+        return result;
+      }
+      function prepareQuestions(){
+        questions=shuffle(questionBank).map(item=>{
+          const choices=shuffle(item.o.map((text,index)=>({text:text,correct:index===item.a})));
+          return {q:item.q,o:choices.map(choice=>choice.text),a:choices.findIndex(choice=>choice.correct),e:item.e};
+        });
+      }
+      function makeDots(){
+        document.getElementById('quizDots').innerHTML=questions.map((_,i)=>'<span class="dot '+(i===qIndex?'current ':'')+(states[i]||'')+'">'+(i+1)+'</span>').join('');
+      }
+      function renderQuestion(){
+        answered=false;
+        const item=questions[qIndex];
+        document.getElementById('quizMeta').textContent='SOAL '+String(qIndex+1).padStart(2,'0')+' / 10';
+        qText.textContent=item.q;
+        optionsEl.innerHTML=item.o.map((o,i)=>'<label class="option"><input type="radio" name="answer" value="'+i+'"><span>'+o+'</span></label>').join('');
+        feedback.className='feedback'; feedback.innerHTML='';
+        document.getElementById('answerPrompt').textContent='Pilih jawaban terlebih dahulu.';
+        quizBtn.textContent='Periksa jawaban';
+        makeDots();
+      }
+      quizBtn.addEventListener('click', function(){
+        if(!answered){
+          const selected=document.querySelector('input[name="answer"]:checked');
+          if(!selected){ document.getElementById('answerPrompt').textContent='Belum ada jawaban yang dipilih.'; return; }
+          answered=true;
+          const chosen=Number(selected.value), item=questions[qIndex], isCorrect=chosen===item.a;
+          if(isCorrect) score+=10;
+          states[qIndex]=isCorrect?'correct':'wrong';
+          document.getElementById('scoreNow').textContent=score;
+          document.querySelectorAll('.option').forEach((label,i)=>{ label.querySelector('input').disabled=true; if(i===item.a) label.classList.add('correct'); if(i===chosen&&!isCorrect) label.classList.add('wrong'); });
+          feedback.innerHTML='<strong>'+(isCorrect?'Benar!':'Belum tepat.')+'</strong>'+item.e;
+          feedback.classList.add('show');
+          document.getElementById('answerPrompt').textContent=isCorrect?'+10 poin':'Pelajari pembahasan, lalu lanjut.';
+          quizBtn.textContent=qIndex===questions.length-1?'Lihat nilai akhir':'Soal berikutnya';
+          makeDots();
+        } else {
+          if(qIndex<questions.length-1){ qIndex++; renderQuestion(); }
+          else showResult();
+        }
+      });
+      function showResult(){
+        document.getElementById('quizContent').style.display='none';
+        document.getElementById('result').classList.add('show');
+        document.getElementById('resultMark').textContent=score;
+        document.getElementById('resultTitle').textContent=score>=80?'Hebat, konsepnya kuat!':score>=60?'Bagus, lanjutkan latihan!':'Ayo coba sekali lagi!';
+        document.getElementById('resultText').textContent='Kamu menjawab '+(score/10)+' dari 10 soal dengan benar. '+(score>=80?'Kamu sudah mampu membedakan kesebangunan dan kekongruenan dengan baik.':'Gunakan kembali simulasi di atas untuk meninjau konsep yang masih membingungkan.');
+      }
+      function startQuiz(){
+        prepareQuestions();
+        qIndex=0; score=0; answered=false; states=[];
+        document.getElementById('scoreNow').textContent='0';
+        document.getElementById('quizContent').style.display='block';
+        document.getElementById('result').classList.remove('show');
+        renderQuestion();
+      }
+      document.getElementById('restartQuiz').addEventListener('click', startQuiz);
+      startQuiz();
+    })();
+  </script>
+</body>
+</html>

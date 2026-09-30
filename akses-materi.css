@@ -1,0 +1,98 @@
+html.mpi-access-pending body {
+  visibility: hidden;
+}
+
+html.mpi-access-pending.mpi-access-open body {
+  visibility: visible;
+}
+
+.mpi-access-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: 24px;
+  background: rgba(8, 28, 34, 0.72);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.mpi-access-card {
+  width: min(100%, 470px);
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  background: #fff;
+  color: #172b2a;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.mpi-access-card h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.15rem);
+  line-height: 1.1;
+}
+
+.mpi-access-card p {
+  margin: 10px 0 24px;
+  color: #526866;
+  line-height: 1.55;
+}
+
+.mpi-access-field {
+  display: grid;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.mpi-access-field label {
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.mpi-access-field input,
+.mpi-access-field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 13px;
+  border: 1px solid #cadbd8;
+  border-radius: 10px;
+  background: #f4f8f7;
+  color: #172b2a;
+  font: inherit;
+}
+
+.mpi-access-field input:focus,
+.mpi-access-field select:focus {
+  border-color: #087f78;
+  outline: 3px solid rgba(8, 127, 120, 0.18);
+}
+
+.mpi-access-submit {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 24px;
+  border: 0;
+  border-radius: 10px;
+  background: #087f78;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.mpi-access-submit:hover {
+  background: #066a64;
+}
+
+.mpi-access-note {
+  margin: 14px 0 0 !important;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .mpi-access-overlay { padding: 14px; }
+  .mpi-access-card { padding: 24px 20px; }
+}

@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <title>Media Interaktif Teorema Pythagoras</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bree+Serif&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: #f7f5ef;
+      --surface: #fffdf8;
+      --surface-2: #edf5f2;
+      --ink: #17211f;
+      --muted: #52605c;
+      --line: #1f2c29;
+      --line-soft: #cbd5d1;
+      --teal: #0f766e;
+      --teal-soft: #ccece5;
+      --coral: #e6553f;
+      --coral-soft: #f9d7cf;
+      --sun: #e8af1b;
+      --sun-soft: #f9e8ab;
+      --good: #157347;
+      --good-soft: #d9f2e5;
+      --bad: #b33838;
+      --bad-soft: #f7dddd;
+      --shadow: 0 8px 0 rgba(23, 33, 31, .12);
+      --grid: rgba(23, 33, 31, .055);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #111715;
+        --surface: #18211e;
+        --surface-2: #1d2b27;
+        --ink: #f3f2ea;
+        --muted: #bcc8c4;
+        --line: #ecf1ee;
+        --line-soft: #3f514b;
+        --teal: #47c7b8;
+        --teal-soft: #17463f;
+        --coral: #ff7b65;
+        --coral-soft: #592c27;
+        --sun: #f7c94d;
+        --sun-soft: #4f401b;
+        --good: #62d697;
+        --good-soft: #173e2c;
+        --bad: #ff8d8d;
+        --bad-soft: #4b2427;
+        --shadow: 0 8px 0 rgba(0, 0, 0, .28);
+        --grid: rgba(255, 255, 255, .055);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--ink);
+      font: 17px/1.55 "Atkinson Hyperlegible", sans-serif;
+    }
+    button, input, select { font: inherit; }
+    button, select, input { color: var(--ink); }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
+    .wrap { width: min(1140px, calc(100% - 32px)); margin-inline: auto; }
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: color-mix(in srgb, var(--paper) 91%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .top-nav .wrap {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .lesson-mark { font-weight: 700; white-space: nowrap; }
+    .lesson-mark span { color: var(--coral); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a {
+      text-decoration: none;
+      padding: 8px 12px;
+      border-bottom: 2px solid transparent;
+      font-size: .95rem;
+    }
+    .nav-links a:hover { border-color: var(--teal); }
+    .hero {
+      padding: 72px 0 48px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: clamp(28px, 5vw, 80px);
+      align-items: end;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--teal);
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+    h1, h2, h3, p { overflow-wrap: anywhere; }
+    h1, h2, h3 { font-family: "Bree Serif", serif; font-weight: 400; line-height: 1.08; }
+    h1 { font-size: clamp(2.6rem, 7vw, 5.8rem); max-width: 820px; margin: 0; letter-spacing: -.035em; }
+    .hero .accent { color: var(--coral); text-decoration: underline; text-decoration-thickness: .12em; text-underline-offset: .08em; }
+    .hero-copy > p:last-child { max-width: 640px; margin: 22px 0 0; font-size: 1.15rem; color: var(--muted); }
+    .formula-ticket {
+      background: var(--sun-soft);
+      border: 2px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      transform: rotate(1.5deg);
+    }
+    .formula-ticket .formula { font: 400 clamp(2.4rem, 6vw, 4.6rem)/1 "Bree Serif", serif; white-space: nowrap; }
+    .formula-ticket p { margin: 14px 0 0; }
+    .section { padding: 52px 0; scroll-margin-top: 70px; }
+    .section-head { display: grid; grid-template-columns: minmax(0, .8fr) minmax(280px, 1.2fr); gap: 28px; align-items: end; margin-bottom: 28px; }
+    .section-num { color: var(--coral); font-weight: 700; display: block; margin-bottom: 6px; }
+    h2 { font-size: clamp(2rem, 4.5vw, 3.6rem); margin: 0; letter-spacing: -.02em; }
+    .section-head p { margin: 0; color: var(--muted); max-width: 650px; }
+    .proof-lab {
+      background: var(--surface);
+      border: 2px solid var(--line);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(300px, .55fr);
+    }
+    .diagram-pane { min-width: 0; padding: clamp(14px, 3vw, 30px); border-right: 2px solid var(--line); }
+    .diagram-pane svg { display: block; width: 100%; height: auto; max-height: 610px; }
+    .control-pane { padding: 28px; display: flex; flex-direction: column; gap: 24px; }
+    .control-pane h3, .tool-card h3, .concept-card h3 { margin: 0; font-size: 1.45rem; }
+    .range-block { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; }
+    .range-block label { font-weight: 700; }
+    .range-value { min-width: 44px; text-align: center; padding: 2px 7px; background: var(--surface-2); border: 1px solid var(--line); font-weight: 700; }
+    input[type="range"] { width: 100%; grid-column: 1 / -1; accent-color: var(--teal); }
+    .preset-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip-btn {
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      padding: 7px 11px;
+      box-shadow: 2px 2px 0 var(--line-soft);
+    }
+    .chip-btn:hover { background: var(--teal-soft); }
+    .equality {
+      padding: 18px;
+      background: var(--surface-2);
+      border-top: 4px solid var(--teal);
+    }
+    .equality strong { display: block; font: 400 1.65rem/1.2 "Bree Serif", serif; margin-bottom: 6px; }
+    .equality span { color: var(--muted); }
+    .legend { display: grid; gap: 10px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; }
+    .swatch { width: 18px; height: 18px; border: 2px solid var(--line); flex: 0 0 auto; }
+    .swatch.coral { background: var(--coral-soft); }
+    .swatch.teal { background: var(--teal-soft); }
+    .swatch.sun { background: var(--sun-soft); }
+    .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .tool-card { background: var(--surface); border: 2px solid var(--line); padding: clamp(22px, 3vw, 32px); }
+    .tool-card:first-child { box-shadow: 6px 6px 0 var(--teal); }
+    .tool-card:last-child { box-shadow: 6px 6px 0 var(--coral); }
+    .tool-card > p { margin: 8px 0 22px; color: var(--muted); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: grid; gap: 6px; min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-weight: 700; }
+    input[type="number"], select {
+      width: 100%;
+      min-height: 46px;
+      border: 1.5px solid var(--line);
+      background: var(--paper);
+      padding: 9px 11px;
+      border-radius: 0;
+    }
+    .action-btn {
+      border: 2px solid var(--line);
+      background: var(--teal);
+      color: #fff;
+      min-height: 48px;
+      padding: 10px 18px;
+      font-weight: 700;
+      box-shadow: 4px 4px 0 var(--line);
+    }
+    @media (prefers-color-scheme: dark) { .action-btn { color: #071613; } }
+    .action-btn:hover { filter: brightness(1.07); transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--line); }
+    .action-btn.coral { background: var(--coral); }
+    .result-box {
+      margin-top: 18px;
+      min-height: 90px;
+      padding: 16px;
+      background: var(--surface-2);
+      border: 1.5px dashed var(--line);
+    }
+    .result-box strong { display: block; font-size: 1.2rem; margin-bottom: 4px; }
+    .result-box p { margin: 3px 0; }
+    .example-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 14px; color: var(--muted); font-size: .94rem; }
+    .concept-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 2px solid var(--line); margin-top: 28px; }
+    .concept-card { background: var(--surface); padding: 24px; }
+    .concept-card .symbol { font: 400 2.3rem/1 "Bree Serif", serif; color: var(--coral); margin-bottom: 12px; }
+    .concept-card p { margin: 8px 0 0; color: var(--muted); }
+    .quiz-shell { background: var(--surface); border: 2px solid var(--line); box-shadow: var(--shadow); overflow: hidden; }
+    .quiz-top { padding: 22px 26px; background: var(--teal); color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    @media (prefers-color-scheme: dark) { .quiz-top { color: #071613; } }
+    .progress-track { height: 10px; background: color-mix(in srgb, #fff 35%, transparent); flex: 1; max-width: 420px; border: 1px solid currentColor; }
+    .progress-fill { height: 100%; width: 0; background: var(--sun); transition: width .25s ease; }
+    .quiz-body { padding: clamp(24px, 5vw, 52px); }
+    .quiz-intro { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 28px; }
+    .quiz-intro h3 { margin: 0 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); }
+    .quiz-intro p { margin: 0; color: var(--muted); max-width: 640px; }
+    .question-text { margin: 0 0 26px; font: 400 clamp(1.5rem, 3.2vw, 2.25rem)/1.2 "Bree Serif", serif; }
+    .choice-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .choice {
+      min-height: 64px;
+      text-align: left;
+      border: 1.5px solid var(--line);
+      background: var(--paper);
+      padding: 14px 16px;
+      font-weight: 700;
+    }
+    .choice:hover:not(:disabled) { background: var(--sun-soft); }
+    .choice:disabled { cursor: default; opacity: 1; }
+    .choice.correct { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+    .choice.wrong { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+    .feedback {
+      margin-top: 22px;
+      border-top: 2px solid var(--line);
+      padding-top: 18px;
+      display: none;
+    }
+    .feedback.show { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; }
+    .feedback p { margin: 4px 0; }
+    .feedback-title { font-weight: 700; font-size: 1.15rem; }
+    .secondary-btn {
+      border: 2px solid var(--line);
+      background: var(--sun);
+      color: #171309;
+      padding: 10px 16px;
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--line);
+    }
+    .score-layout { display: grid; grid-template-columns: auto 1fr; gap: 34px; align-items: center; }
+    .score-ring {
+      width: 150px; aspect-ratio: 1; border-radius: 50%;
+      display: grid; place-items: center;
+      background: conic-gradient(var(--teal) calc(var(--score) * 1%), var(--line-soft) 0);
+      position: relative;
+    }
+    .score-ring::after { content: ""; position: absolute; inset: 14px; background: var(--surface); border-radius: 50%; }
+    .score-ring strong { position: relative; z-index: 1; font: 400 2.2rem/1 "Bree Serif", serif; text-align: center; }
+    .score-ring small { display: block; font: 700 .8rem/1.2 "Atkinson Hyperlegible", sans-serif; margin-top: 5px; }
+    .review { margin-top: 34px; border-top: 2px solid var(--line); padding-top: 22px; }
+    .review h3 { margin: 0 0 16px; }
+    .review-list { display: grid; gap: 10px; }
+    .review-item { padding: 14px 16px; background: var(--surface-2); border-left: 5px solid var(--line-soft); }
+    .review-item.ok { border-left-color: var(--good); }
+    .review-item.no { border-left-color: var(--bad); }
+    .review-item p { margin: 4px 0; }
+    .review-item .review-q { font-weight: 700; }
+    .mini-rule { height: 2px; background: var(--line); margin: 22px 0; }
+    footer { padding: 34px 0 56px; color: var(--muted); text-align: center; }
+    @media (max-width: 820px) {
+      .hero, .section-head { grid-template-columns: 1fr; }
+      .hero { padding-top: 52px; }
+      .formula-ticket { transform: none; max-width: 480px; }
+      .proof-lab { grid-template-columns: 1fr; }
+      .diagram-pane { border-right: 0; border-bottom: 2px solid var(--line); }
+      .tools-grid { grid-template-columns: 1fr; }
+      .concept-strip { grid-template-columns: 1fr; }
+      .quiz-intro { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      body { font-size: 16px; }
+      .wrap { width: min(100% - 20px, 1140px); }
+      .top-nav .wrap { align-items: flex-start; padding-block: 8px; }
+      .lesson-mark { padding-top: 7px; font-size: .92rem; }
+      .nav-links { overflow: visible; flex-wrap: wrap; justify-content: flex-end; }
+      .nav-links a { padding: 6px 7px; font-size: .85rem; }
+      .hero { padding: 38px 0 32px; }
+      h1 { font-size: clamp(2.45rem, 14vw, 4rem); }
+      .section { padding: 38px 0; }
+      .diagram-pane { padding: 8px; }
+      .control-pane, .tool-card { padding: 20px; }
+      .form-grid, .choice-list { grid-template-columns: 1fr; }
+      .feedback.show, .score-layout { grid-template-columns: 1fr; }
+      .feedback .secondary-btn { width: 100%; }
+      .quiz-top { align-items: flex-start; flex-direction: column; }
+      .progress-track { width: 100%; }
+      .score-ring { width: 130px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <nav class="top-nav" aria-label="Navigasi materi">
+    <div class="wrap">
+      <div class="lesson-mark">Kelas 8 <span>•</span> Geometri</div>
+      <div class="nav-links">
+        <a href="#bukti">Bukti</a>
+        <a href="#alat">Alat hitung</a>
+        <a href="#kuis">Kuis</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Teorema Pythagoras</p>
+        <h1>Buktikan, hitung, lalu <span class="accent">taklukkan.</span></h1>
+        <p>Ubah panjang sisi, amati luas persegi, periksa bentuk segitiga, lalu uji pemahamanmu melalui 10 soal yang selalu diacak.</p>
+      </div>
+      <aside class="formula-ticket" aria-label="Rumus utama Teorema Pythagoras">
+        <div class="formula">a² + b² = c²</div>
+        <p><strong>c</strong> adalah sisi miring: sisi terpanjang yang berhadapan dengan sudut siku-siku.</p>
+      </aside>
+    </header>
+
+    <section class="section wrap" id="bukti">
+      <div class="section-head">
+        <div><span class="section-num">01 / SIMULASI</span><h2>Luasnya selalu cocok</h2></div>
+        <p>Geser nilai <strong>a</strong> dan <strong>b</strong>. Persegi merah dan hijau berada pada dua sisi siku-siku. Jumlah luas keduanya selalu sama dengan luas persegi kuning pada sisi miring.</p>
+      </div>
+
+      <div class="proof-lab">
+        <div class="diagram-pane">
+          <svg id="proofSvg" viewBox="0 -30 560 470" role="img" aria-labelledby="svgTitle svgDesc">
+            <title id="svgTitle">Visualisasi Teorema Pythagoras</title>
+            <desc id="svgDesc">Segitiga siku-siku dengan persegi pada ketiga sisinya. Ukuran menyesuaikan nilai a dan b.</desc>
+            <defs>
+              <pattern id="smallGrid" width="16" height="16" patternUnits="userSpaceOnUse">
+                <path d="M 16 0 L 0 0 0 16" fill="none" stroke="currentColor" stroke-opacity=".10" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect x="0" y="-30" width="560" height="470" fill="url(#smallGrid)" opacity=".85"/>
+            <polygon id="sqB" fill="var(--teal-soft)" stroke="var(--line)" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+            <polygon id="sqA" fill="var(--coral-soft)" stroke="var(--line)" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+            <polygon id="sqC" fill="var(--sun-soft)" stroke="var(--line)" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+            <polygon id="tri" fill="var(--surface)" stroke="var(--line)" stroke-width="3" vector-effect="non-scaling-stroke"/>
+            <path id="rightMark" fill="none" stroke="var(--line)" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+            <g fill="var(--ink)" font-family="Atkinson Hyperlegible, sans-serif" font-weight="700" text-anchor="middle">
+              <text id="areaA" font-size="17"></text>
+              <text id="areaB" font-size="17"></text>
+              <text id="areaC" font-size="17"></text>
+              <text id="labelA" font-size="16"></text>
+              <text id="labelB" font-size="16"></text>
+              <text id="labelC" font-size="16"></text>
+            </g>
+          </svg>
+        </div>
+        <div class="control-pane">
+          <h3>Ubah ukuran segitiga</h3>
+          <div class="range-block">
+            <label for="sideA">Sisi a</label><output class="range-value" id="sideAValue">3</output>
+            <input id="sideA" type="range" min="2" max="12" step="1" value="3" />
+          </div>
+          <div class="range-block">
+            <label for="sideB">Sisi b</label><output class="range-value" id="sideBValue">4</output>
+            <input id="sideB" type="range" min="2" max="12" step="1" value="4" />
+          </div>
+          <div>
+            <div style="font-weight:700; margin-bottom:8px">Coba tripel terkenal</div>
+            <div class="preset-row">
+              <button class="chip-btn preset" data-a="3" data-b="4">3–4–5</button>
+              <button class="chip-btn preset" data-a="5" data-b="12">5–12–13</button>
+              <button class="chip-btn preset" data-a="8" data-b="6">6–8–10</button>
+            </div>
+          </div>
+          <div class="equality" aria-live="polite">
+            <strong id="proofEquation">9 + 16 = 25</strong>
+            <span id="proofSentence">Luas 9 satuan² + 16 satuan² tepat sama dengan 25 satuan².</span>
+          </div>
+          <div class="legend" aria-label="Keterangan warna">
+            <div class="legend-item"><span class="swatch coral"></span> Persegi pada sisi a</div>
+            <div class="legend-item"><span class="swatch teal"></span> Persegi pada sisi b</div>
+            <div class="legend-item"><span class="swatch sun"></span> Persegi pada sisi c</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="alat">
+      <div class="section-head">
+        <div><span class="section-num">02 / ALAT HITUNG</span><h2>Uji dengan angkamu</h2></div>
+        <p>Pilih sisi yang belum diketahui atau masukkan tiga sisi sekaligus. Setiap hasil menampilkan langkah hitung agar prosesnya tetap terlihat.</p>
+      </div>
+
+      <div class="tools-grid">
+        <article class="tool-card">
+          <h3>Kalkulator sisi siku-siku</h3>
+          <p>Gunakan dua sisi yang diketahui untuk menemukan sisi ketiga.</p>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="findSide">Sisi yang dicari</label>
+              <select id="findSide">
+                <option value="c">Sisi miring (c)</option>
+                <option value="a">Sisi siku-siku (a)</option>
+                <option value="b">Sisi siku-siku (b)</option>
+              </select>
+            </div>
+            <div class="field"><label id="known1Label" for="known1">Sisi a</label><input id="known1" type="number" min="0.1" step="0.1" value="3" inputmode="decimal" /></div>
+            <div class="field"><label id="known2Label" for="known2">Sisi b</label><input id="known2" type="number" min="0.1" step="0.1" value="4" inputmode="decimal" /></div>
+            <button class="action-btn field full" id="calculateSide" type="button">Hitung sisi</button>
+          </div>
+          <div class="result-box" id="sideResult" aria-live="polite">
+            <strong>c = 5</strong>
+            <p>c = √(3² + 4²) = √25 = 5</p>
+          </div>
+        </article>
+
+        <article class="tool-card">
+          <h3>Detektif tiga sisi</h3>
+          <p>Urutan sisi bebas. Alat akan mencari sisi terpanjang, memeriksa jenis segitiga, dan mengecek tripel Pythagoras.</p>
+          <div class="form-grid">
+            <div class="field"><label for="triX">Sisi pertama</label><input id="triX" type="number" min="0.1" step="0.1" value="3" inputmode="decimal" /></div>
+            <div class="field"><label for="triY">Sisi kedua</label><input id="triY" type="number" min="0.1" step="0.1" value="4" inputmode="decimal" /></div>
+            <div class="field full"><label for="triZ">Sisi ketiga</label><input id="triZ" type="number" min="0.1" step="0.1" value="5" inputmode="decimal" /></div>
+            <button class="action-btn coral field full" id="checkTriangle" type="button">Periksa segitiga</button>
+          </div>
+          <div class="example-row">
+            Coba:
+            <button class="chip-btn tri-preset" data-sides="3,4,5">3–4–5</button>
+            <button class="chip-btn tri-preset" data-sides="7,8,9">7–8–9</button>
+            <button class="chip-btn tri-preset" data-sides="6,8,11">6–8–11</button>
+          </div>
+          <div class="result-box" id="triangleResult" aria-live="polite">
+            <strong>Segitiga siku-siku</strong>
+            <p>3² + 4² = 5² → 25 = 25.</p>
+            <p>Ketiganya bilangan bulat, jadi merupakan tripel Pythagoras.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="concept-strip" aria-label="Aturan menentukan jenis segitiga">
+        <article class="concept-card"><div class="symbol">x² + y² = z²</div><h3>Siku-siku</h3><p>Jumlah kuadrat dua sisi pendek sama dengan kuadrat sisi terpanjang.</p></article>
+        <article class="concept-card"><div class="symbol">x² + y² &gt; z²</div><h3>Lancip</h3><p>Jumlah kuadrat dua sisi pendek lebih besar daripada kuadrat sisi terpanjang.</p></article>
+        <article class="concept-card"><div class="symbol">x² + y² &lt; z²</div><h3>Tumpul</h3><p>Jumlah kuadrat dua sisi pendek lebih kecil daripada kuadrat sisi terpanjang.</p></article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="kuis">
+      <div class="section-head">
+        <div><span class="section-num">03 / KUIS</span><h2>Siap menguji strategi?</h2></div>
+        <p>Sepuluh soal akan tampil satu per satu. Soal dan pilihan jawaban diacak setiap kali dimulai. Setelah menjawab, baca pembahasannya sebelum lanjut.</p>
+      </div>
+
+      <div class="quiz-shell">
+        <div class="quiz-top">
+          <strong id="quizStatus">10 soal • urutan acak</strong>
+          <div class="progress-track" aria-label="Kemajuan kuis"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+        <div class="quiz-body" id="quizBody">
+          <div class="quiz-intro">
+            <div><h3>Gunakan rumus, bukan tebakan.</h3><p>Kamu akan langsung mengetahui jawaban benar dan mendapatkan pembahasan singkat. Nilai akhir dihitung otomatis.</p></div>
+            <button class="action-btn" id="startQuiz" type="button">Mulai kuis</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">Belajar matematika berarti melihat pola, menguji alasan, lalu berani menyimpulkan.</footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var sideA = document.getElementById("sideA");
+      var sideB = document.getElementById("sideB");
+      var sideAValue = document.getElementById("sideAValue");
+      var sideBValue = document.getElementById("sideBValue");
+
+      function points(arr) {
+        return arr.map(function (p) { return p.x + "," + p.y; }).join(" ");
+      }
+      function center(arr) {
+        var total = arr.reduce(function (acc, p) { return { x: acc.x + p.x, y: acc.y + p.y }; }, { x: 0, y: 0 });
+        return { x: total.x / arr.length, y: total.y / arr.length };
+      }
+      function placeText(id, pos, text) {
+        var el = document.getElementById(id);
+        el.setAttribute("x", pos.x);
+        el.setAttribute("y", pos.y);
+        el.textContent = text;
+      }
+      function fmt(n) {
+        if (Math.abs(n - Math.round(n)) < 1e-10) return String(Math.round(n));
+        return String(Math.round(n * 100) / 100).replace(".", ",");
+      }
+      function updateProof() {
+        var a = Number(sideA.value), b = Number(sideB.value), c = Math.sqrt(a * a + b * b);
+        var s = 12.5;
+        var A = { x: 210, y: 280 };
+        var B = { x: A.x + a * s, y: A.y };
+        var C = { x: A.x, y: A.y - b * s };
+        var sqA = [A, B, { x: B.x, y: B.y + a * s }, { x: A.x, y: A.y + a * s }];
+        var sqB = [C, A, { x: A.x - b * s, y: A.y }, { x: C.x - b * s, y: C.y }];
+        var n = { x: b * s, y: -a * s };
+        var sqC = [C, B, { x: B.x + n.x, y: B.y + n.y }, { x: C.x + n.x, y: C.y + n.y }];
+        document.getElementById("sqA").setAttribute("points", points(sqA));
+        document.getElementById("sqB").setAttribute("points", points(sqB));
+        document.getElementById("sqC").setAttribute("points", points(sqC));
+        document.getElementById("tri").setAttribute("points", points([A, B, C]));
+        document.getElementById("rightMark").setAttribute("d", "M " + (A.x + 13) + " " + A.y + " L " + (A.x + 13) + " " + (A.y - 13) + " L " + A.x + " " + (A.y - 13));
+        placeText("areaA", center(sqA), "a² = " + (a * a));
+        placeText("areaB", center(sqB), "b² = " + (b * b));
+        placeText("areaC", center(sqC), "c² = " + (a * a + b * b));
+        placeText("labelA", { x: (A.x + B.x) / 2, y: A.y - 8 }, "a = " + a);
+        placeText("labelB", { x: A.x + 23, y: (A.y + C.y) / 2 }, "b = " + b);
+        placeText("labelC", { x: (B.x + C.x) / 2 + 14, y: (B.y + C.y) / 2 - 9 }, "c ≈ " + fmt(c));
+        sideAValue.textContent = a;
+        sideBValue.textContent = b;
+        document.getElementById("proofEquation").textContent = (a * a) + " + " + (b * b) + " = " + (a * a + b * b);
+        document.getElementById("proofSentence").textContent = "Luas " + (a * a) + " satuan² + " + (b * b) + " satuan² tepat sama dengan " + (a * a + b * b) + " satuan².";
+      }
+      sideA.addEventListener("input", updateProof);
+      sideB.addEventListener("input", updateProof);
+      document.querySelectorAll(".preset").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          sideA.value = btn.dataset.a;
+          sideB.value = btn.dataset.b;
+          updateProof();
+        });
+      });
+      updateProof();
+
+      var findSide = document.getElementById("findSide");
+      var known1 = document.getElementById("known1");
+      var known2 = document.getElementById("known2");
+      var known1Label = document.getElementById("known1Label");
+      var known2Label = document.getElementById("known2Label");
+      var sideResult = document.getElementById("sideResult");
+      function updateKnownLabels() {
+        var target = findSide.value;
+        if (target === "c") {
+          known1Label.textContent = "Sisi a"; known2Label.textContent = "Sisi b";
+          known1.value = 3; known2.value = 4;
+        } else if (target === "a") {
+          known1Label.textContent = "Sisi b"; known2Label.textContent = "Sisi miring c";
+          known1.value = 4; known2.value = 5;
+        } else {
+          known1Label.textContent = "Sisi a"; known2Label.textContent = "Sisi miring c";
+          known1.value = 3; known2.value = 5;
+        }
+        calculateSide();
+      }
+      function calculateSide() {
+        var x = Number(known1.value), y = Number(known2.value), target = findSide.value;
+        if (!(x > 0 && y > 0)) {
+          sideResult.innerHTML = "<strong>Masukkan bilangan positif.</strong><p>Panjang sisi harus lebih dari nol.</p>";
+          return;
+        }
+        var value, step;
+        if (target === "c") {
+          value = Math.sqrt(x * x + y * y);
+          step = "c = √(" + fmt(x) + "² + " + fmt(y) + "²) = √" + fmt(x * x + y * y) + " = " + fmt(value);
+        } else {
+          if (y <= x) {
+            sideResult.innerHTML = "<strong>Sisi miring harus paling panjang.</strong><p>Nilai c harus lebih besar daripada sisi siku-siku yang diketahui.</p>";
+            return;
+          }
+          value = Math.sqrt(y * y - x * x);
+          step = target + " = √(" + fmt(y) + "² − " + fmt(x) + "²) = √" + fmt(y * y - x * x) + " = " + fmt(value);
+        }
+        sideResult.innerHTML = "<strong>" + target + " = " + fmt(value) + "</strong><p>" + step + "</p>";
+      }
+      findSide.addEventListener("change", updateKnownLabels);
+      document.getElementById("calculateSide").addEventListener("click", calculateSide);
+
+      var triInputs = [document.getElementById("triX"), document.getElementById("triY"), document.getElementById("triZ")];
+      var triangleResult = document.getElementById("triangleResult");
+      function checkTriangle() {
+        var vals = triInputs.map(function (el) { return Number(el.value); }).sort(function (a, b) { return a - b; });
+        var x = vals[0], y = vals[1], z = vals[2];
+        if (!(x > 0 && y > 0 && z > 0)) {
+          triangleResult.innerHTML = "<strong>Masukkan tiga bilangan positif.</strong><p>Panjang sisi harus lebih dari nol.</p>";
+          return;
+        }
+        if (x + y <= z) {
+          triangleResult.innerHTML = "<strong>Tidak membentuk segitiga</strong><p>Karena " + fmt(x) + " + " + fmt(y) + " ≤ " + fmt(z) + ", dua sisi pendek tidak dapat bertemu.</p>";
+          return;
+        }
+        var left = x * x + y * y, right = z * z, eps = 1e-9 * Math.max(left, right, 1);
+        var type, sign;
+        if (Math.abs(left - right) <= eps) { type = "Segitiga siku-siku"; sign = "="; }
+        else if (left > right) { type = "Segitiga lancip"; sign = ">"; }
+        else { type = "Segitiga tumpul"; sign = "<"; }
+        var integers = vals.every(function (v) { return Number.isInteger(v); });
+        var triple = Math.abs(left - right) <= eps && integers;
+        var note = triple ? "Ketiganya bilangan bulat, jadi merupakan tripel Pythagoras." : (Math.abs(left - right) <= eps ? "Membentuk segitiga siku-siku, tetapi bukan tripel bilangan bulat." : "Bukan tripel Pythagoras karena tidak memenuhi persamaan sama dengan.");
+        triangleResult.innerHTML = "<strong>" + type + "</strong><p>" + fmt(x) + "² + " + fmt(y) + "² " + sign + " " + fmt(z) + "² → " + fmt(left) + " " + sign + " " + fmt(right) + ".</p><p>" + note + "</p>";
+      }
+      document.getElementById("checkTriangle").addEventListener("click", checkTriangle);
+      document.querySelectorAll(".tri-preset").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          btn.dataset.sides.split(",").forEach(function (v, i) { triInputs[i].value = v; });
+          checkTriangle();
+        });
+      });
+
+      var quizData = [
+        { q: "Sebuah segitiga siku-siku memiliki sisi siku-siku 6 cm dan 8 cm. Berapa panjang sisi miringnya?", choices: ["10 cm", "12 cm", "14 cm", "48 cm"], answer: "10 cm", explain: "c = √(6² + 8²) = √(36 + 64) = √100 = 10 cm." },
+        { q: "Sisi miring sebuah segitiga siku-siku 13 cm dan salah satu sisi siku-sikunya 5 cm. Berapa sisi lainnya?", choices: ["12 cm", "8 cm", "10 cm", "18 cm"], answer: "12 cm", explain: "Sisi lain = √(13² − 5²) = √(169 − 25) = √144 = 12 cm." },
+        { q: "Luas dua persegi pada sisi siku-siku adalah 49 cm² dan 576 cm². Berapa luas persegi pada sisi miring?", choices: ["625 cm²", "527 cm²", "25 cm²", "1.250 cm²"], answer: "625 cm²", explain: "Luas persegi pada sisi miring = 49 + 576 = 625 cm²." },
+        { q: "Manakah yang merupakan tripel Pythagoras?", choices: ["8, 15, 17", "6, 7, 8", "4, 5, 6", "9, 10, 12"], answer: "8, 15, 17", explain: "8² + 15² = 64 + 225 = 289, sedangkan 17² = 289." },
+        { q: "Apa jenis segitiga dengan panjang sisi 6 cm, 8 cm, dan 11 cm?", choices: ["Tumpul", "Siku-siku", "Lancip", "Tidak membentuk segitiga"], answer: "Tumpul", explain: "6² + 8² = 100, sedangkan 11² = 121. Karena 100 < 121, segitiga tersebut tumpul." },
+        { q: "Apa jenis segitiga dengan panjang sisi 7 cm, 8 cm, dan 9 cm?", choices: ["Lancip", "Tumpul", "Siku-siku", "Tidak membentuk segitiga"], answer: "Lancip", explain: "7² + 8² = 113, sedangkan 9² = 81. Karena 113 > 81, segitiga tersebut lancip." },
+        { q: "Tangga 10 m bersandar pada dinding. Ujung bawahnya berjarak 6 m dari dinding. Berapa tinggi yang dicapai tangga?", choices: ["8 m", "4 m", "12 m", "16 m"], answer: "8 m", explain: "Tinggi = √(10² − 6²) = √(100 − 36) = √64 = 8 m." },
+        { q: "Pernyataan manakah yang tepat tentang sisi c dalam rumus a² + b² = c²?", choices: ["c berhadapan dengan sudut siku-siku", "c selalu sisi paling pendek", "c dapat dipilih bebas", "c adalah salah satu sisi siku-siku"], answer: "c berhadapan dengan sudut siku-siku", explain: "Sisi c adalah sisi miring, yaitu sisi terpanjang yang tepat berhadapan dengan sudut 90°." },
+        { q: "Berapakah keliling segitiga siku-siku yang sisinya membentuk tripel 3, 4, 5?", choices: ["12 satuan", "7 satuan", "20 satuan", "25 satuan"], answer: "12 satuan", explain: "Keliling adalah jumlah semua sisi: 3 + 4 + 5 = 12 satuan." },
+        { q: "Luas persegi pada sisi miring adalah 169 cm². Luas persegi pada salah satu sisi siku-siku 25 cm². Berapa panjang sisi siku-siku lainnya?", choices: ["12 cm", "144 cm", "13 cm", "8 cm"], answer: "12 cm", explain: "Luas persegi lainnya = 169 − 25 = 144 cm², sehingga panjang sisinya √144 = 12 cm." }
+      ];
+      var quizBody = document.getElementById("quizBody");
+      var quizStatus = document.getElementById("quizStatus");
+      var progressFill = document.getElementById("progressFill");
+      var run = [], current = 0, score = 0, responses = [];
+      function shuffle(arr) {
+        var copy = arr.slice();
+        for (var i = copy.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = copy[i]; copy[i] = copy[j]; copy[j] = t;
+        }
+        return copy;
+      }
+      function startQuiz() {
+        run = shuffle(quizData).map(function (item) {
+          return { q: item.q, choices: shuffle(item.choices), answer: item.answer, explain: item.explain };
+        });
+        current = 0; score = 0; responses = [];
+        renderQuestion();
+      }
+      function renderQuestion() {
+        var item = run[current];
+        quizStatus.textContent = "Soal " + (current + 1) + " dari " + run.length + " • Skor " + score;
+        progressFill.style.width = ((current / run.length) * 100) + "%";
+        quizBody.innerHTML = "<p class=\"question-text\"></p><div class=\"choice-list\"></div><div class=\"feedback\" aria-live=\"polite\"><div><div class=\"feedback-title\"></div><p class=\"feedback-copy\"></p></div><button class=\"secondary-btn next-btn\" type=\"button\"></button></div>";
+        quizBody.querySelector(".question-text").textContent = item.q;
+        var list = quizBody.querySelector(".choice-list");
+        item.choices.forEach(function (choiceText) {
+          var btn = document.createElement("button");
+          btn.className = "choice";
+          btn.type = "button";
+          btn.textContent = choiceText;
+          btn.addEventListener("click", function () { answerQuestion(choiceText, btn); });
+          list.appendChild(btn);
+        });
+      }
+      function answerQuestion(selected, selectedBtn) {
+        var item = run[current];
+        var correct = selected === item.answer;
+        if (correct) score++;
+        responses.push({ q: item.q, selected: selected, answer: item.answer, explain: item.explain, correct: correct });
+        quizBody.querySelectorAll(".choice").forEach(function (btn) {
+          btn.disabled = true;
+          if (btn.textContent === item.answer) btn.classList.add("correct");
+        });
+        if (!correct) selectedBtn.classList.add("wrong");
+        var feedback = quizBody.querySelector(".feedback");
+        feedback.classList.add("show");
+        feedback.querySelector(".feedback-title").textContent = correct ? "Tepat!" : "Belum tepat.";
+        feedback.querySelector(".feedback-copy").textContent = item.explain;
+        var next = feedback.querySelector(".next-btn");
+        next.textContent = current === run.length - 1 ? "Lihat nilai akhir" : "Soal berikutnya →";
+        next.addEventListener("click", function () {
+          current++;
+          if (current < run.length) renderQuestion(); else renderResult();
+        });
+        quizStatus.textContent = "Soal " + (current + 1) + " dari " + run.length + " • Skor " + score;
+        progressFill.style.width = (((current + 1) / run.length) * 100) + "%";
+      }
+      function renderResult() {
+        var percent = Math.round((score / run.length) * 100);
+        var message = percent >= 90 ? "Pemahamanmu sangat kuat." : percent >= 70 ? "Dasarnya sudah mantap." : percent >= 50 ? "Sudah berkembang, periksa lagi bagian yang keliru." : "Mari ulangi simulasi lalu coba kembali.";
+        quizStatus.textContent = "Kuis selesai • " + score + " jawaban benar";
+        progressFill.style.width = "100%";
+        quizBody.innerHTML = "<div class=\"score-layout\"><div class=\"score-ring\" style=\"--score:" + percent + "\"><strong>" + percent + "<small>nilai akhir</small></strong></div><div><h3 style=\"font-size:2rem;margin:0 0 8px\">" + message + "</h3><p style=\"color:var(--muted);margin:0 0 18px\">Kamu menjawab " + score + " dari " + run.length + " soal dengan benar.</p><button class=\"action-btn\" id=\"restartQuiz\" type=\"button\">Ulangi dengan urutan baru</button></div></div><div class=\"review\"><h3>Pembahasan semua soal</h3><div class=\"review-list\"></div></div>";
+        var review = quizBody.querySelector(".review-list");
+        responses.forEach(function (r, i) {
+          var item = document.createElement("article");
+          item.className = "review-item " + (r.correct ? "ok" : "no");
+          item.innerHTML = "<p class=\"review-q\"></p><p class=\"review-answer\"></p><p class=\"review-explain\"></p>";
+          item.querySelector(".review-q").textContent = (i + 1) + ". " + r.q;
+          item.querySelector(".review-answer").textContent = r.correct ? "Jawabanmu: " + r.selected + " — benar" : "Jawabanmu: " + r.selected + " • Jawaban benar: " + r.answer;
+          item.querySelector(".review-explain").textContent = r.explain;
+          review.appendChild(item);
+        });
+        document.getElementById("restartQuiz").addEventListener("click", startQuiz);
+      }
+      document.getElementById("startQuiz").addEventListener("click", startQuiz);
+    })();
+  </script>
+</body>
+</html>

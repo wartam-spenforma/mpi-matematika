@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Figtree:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <title>Media Interaktif Peluang Kelas 7</title>
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#f4f7f1; --surface:#ffffff; --surface-2:#edf3e8; --ink:#183029; --muted:#536a62;
+      --line:#cbd8cf; --teal:#087f6b; --teal-deep:#075f52; --teal-soft:#d8f1e8;
+      --orange:#e86f2c; --orange-soft:#fff0e3; --yellow:#f2c84b; --yellow-soft:#fff8d9;
+      --red:#c94444; --red-soft:#fde8e5; --shadow:0 14px 38px rgba(28,62,51,.10);
+      --radius-lg:28px; --radius-md:18px; --radius-sm:12px;
+    }
+    @media (prefers-color-scheme:dark){
+      :root{
+        --bg:#10211c; --surface:#172c26; --surface-2:#203a32; --ink:#f4f8f4; --muted:#b8c9c1;
+        --line:#355349; --teal:#54d7bb; --teal-deep:#90ead6; --teal-soft:#183f36;
+        --orange:#ff9a61; --orange-soft:#4a2b1f; --yellow:#f6d96c; --yellow-soft:#433b1b;
+        --red:#ff8787; --red-soft:#482627; --shadow:0 16px 40px rgba(0,0,0,.22);
+      }
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.55}
+    button{font:inherit}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+    .wrap{width:min(1160px,calc(100% - 32px));margin:auto}
+    .intro{padding:44px 0 24px;display:grid;grid-template-columns:1.2fr .8fr;gap:26px;align-items:center}
+    .intro h1{font:800 clamp(2.25rem,5vw,4.6rem)/.98 "Figtree",sans-serif;letter-spacing:-.045em;margin:0 0 20px;max-width:760px}
+    .intro h1 span{color:var(--teal)}
+    .intro p{font-size:clamp(1rem,2vw,1.22rem);color:var(--muted);max-width:650px;margin:0}
+    .hero-visual{min-height:290px;position:relative;display:grid;place-items:center}
+    .hero-ring{width:230px;height:230px;border:2px dashed var(--line);border-radius:50%;display:grid;place-items:center;animation:spin 24s linear infinite}
+    .hero-coin{width:112px;height:112px;border-radius:50%;background:var(--yellow);border:7px solid #d9aa24;color:#5d4511;display:grid;place-items:center;font:800 2.6rem "Figtree";box-shadow:0 14px 0 #b8891d;transform:rotate(-9deg)}
+    .hero-die{position:absolute;right:8%;bottom:7%;width:94px;height:94px;border-radius:19px;background:var(--surface);border:2px solid var(--line);box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(3,1fr);padding:16px;gap:5px;transform:rotate(10deg)}
+    .hero-die i{width:12px;height:12px;background:var(--orange);border-radius:50%;place-self:center}.hero-die i:nth-child(2),.hero-die i:nth-child(4),.hero-die i:nth-child(6),.hero-die i:nth-child(8){opacity:0}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero-ring{animation:none}}
+    .jump{display:flex;gap:10px;flex-wrap:wrap;margin:25px 0 16px}
+    .jump a{color:var(--ink);text-decoration:none;background:var(--surface);border:1px solid var(--line);padding:10px 15px;border-radius:999px;font-weight:700}
+    .jump a:hover{border-color:var(--teal);color:var(--teal-deep)}
+    .concepts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0 70px}
+    .concept{background:var(--surface);border-top:5px solid var(--teal);padding:21px;border-radius:8px 8px var(--radius-md) var(--radius-md);box-shadow:var(--shadow)}
+    .concept:nth-child(2){border-color:var(--orange)}.concept:nth-child(3){border-color:var(--yellow)}.concept:nth-child(4){border-color:#4c8ac8}
+    .concept b{font:700 1.05rem "Figtree";display:block;margin-bottom:7px}.concept p{margin:0;color:var(--muted);font-size:.93rem}
+    .formula{display:inline-block;margin-top:11px;padding:5px 9px;background:var(--surface-2);border-radius:8px;color:var(--ink);font-weight:700;font-size:.86rem}
+    .section{padding:28px 0 70px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:24px}
+    .section h2{font:800 clamp(1.8rem,4vw,3.1rem)/1.05 "Figtree";letter-spacing:-.03em;margin:0}.section-head p{max-width:470px;margin:0;color:var(--muted)}
+    .lab{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius-lg);overflow:hidden}
+    .lab-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);padding:0 20px;overflow:auto}
+    .tab{appearance:none;border:0;background:transparent;color:var(--muted);font-weight:800;padding:18px 20px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+    .tab[aria-selected="true"]{color:var(--teal-deep);border-bottom-color:var(--teal)}
+    .panel{display:none;padding:30px}.panel.active{display:block}
+    .sim-grid{display:grid;grid-template-columns:minmax(250px,.72fr) minmax(320px,1.28fr);gap:30px;align-items:start}
+    .stage{background:var(--surface-2);min-height:330px;border-radius:22px;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+    .object-area{height:150px;display:grid;place-items:center;margin-bottom:10px}
+    .coin{width:120px;height:120px;border-radius:50%;background:var(--yellow);border:8px solid #d6aa2e;color:#604711;display:grid;place-items:center;font:800 2rem "Figtree";box-shadow:0 10px 0 #b78a1d;transition:transform .25s}
+    .coin.tossing{transform:rotateY(540deg) scale(.92)}
+    .die{width:120px;height:120px;background:var(--surface);border:2px solid var(--line);border-radius:24px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:20px;box-shadow:0 10px 0 rgba(22,47,40,.16);transition:transform .25s}
+    .die.rolling{transform:rotate(240deg) scale(.9)}
+    .pip{width:16px;height:16px;background:var(--orange);border-radius:50%;place-self:center}.pip.off{visibility:hidden}
+    .result-label{font:800 1.35rem "Figtree";min-height:34px;margin:7px 0;color:var(--ink)}
+    .controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .btn{border:0;background:var(--teal);color:#fff;border-radius:12px;padding:11px 17px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 var(--teal-deep)}
+    @media(prefers-color-scheme:dark){.btn{color:#09241d;box-shadow:0 4px 0 #2c937c}}
+    .btn:hover{filter:brightness(1.06)}.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--teal-deep)}
+    .btn.secondary{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:none}.btn.orange{background:var(--orange);box-shadow:0 4px 0 #a44618;color:white}
+    .stats h3,.sample-info h3{font:800 1.4rem "Figtree";margin:0 0 5px}.stats-intro{color:var(--muted);margin:0 0 22px}
+    .stat-row{margin:18px 0}.stat-top{display:flex;justify-content:space-between;gap:10px;font-weight:700;margin-bottom:7px}.stat-top span:last-child{font-variant-numeric:tabular-nums}
+    .track{height:16px;background:var(--surface-2);border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:var(--teal);border-radius:99px;transition:width .35s}.bar.alt{background:var(--orange)}
+    .theory{border-top:1px solid var(--line);margin-top:25px;padding-top:20px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.theory div{padding:14px;background:var(--surface-2);border-radius:var(--radius-sm)}.theory small{display:block;color:var(--muted)}.theory strong{font-size:1.2rem}
+    .hint{margin:22px 0 0;padding:14px 16px;background:var(--yellow-soft);border-radius:var(--radius-sm);font-size:.94rem}
+    .sample-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:30px}.sample-info p{color:var(--muted)}
+    .switcher{display:flex;gap:8px;margin:20px 0}.switcher button{flex:1}
+    .event-box{background:var(--surface-2);padding:16px;border-radius:var(--radius-sm);margin-top:18px}.event-box b{display:block}.event-box span{color:var(--muted);font-size:.93rem}
+    .outcome-grid{display:grid;gap:7px}.outcome-grid.coins{grid-template-columns:repeat(2,minmax(90px,1fr))}.outcome-grid.dice{grid-template-columns:repeat(6,1fr)}
+    .outcome{min-height:52px;border:1px solid var(--line);background:var(--surface);border-radius:10px;display:grid;place-items:center;font-weight:800;position:relative}.outcome.match{background:var(--teal-soft);border-color:var(--teal);color:var(--teal-deep)}
+    .outcome small{font-weight:500;color:var(--muted)}.outcome .sum{position:absolute;right:4px;top:2px;font-size:.65rem;color:var(--muted)}
+    .axis-labels{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-bottom:7px;color:var(--muted);font-weight:700;text-align:center;font-size:.8rem}
+    .event-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 11px;border-radius:99px;cursor:pointer;font-weight:700}.chip.active{background:var(--teal);color:white;border-color:var(--teal)}
+    .quiz-shell{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius-lg);padding:clamp(22px,5vw,44px);min-height:520px}
+    .quiz-start{text-align:center;max-width:680px;margin:45px auto}.quiz-start .big-mark{width:98px;height:98px;border-radius:26px;background:var(--orange-soft);color:var(--orange);display:grid;place-items:center;margin:0 auto 25px;font:800 3rem "Figtree";transform:rotate(-4deg)}
+    .quiz-start h3,.final h3{font:800 2rem "Figtree";margin:0 0 12px}.quiz-start p,.final p{color:var(--muted)}
+    .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.progress{height:10px;background:var(--surface-2);border-radius:99px;overflow:hidden;flex:1}.progress span{display:block;height:100%;background:var(--orange);transition:width .3s}.q-count{font-weight:800;white-space:nowrap;color:var(--muted)}
+    .question{font:700 clamp(1.25rem,3vw,1.75rem)/1.35 "Figtree";margin:0 0 22px;max-width:820px}
+    .answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}.answer{border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:16px 18px;border-radius:14px;text-align:left;font-weight:700;cursor:pointer;min-height:62px}.answer:hover:not(:disabled){border-color:var(--teal);background:var(--teal-soft)}.answer.correct{border-color:var(--teal);background:var(--teal-soft);color:var(--teal-deep)}.answer.wrong{border-color:var(--red);background:var(--red-soft);color:var(--red)}.answer:disabled{cursor:default}
+    .feedback{margin-top:22px;padding:18px;background:var(--surface-2);border-radius:14px;display:none}.feedback.show{display:block}.feedback strong{font:800 1.08rem "Figtree"}.feedback p{margin:5px 0 0;color:var(--muted)}.next-wrap{display:flex;justify-content:flex-end;margin-top:20px}
+    .final{text-align:center;max-width:680px;margin:24px auto}.score-ring{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;margin:0 auto 24px;background:conic-gradient(var(--teal) var(--score,0%),var(--surface-2) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:15px;background:var(--surface);border-radius:50%}.score-ring div{position:relative;z-index:1}.score-ring strong{font:800 2.4rem "Figtree";display:block}.score-ring small{color:var(--muted)}
+    .summary-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0}.summary-list div{background:var(--surface-2);padding:13px;border-radius:12px}.summary-list strong{display:block;font-size:1.25rem}
+    .hidden{display:none!important}
+    footer{padding:8px 0 40px;color:var(--muted);text-align:center;font-size:.9rem}
+    @media(max-width:850px){.intro{grid-template-columns:1fr}.hero-visual{display:none}.concepts{grid-template-columns:1fr 1fr}.sim-grid,.sample-layout{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:12px}.stats{padding:2px}.outcome-grid.dice{gap:5px}.outcome{min-height:45px;font-size:.86rem}.axis-labels{gap:5px}.answers{grid-template-columns:1fr}}
+    @media(max-width:560px){.wrap{width:min(100% - 20px,1160px)}.intro{padding-top:28px}.concepts{grid-template-columns:1fr;margin-bottom:44px}.section{padding-bottom:50px}.lab-tabs{padding:0 4px}.tab{padding:15px 12px;font-size:.9rem}.panel{padding:16px}.stage{min-height:300px;padding:18px}.theory{grid-template-columns:1fr}.outcome-grid.coins{grid-template-columns:1fr 1fr}.outcome-grid.dice{grid-template-columns:repeat(6,minmax(0,1fr))}.outcome{min-height:39px;font-size:.7rem;border-radius:7px}.outcome .sum{display:none}.axis-labels{font-size:.68rem}.quiz-shell{padding:18px;min-height:480px}.summary-list{grid-template-columns:1fr}.quiz-top{align-items:flex-start;flex-direction:column}.progress{width:100%}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <main>
+    <div class="wrap">
+      <section class="intro">
+        <div>
+          <h1>Acak bukan berarti <span>tanpa pola.</span></h1>
+          <p>Lempar koin dan dadu, amati hasilnya, lalu temukan bagaimana frekuensi relatif bergerak mendekati peluang teoretis.</p>
+          <nav class="jump" aria-label="Navigasi materi">
+            <a href="#ringkasan">Pahami konsep</a><a href="#simulasi">Mulai simulasi</a><a href="#kuis">Uji pemahaman</a>
+          </nav>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-ring"><div class="hero-coin">A</div></div>
+          <div class="hero-die"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </section>
+
+      <section id="ringkasan" class="concepts" aria-label="Ringkasan konsep peluang">
+        <article class="concept"><b>1. Peluang</b><p>Ukuran kemungkinan suatu kejadian, dari 0 (mustahil) sampai 1 (pasti).</p><span class="formula">P(A) = n(A) ÷ n(S)</span></article>
+        <article class="concept"><b>2. Ruang sampel</b><p>Himpunan semua hasil yang mungkin dari sebuah percobaan acak.</p><span class="formula">S = {semua hasil}</span></article>
+        <article class="concept"><b>3. Frekuensi relatif</b><p>Perbandingan banyak kemunculan suatu hasil dengan jumlah percobaan.</p><span class="formula">fᵣ = muncul ÷ percobaan</span></article>
+        <article class="concept"><b>4. Frekuensi harapan</b><p>Perkiraan banyak kemunculan kejadian jika percobaan dilakukan n kali.</p><span class="formula">Fₕ = n × P(A)</span></article>
+      </section>
+
+      <section id="simulasi" class="section">
+        <div class="section-head"><h2>Laboratorium peluang</h2><p>Ulangi percobaan sebanyak mungkin. Semakin banyak data, biasanya frekuensi relatif semakin dekat dengan peluang teoretis.</p></div>
+        <div class="lab">
+          <div class="lab-tabs" role="tablist" aria-label="Pilih simulasi">
+            <button class="tab" role="tab" aria-selected="true" aria-controls="coin-panel" data-tab="coin-panel">Lempar koin</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="die-panel" data-tab="die-panel">Lempar dadu</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="sample-panel" data-tab="sample-panel">Ruang sampel</button>
+          </div>
+
+          <div class="panel active" id="coin-panel" role="tabpanel">
+            <div class="sim-grid">
+              <div class="stage">
+                <div class="object-area"><div class="coin" id="coin">A</div></div>
+                <div class="result-label" id="coin-result">Siap dilempar</div>
+                <div class="controls">
+                  <button class="btn toss-coin" data-count="1">Lempar 1×</button><button class="btn toss-coin" data-count="10">10×</button><button class="btn toss-coin" data-count="50">50×</button>
+                  <button class="btn secondary" id="coin-reset">Ulang dari nol</button>
+                </div>
+              </div>
+              <div class="stats">
+                <h3>Catatan hasil</h3><p class="stats-intro">Total percobaan: <strong id="coin-total">0</strong></p>
+                <div class="stat-row"><div class="stat-top"><span>Angka — <b id="heads-count">0</b> kali</span><span id="heads-rate">0%</span></div><div class="track"><div class="bar" id="heads-bar"></div></div></div>
+                <div class="stat-row"><div class="stat-top"><span>Gambar — <b id="tails-count">0</b> kali</span><span id="tails-rate">0%</span></div><div class="track"><div class="bar alt" id="tails-bar"></div></div></div>
+                <div class="theory"><div><small>Peluang teoretis Angka</small><strong>½ = 50%</strong></div><div><small>Frekuensi harapan</small><strong id="coin-expected">0 kali</strong></div></div>
+                <p class="hint">Coba lempar 1 kali, lalu bandingkan lagi setelah 50 atau 100 kali. Apakah persentasenya makin dekat ke 50%?</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="die-panel" role="tabpanel">
+            <div class="sim-grid">
+              <div class="stage">
+                <div class="object-area"><div class="die" id="die" aria-label="Dadu menunjukkan 1"></div></div>
+                <div class="result-label" id="die-result">Siap dilempar</div>
+                <div class="controls">
+                  <button class="btn toss-die" data-count="1">Lempar 1×</button><button class="btn toss-die" data-count="10">10×</button><button class="btn toss-die" data-count="60">60×</button>
+                  <button class="btn secondary" id="die-reset">Ulang dari nol</button>
+                </div>
+              </div>
+              <div class="stats">
+                <h3>Frekuensi setiap mata dadu</h3><p class="stats-intro">Total percobaan: <strong id="die-total">0</strong></p>
+                <div id="die-stats"></div>
+                <div class="theory"><div><small>Peluang setiap mata</small><strong>⅙ ≈ 16,7%</strong></div><div><small>Harapan tiap mata</small><strong id="die-expected">0 kali</strong></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="sample-panel" role="tabpanel">
+            <div class="sample-layout">
+              <div class="sample-info">
+                <h3>Petakan semua kemungkinan</h3><p>Setiap kotak adalah satu titik sampel. Sorotan hijau menunjukkan kejadian yang sedang dipilih.</p>
+                <div class="switcher"><button class="btn sample-type" data-type="coins">Dua koin</button><button class="btn secondary sample-type" data-type="dice">Dua dadu</button></div>
+                <div class="event-box"><b id="event-title">Kejadian: tepat satu Angka</b><span id="event-calc">2 dari 4 hasil → P = 2/4 = 1/2</span></div>
+              </div>
+              <div>
+                <div class="axis-labels hidden" id="axis-labels"><span>Dadu 2 → 1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div>
+                <div class="outcome-grid coins" id="outcome-grid"></div>
+                <div class="event-controls" id="event-controls"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="kuis" class="section">
+        <div class="section-head"><h2>Tantangan 10 soal</h2><p>Soal dan pilihan jawaban selalu diacak. Setelah menjawab, baca pembahasan sebelum lanjut.</p></div>
+        <div class="quiz-shell">
+          <div class="quiz-start" id="quiz-start">
+            <div class="big-mark">?</div><h3>Siap menguji pemahamanmu?</h3><p>Sepuluh soal mencakup peluang, ruang sampel, frekuensi relatif, dan frekuensi harapan.</p>
+            <button class="btn orange" id="start-quiz">Mulai kuis</button>
+          </div>
+          <div id="quiz-play" class="hidden">
+            <div class="quiz-top"><div class="progress"><span id="quiz-progress"></span></div><div class="q-count" id="q-count">Soal 1 dari 10</div></div>
+            <p class="question" id="question"></p><div class="answers" id="answers"></div>
+            <div class="feedback" id="feedback"><strong id="feedback-title"></strong><p id="feedback-text"></p></div>
+            <div class="next-wrap"><button class="btn hidden" id="next-question">Soal berikutnya</button></div>
+          </div>
+          <div class="final hidden" id="quiz-final">
+            <div class="score-ring" id="score-ring"><div><strong id="final-score">0</strong><small>nilai akhir</small></div></div>
+            <h3 id="final-title">Bagus!</h3><p id="final-message"></p>
+            <div class="summary-list"><div><strong id="correct-total">0</strong><span>jawaban benar</span></div><div><strong id="wrong-total">0</strong><span>perlu ditinjau</span></div><div><strong>10</strong><span>soal selesai</span></div></div>
+            <button class="btn orange" id="restart-quiz">Acak &amp; ulangi kuis</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer><div class="wrap">Belajar peluang: coba, catat, bandingkan, lalu simpulkan.</div></footer>
+
+  <script>
+    (function(){
+      const qs=(s,p=document)=>p.querySelector(s), qsa=(s,p=document)=>Array.from(p.querySelectorAll(s));
+      const shuffle=a=>{const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+      qsa('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+        qsa('.tab').forEach(b=>b.setAttribute('aria-selected','false')); qsa('.panel').forEach(p=>p.classList.remove('active'));
+        btn.setAttribute('aria-selected','true'); qs('#'+btn.dataset.tab).classList.add('active');
+      }));
+
+      let heads=0,tails=0;
+      function updateCoin(){const t=heads+tails,hr=t?heads/t*100:0,tr=t?tails/t*100:0;qs('#coin-total').textContent=t;qs('#heads-count').textContent=heads;qs('#tails-count').textContent=tails;qs('#heads-rate').textContent=hr.toFixed(1).replace('.',',')+'%';qs('#tails-rate').textContent=tr.toFixed(1).replace('.',',')+'%';qs('#heads-bar').style.width=hr+'%';qs('#tails-bar').style.width=tr+'%';qs('#coin-expected').textContent=(t/2).toLocaleString('id-ID',{maximumFractionDigits:1})+' kali'}
+      qsa('.toss-coin').forEach(b=>b.addEventListener('click',()=>{let n=+b.dataset.count,last='';for(let i=0;i<n;i++){if(Math.random()<.5){heads++;last='Angka'}else{tails++;last='Gambar'}}const c=qs('#coin');c.classList.remove('tossing');void c.offsetWidth;c.classList.add('tossing');c.textContent=last==='Angka'?'A':'G';qs('#coin-result').textContent=n===1?last:'Hasil terakhir: '+last;setTimeout(()=>c.classList.remove('tossing'),300);updateCoin()}));
+      qs('#coin-reset').addEventListener('click',()=>{heads=tails=0;qs('#coin').textContent='A';qs('#coin-result').textContent='Siap dilempar';updateCoin()});
+
+      const patterns={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};let dieCounts=[0,0,0,0,0,0];
+      function drawDie(n){const d=qs('#die');d.innerHTML='';for(let i=0;i<9;i++){const p=document.createElement('span');p.className='pip'+(patterns[n].includes(i)?'':' off');d.appendChild(p)}d.setAttribute('aria-label','Dadu menunjukkan '+n)}
+      function renderDieStats(){const total=dieCounts.reduce((a,b)=>a+b,0);qs('#die-total').textContent=total;qs('#die-expected').textContent=(total/6).toLocaleString('id-ID',{maximumFractionDigits:1})+' kali';qs('#die-stats').innerHTML=dieCounts.map((c,i)=>{const r=total?c/total*100:0;return '<div class="stat-row"><div class="stat-top"><span>Mata '+(i+1)+' — <b>'+c+'</b> kali</span><span>'+r.toFixed(1).replace('.',',')+'%</span></div><div class="track"><div class="bar '+(i%2?'alt':'')+'" style="width:'+r+'%"></div></div></div>'}).join('')}
+      qsa('.toss-die').forEach(b=>b.addEventListener('click',()=>{let n=+b.dataset.count,last=1;for(let i=0;i<n;i++){last=1+Math.floor(Math.random()*6);dieCounts[last-1]++}drawDie(last);const d=qs('#die');d.classList.remove('rolling');void d.offsetWidth;d.classList.add('rolling');qs('#die-result').textContent=n===1?'Mata '+last:'Hasil terakhir: '+last;setTimeout(()=>d.classList.remove('rolling'),300);renderDieStats()}));
+      qs('#die-reset').addEventListener('click',()=>{dieCounts=[0,0,0,0,0,0];drawDie(1);qs('#die-result').textContent='Siap dilempar';renderDieStats()});drawDie(1);renderDieStats();
+
+      let sampleType='coins',eventKey='oneHead';
+      const eventDefs={coins:[{k:'oneHead',l:'Tepat satu Angka'},{k:'same',l:'Kedua sisi sama'},{k:'atLeastHead',l:'Sedikitnya satu Angka'}],dice:[{k:'sum7',l:'Jumlah 7'},{k:'double',l:'Kembar'},{k:'sumAtLeast10',l:'Jumlah ≥ 10'}]};
+      function isMatch(a,b,key){if(key==='oneHead')return (a==='A')!==(b==='A');if(key==='same')return a===b;if(key==='atLeastHead')return a==='A'||b==='A';if(key==='sum7')return a+b===7;if(key==='double')return a===b;if(key==='sumAtLeast10')return a+b>=10;return false}
+      function renderSample(){const grid=qs('#outcome-grid'), defs=eventDefs[sampleType];grid.className='outcome-grid '+sampleType;grid.innerHTML='';let values=sampleType==='coins'?['A','G']:[1,2,3,4,5,6],matches=0,total=values.length*values.length;values.forEach(a=>values.forEach(b=>{let m=isMatch(a,b,eventKey);if(m)matches++;let el=document.createElement('div');el.className='outcome'+(m?' match':'');el.innerHTML=sampleType==='coins'?'<span>('+a+', '+b+')</span><small>Koin 1, Koin 2</small>':'<span>('+a+', '+b+')</span><span class="sum">Σ'+(a+b)+'</span>';grid.appendChild(el)}));qs('#axis-labels').classList.toggle('hidden',sampleType!=='dice');qs('#event-title').textContent='Kejadian: '+defs.find(d=>d.k===eventKey).l;let g=(a,b)=>b?g(b,a%b):a,div=g(matches,total);qs('#event-calc').textContent=matches+' dari '+total+' hasil → P = '+matches+'/'+total+(div>1?' = '+(matches/div)+'/'+(total/div):'');qs('#event-controls').innerHTML='';defs.forEach(d=>{let b=document.createElement('button');b.className='chip'+(d.k===eventKey?' active':'');b.textContent=d.l;b.addEventListener('click',()=>{eventKey=d.k;renderSample()});qs('#event-controls').appendChild(b)})}
+      qsa('.sample-type').forEach(b=>b.addEventListener('click',()=>{sampleType=b.dataset.type;eventKey=sampleType==='coins'?'oneHead':'sum7';qsa('.sample-type').forEach(x=>{x.classList.toggle('secondary',x!==b)});renderSample()}));renderSample();
+
+      const quiz=[
+        {q:'Sebuah koin seimbang dilempar satu kali. Berapa peluang muncul sisi Angka?',o:['1/2','1/4','1','0'],a:'1/2',e:'Ada dua hasil yang sama mungkin, yaitu Angka dan Gambar. Jadi P(Angka) = 1/2.'},
+        {q:'Manakah ruang sampel pelemparan satu dadu?',o:['{1, 2, 3, 4, 5, 6}','{0, 1, 2, 3, 4, 5}','{genap, ganjil}','{1, 6}'],a:'{1, 2, 3, 4, 5, 6}',e:'Dadu memiliki enam kemungkinan mata, yaitu 1 sampai 6. Semua kemungkinan itu membentuk ruang sampel.'},
+        {q:'Dari 40 kali lemparan koin, sisi Gambar muncul 22 kali. Berapa frekuensi relatif Gambar?',o:['55%','45%','22%','62%'],a:'55%',e:'Frekuensi relatif = 22 ÷ 40 = 0,55 = 55%.'},
+        {q:'Sebuah dadu dilempar 120 kali. Berapa frekuensi harapan muncul mata 3?',o:['20 kali','30 kali','60 kali','6 kali'],a:'20 kali',e:'P(mata 3) = 1/6. Frekuensi harapan = 120 × 1/6 = 20 kali.'},
+        {q:'Dua koin dilempar bersamaan. Berapa banyak anggota ruang sampelnya?',o:['4','2','6','8'],a:'4',e:'Kemungkinannya adalah (A,A), (A,G), (G,A), dan (G,G), sehingga ada 4 titik sampel.'},
+        {q:'Pada pelemparan satu dadu, berapa peluang muncul bilangan genap?',o:['1/2','1/3','2/3','1/6'],a:'1/2',e:'Bilangan genap adalah {2, 4, 6}, yaitu 3 dari 6 hasil. Jadi peluangnya 3/6 = 1/2.'},
+        {q:'Dua dadu dilempar bersamaan. Berapa banyak titik sampel yang mungkin?',o:['36','12','6','24'],a:'36',e:'Dadu pertama memiliki 6 pilihan dan dadu kedua 6 pilihan. Dengan aturan perkalian: 6 × 6 = 36.'},
+        {q:'Pada pelemparan dua dadu, berapa peluang jumlah mata dadu sama dengan 7?',o:['1/6','1/12','7/36','1/3'],a:'1/6',e:'Ada 6 pasangan berjumlah 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). Jadi 6/36 = 1/6.'},
+        {q:'Peluang turun hujan adalah 0,3. Jika diamati selama 50 hari dengan kondisi serupa, berapa frekuensi harapannya?',o:['15 hari','20 hari','30 hari','5 hari'],a:'15 hari',e:'Frekuensi harapan = 50 × 0,3 = 15 hari.'},
+        {q:'Setelah dadu dilempar hanya 6 kali, mata 6 belum muncul. Kesimpulan yang paling tepat adalah…',o:['Hal itu mungkin terjadi karena hasil percobaan bersifat acak','Dadu pasti rusak','Peluang mata 6 adalah nol','Mata 6 tidak ada pada dadu'],a:'Hal itu mungkin terjadi karena hasil percobaan bersifat acak',e:'Peluang 1/6 tidak menjamin mata 6 muncul tepat sekali dalam setiap 6 lemparan. Pola cenderung terlihat setelah percobaan lebih banyak.'}
+      ];
+      let order=[],idx=0,score=0,answered=false;
+      function startQuiz(){order=shuffle(quiz).map(x=>({...x,o:shuffle(x.o)}));idx=0;score=0;qs('#quiz-start').classList.add('hidden');qs('#quiz-final').classList.add('hidden');qs('#quiz-play').classList.remove('hidden');showQuestion()}
+      function showQuestion(){answered=false;let item=order[idx];qs('#q-count').textContent='Soal '+(idx+1)+' dari '+order.length;qs('#quiz-progress').style.width=(idx/order.length*100)+'%';qs('#question').textContent=item.q;qs('#feedback').classList.remove('show');qs('#next-question').classList.add('hidden');let box=qs('#answers');box.innerHTML='';item.o.forEach(opt=>{let b=document.createElement('button');b.className='answer';b.textContent=opt;b.addEventListener('click',()=>answer(b,opt,item));box.appendChild(b)})}
+      function answer(btn,opt,item){if(answered)return;answered=true;const correct=opt===item.a;if(correct)score++;qsa('.answer').forEach(b=>{b.disabled=true;if(b.textContent===item.a)b.classList.add('correct')});if(!correct)btn.classList.add('wrong');qs('#feedback-title').textContent=correct?'Tepat!':'Belum tepat.';qs('#feedback-text').textContent=item.e;qs('#feedback').classList.add('show');qs('#next-question').classList.remove('hidden');qs('#next-question').textContent=idx===order.length-1?'Lihat nilai akhir':'Soal berikutnya';qs('#quiz-progress').style.width=((idx+1)/order.length*100)+'%'}
+      qs('#next-question').addEventListener('click',()=>{idx++;if(idx>=order.length)finishQuiz();else showQuestion()});
+      function finishQuiz(){qs('#quiz-play').classList.add('hidden');qs('#quiz-final').classList.remove('hidden');let val=score*10;qs('#final-score').textContent=val;qs('#score-ring').style.setProperty('--score',val+'%');qs('#correct-total').textContent=score;qs('#wrong-total').textContent=10-score;let title=score>=9?'Hebat, konsepnya kuat!':score>=7?'Bagus, tinggal sedikit lagi!':score>=5?'Awal yang baik!':'Ayo coba sekali lagi!';let msg=score>=7?'Kamu sudah memahami sebagian besar konsep peluang. Ulangi simulasi untuk memperkuat intuisi.':'Baca lagi ringkasan dan gunakan simulasi, lalu ulangi kuis dengan urutan baru.';qs('#final-title').textContent=title;qs('#final-message').textContent=msg}
+      qs('#start-quiz').addEventListener('click',startQuiz);qs('#restart-quiz').addEventListener('click',startQuiz);
+    })();
+  </script>
+</body>
+</html>

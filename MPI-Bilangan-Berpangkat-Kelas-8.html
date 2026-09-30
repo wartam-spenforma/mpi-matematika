@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,700;6..72,800&display=swap" rel="stylesheet">
+  <title>Media Interaktif Bilangan Berpangkat Kelas 8</title>
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#f7f5ef;--paper:#fffdf8;--ink:#17231d;--muted:#5e6a63;--line:#d8ddd7;
+      --green:#167a57;--green-soft:#dff1e8;--orange:#e46c28;--orange-soft:#fde8d8;
+      --blue:#2066b1;--blue-soft:#dfeafb;--yellow:#f3c64d;--red:#bf4c3f;--shadow:0 12px 32px rgba(42,54,46,.09);
+      --radius:18px;
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--bg:#111713;--paper:#19211c;--ink:#f4f3ec;--muted:#aeb9b1;--line:#344139;--green:#6bd5aa;--green-soft:#193b2f;--orange:#ff9a5f;--orange-soft:#49291b;--blue:#82b7f4;--blue-soft:#1b3550;--yellow:#f2ca62;--red:#f08b7e;--shadow:0 14px 38px rgba(0,0,0,.26)}
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "DM Sans",sans-serif;overflow-x:hidden}
+    button,input,select{font:inherit}
+    button{color:inherit}
+    .skip{position:fixed;top:8px;left:8px;z-index:99;background:var(--paper);padding:10px 14px;border-radius:8px;transform:translateY(-160%);transition:transform .15s}.skip:focus{transform:translateY(0)}
+    .wrap{width:min(1160px,calc(100% - 32px));margin:auto}
+    .hero{position:relative;isolation:isolate;overflow:hidden;padding:70px 0 52px;border-bottom:1px solid var(--line)}
+    .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(115deg,var(--green-soft),transparent 54%)}
+    .hero-grid{display:grid;grid-template-columns:1.22fr .78fr;gap:48px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--green);font-weight:700;font-size:.88rem;margin-bottom:12px}
+    .eyebrow:before{content:"";width:28px;height:3px;background:var(--orange);border-radius:2px}
+    h1,h2,h3{font-family:"Newsreader",serif;line-height:1.05;margin:0}
+    h1{font-size:clamp(2.8rem,7vw,5.7rem);letter-spacing:-.045em;max-width:760px}
+    h1 em{font-style:normal;color:var(--green)}
+    .lead{font-size:clamp(1.05rem,2vw,1.25rem);max-width:650px;color:var(--muted);margin:22px 0 28px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{border:0;border-radius:11px;padding:12px 18px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:transform .18s,background .18s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary{background:var(--green);color:#fff}.btn.secondary{background:var(--paper);border:1px solid var(--line)}
+    .math-poster{min-height:350px;position:relative;background:var(--paper);border:1px solid var(--line);border-radius:34px 10px 34px 10px;box-shadow:var(--shadow);display:grid;place-items:center;transform:rotate(1.5deg)}
+    .orbit{width:248px;height:248px;border:2px dashed var(--line);border-radius:50%;display:grid;place-items:center;position:relative}
+    .big-math{font:800 5.2rem/1 "Newsreader",serif;color:var(--green);transform:rotate(-1.5deg)}
+    .big-math sup{font-size:.45em;color:var(--orange)}
+    .chip{position:absolute;padding:9px 13px;border-radius:999px;font-weight:700;box-shadow:var(--shadow);transform:rotate(-1.5deg)}
+    .chip.one{top:28px;right:18px;background:var(--orange-soft);color:var(--orange)}
+    .chip.two{bottom:38px;left:5px;background:var(--blue-soft);color:var(--blue)}
+    .chip.three{bottom:18px;right:24px;background:var(--green-soft);color:var(--green)}
+    .tabs-shell{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .tabs{display:flex;gap:8px;padding:10px 0;overflow:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+    .tab-btn{border:0;background:transparent;padding:10px 14px;border-radius:999px;white-space:nowrap;font-weight:700;color:var(--muted);cursor:pointer}
+    .tab-btn.active{background:var(--ink);color:var(--bg)}
+    main{padding:54px 0 80px}
+    .panel{display:none}.panel.active{display:block}
+    .section-head{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:end;margin-bottom:28px}
+    .section-head h2{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.025em}
+    .section-head p{color:var(--muted);margin:0;max-width:580px}
+    .sim-grid{display:grid;grid-template-columns:minmax(270px,.8fr) minmax(0,1.2fr);gap:20px;align-items:start}
+    .control-card,.stage,.note-card,.quiz-card{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .control-card{padding:24px;border-radius:var(--radius);position:sticky;top:76px}
+    .stage{padding:clamp(22px,4vw,38px);border-radius:28px 10px 28px 10px;min-height:390px}
+    .control-card h3,.stage h3{font-size:1.5rem;margin-bottom:8px}
+    .helper{color:var(--muted);font-size:.9rem;margin:0 0 20px}
+    label{font-weight:700;font-size:.92rem;display:block;margin-bottom:8px}
+    .field{margin-bottom:20px}
+    .range-line{display:grid;grid-template-columns:1fr 76px;gap:10px;align-items:center}
+    input[type=range]{width:100%;accent-color:var(--green)}
+    input[type=number],select,.text-input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:11px 12px;border-radius:10px;outline:none}
+    input:focus,select:focus,button:focus-visible{outline:3px solid color-mix(in srgb,var(--blue) 40%,transparent);outline-offset:2px}
+    .result-box{background:var(--green-soft);border-radius:14px;padding:22px;margin-bottom:20px}
+    .result-main{font:800 clamp(2rem,6vw,4.4rem)/1.05 "Newsreader",serif;color:var(--green);overflow-wrap:anywhere}
+    .result-label{font-size:.82rem;color:var(--muted);font-weight:700;margin-bottom:8px}
+    .multiplication{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:22px 0}
+    .factor{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--orange-soft);color:var(--orange);font-weight:800}
+    .operator{font-weight:800;color:var(--muted)}
+    .rule-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
+    .rule-btn{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:10px 8px;font-weight:700;cursor:pointer;min-height:48px}
+    .rule-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+    .formula{font:800 clamp(1.65rem,4vw,2.7rem)/1.2 "Newsreader",serif;margin:12px 0;color:var(--blue)}
+    .steps{counter-reset:step;display:grid;gap:12px;margin-top:24px}
+    .step{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;padding:13px 0;border-top:1px solid var(--line)}
+    .step:before{counter-increment:step;content:counter(step);width:30px;height:30px;border-radius:50%;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;font-weight:800}
+    .step strong{display:block;margin-bottom:3px}.step span{color:var(--muted)}
+    .root-tree{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:center;text-align:center;margin:26px 0}
+    .tree-node{background:var(--orange-soft);color:var(--orange);padding:14px 8px;border-radius:12px;font-weight:800}
+    .tree-node.final{background:var(--green-soft);color:var(--green)}
+    .root-answer{font:800 clamp(2rem,5vw,3.5rem)/1.1 "Newsreader",serif;color:var(--orange);margin:16px 0}
+    .root-break{font-size:1.05rem;color:var(--muted)}
+    .notation-preview{background:var(--blue-soft);padding:28px;border-radius:14px;margin:18px 0 22px;overflow-wrap:anywhere}
+    .notation-preview .arrow{color:var(--muted);font-size:1rem;margin:8px 0}.notation-preview strong{font:800 clamp(1.55rem,4vw,2.8rem)/1.1 "Newsreader",serif;color:var(--blue);display:block}
+    .place-track{display:flex;gap:4px;flex-wrap:wrap;margin-top:20px}.digit-cell{min-width:34px;padding:8px 5px;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:7px;font-weight:800}.digit-cell.decimal{color:var(--orange);border-color:var(--orange)}
+    .concepts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:38px}.concept{padding:18px;border-top:4px solid var(--green);background:var(--paper);box-shadow:var(--shadow)}.concept:nth-child(2){border-color:var(--orange)}.concept:nth-child(3){border-color:var(--blue)}.concept:nth-child(4){border-color:var(--yellow)}.concept strong{display:block;margin-bottom:6px}.concept p{font-size:.9rem;color:var(--muted);margin:0}
+    .quiz-intro{display:grid;grid-template-columns:1fr .75fr;gap:20px}.quiz-card{padding:clamp(24px,5vw,46px);border-radius:28px 10px}.quiz-card h2{font-size:clamp(2.2rem,5vw,4rem);max-width:600px}.quiz-card p{color:var(--muted);max-width:660px}.quiz-art{background:var(--yellow);color:#332b10;display:grid;place-items:center;min-height:300px;border-radius:10px 28px;position:relative;overflow:hidden}.quiz-art .score-zero{font:800 6rem/1 "Newsreader",serif}.quiz-art small{font-weight:800}.quiz-art:before,.quiz-art:after{content:"";position:absolute;border:3px solid rgba(51,43,16,.25);border-radius:50%}.quiz-art:before{width:180px;height:180px;left:-65px;top:-70px}.quiz-art:after{width:120px;height:120px;right:-35px;bottom:-48px}
+    .quiz-play{max-width:820px;margin:auto}.progress-meta{display:flex;justify-content:space-between;gap:16px;font-weight:700;margin-bottom:10px}.progress{height:9px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:24px}.progress-fill{height:100%;background:var(--green);transition:width .3s}.question{font:700 clamp(1.4rem,3vw,2.15rem)/1.25 "Newsreader",serif;margin:0 0 24px}.choices{display:grid;gap:10px}.choice{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:15px 16px;text-align:left;font-weight:700;cursor:pointer;transition:border .15s,background .15s}.choice:hover:not(:disabled){border-color:var(--green);background:var(--green-soft)}.choice.correct{background:var(--green-soft);border-color:var(--green);color:var(--green)}.choice.wrong{background:var(--orange-soft);border-color:var(--red);color:var(--red)}.choice:disabled{cursor:default}
+    .explanation{display:none;margin-top:20px;padding:18px;background:var(--blue-soft);border-radius:12px;color:var(--ink)}.explanation.show{display:block}.explanation strong{color:var(--blue)}.quiz-nav{display:flex;justify-content:flex-end;margin-top:18px}.hidden{display:none!important}
+    .final{text-align:center}.score-ring{width:170px;height:170px;margin:0 auto 22px;border-radius:50%;border:14px solid var(--green-soft);display:grid;place-items:center}.score-ring strong{font:800 3.5rem/1 "Newsreader",serif;color:var(--green)}.final h2{font-size:2.6rem}.final p{color:var(--muted)}
+    footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem}.footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.legend{display:flex;gap:14px;flex-wrap:wrap}.legend span{display:flex;align-items:center;gap:6px}.dot{width:9px;height:9px;border-radius:50%;background:var(--green)}.dot.o{background:var(--orange)}.dot.b{background:var(--blue)}
+    @media(max-width:820px){.hero{padding:44px 0 38px}.hero-grid,.section-head,.sim-grid,.quiz-intro{grid-template-columns:1fr}.math-poster{min-height:250px;max-width:520px}.control-card{position:static}.concepts{grid-template-columns:1fr 1fr}.section-head{gap:10px}.sim-grid{gap:14px}.stage{min-height:auto}.rule-strip{grid-template-columns:1fr 1fr}}
+    @media(max-width:520px){.wrap{width:min(100% - 22px,1160px)}h1{font-size:2.75rem}.hero-actions .btn{width:100%}.math-poster{min-height:220px}.orbit{width:180px;height:180px}.big-math{font-size:4rem}.chip{font-size:.78rem}.concepts{grid-template-columns:1fr}.stage,.control-card,.quiz-card{padding:19px}.range-line{grid-template-columns:1fr 68px}.root-tree{grid-template-columns:1fr}.rule-strip{grid-template-columns:1fr 1fr}.tabs{padding:8px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;overflow:visible}.tab-btn{padding:8px 6px;font-size:.8rem;white-space:normal;line-height:1.2}.quiz-art{min-height:220px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.progress-fill{transition:none}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+<a class="skip" href="#konten">Lewati ke materi</a>
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Matematika Kelas VIII</div>
+      <h1>Angka besar, ide yang <em>sederhana.</em></h1>
+      <p class="lead">Geser, ubah, dan amati pola bilangan berpangkat, sifat operasi, bentuk akar, serta notasi ilmiah. Setelah bereksperimen, uji pemahamanmu lewat 10 soal acak.</p>
+      <div class="hero-actions">
+        <button class="btn primary" data-jump="pangkat">Mulai simulasi <span aria-hidden="true">→</span></button>
+        <button class="btn secondary" data-jump="kuis">Langsung ke kuis</button>
+      </div>
+    </div>
+    <div class="math-poster" aria-label="Ilustrasi konsep pangkat, akar, dan notasi ilmiah">
+      <div class="orbit"><div class="big-math">2<sup>5</sup></div></div>
+      <div class="chip one">√72 = 6√2</div>
+      <div class="chip two">10³ = 1.000</div>
+      <div class="chip three">3,2 × 10⁵</div>
+    </div>
+  </div>
+</header>
+<nav class="tabs-shell" aria-label="Bagian pembelajaran">
+  <div class="wrap tabs" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true" data-tab="pangkat">Pangkat</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="sifat">Sifat operasi</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="akar">Bentuk akar</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="notasi">Notasi ilmiah</button>
+    <button class="tab-btn" role="tab" aria-selected="false" data-tab="kuis">Kuis</button>
+  </div>
+</nav>
+<main id="konten" class="wrap">
+  <section class="panel active" id="pangkat" role="tabpanel">
+    <div class="section-head"><h2>Penjelajah pangkat</h2><p>Pangkat menyatakan berapa kali bilangan pokok digunakan sebagai faktor. Cobalah pangkat positif, nol, dan negatif untuk melihat perbedaannya.</p></div>
+    <div class="sim-grid">
+      <aside class="control-card">
+        <h3>Atur bilangannya</h3><p class="helper">Gunakan penggeser atau ketik nilai.</p>
+        <div class="field"><label for="baseRange">Bilangan pokok (a)</label><div class="range-line"><input id="baseRange" type="range" min="-8" max="10" value="2"><input id="baseNum" type="number" min="-8" max="10" value="2"></div></div>
+        <div class="field"><label for="expRange">Pangkat (n)</label><div class="range-line"><input id="expRange" type="range" min="-4" max="8" value="5"><input id="expNum" type="number" min="-4" max="8" value="5"></div></div>
+        <div class="result-box"><div class="result-label">HASIL aⁿ</div><div class="result-main" id="powerResult">32</div></div>
+        <p class="helper" id="powerHint">Pangkat 5 berarti 2 dikalikan dengan dirinya sendiri sebanyak 5 faktor.</p>
+      </aside>
+      <div class="stage">
+        <h3>Pola perkalian berulang</h3><p class="helper">Setiap lingkaran adalah satu faktor.</p>
+        <div class="formula" id="powerFormula">2⁵ = 32</div>
+        <div class="multiplication" id="factorLine"></div>
+        <div class="steps" id="powerSteps"></div>
+      </div>
+    </div>
+    <div class="concepts">
+      <div class="concept"><strong>Pangkat positif</strong><p>aⁿ adalah perkalian a sebanyak n faktor.</p></div>
+      <div class="concept"><strong>Pangkat nol</strong><p>a⁰ = 1 untuk a ≠ 0.</p></div>
+      <div class="concept"><strong>Pangkat negatif</strong><p>a⁻ⁿ = 1/aⁿ untuk a ≠ 0.</p></div>
+      <div class="concept"><strong>Tanda hasil</strong><p>Pokok negatif berpangkat genap menghasilkan bilangan positif.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" id="sifat" role="tabpanel">
+    <div class="section-head"><h2>Bedah sifat operasi</h2><p>Jangan sekadar hafal rumus. Pilih sifat, ubah nilai, lalu ikuti alasan pada setiap langkah.</p></div>
+    <div class="sim-grid">
+      <aside class="control-card">
+        <h3>Pilih sifat</h3><p class="helper">Semua contoh memakai bilangan bulat kecil.</p>
+        <div class="rule-strip" id="ruleButtons">
+          <button class="rule-btn active" data-rule="multiply">Kali</button><button class="rule-btn" data-rule="divide">Bagi</button><button class="rule-btn" data-rule="power">Pangkatkan</button><button class="rule-btn" data-rule="product">Pangkat hasil kali</button>
+        </div>
+        <div class="field"><label for="ruleBase">Bilangan pokok (a)</label><input id="ruleBase" type="number" min="1" max="10" value="2"></div>
+        <div class="field" id="baseBField" hidden><label for="ruleBaseB">Bilangan kedua (b)</label><input id="ruleBaseB" type="number" min="1" max="10" value="3"></div>
+        <div class="field"><label for="ruleM">Pangkat pertama (m)</label><input id="ruleM" type="number" min="0" max="8" value="3"></div>
+        <div class="field" id="ruleNField"><label for="ruleN">Pangkat kedua (n)</label><input id="ruleN" type="number" min="0" max="8" value="2"></div>
+      </aside>
+      <div class="stage">
+        <div class="result-label">SIFAT YANG DIGUNAKAN</div><h3 id="ruleTitle">Perkalian dengan pokok sama</h3>
+        <div class="formula" id="ruleFormula">aᵐ × aⁿ = aᵐ⁺ⁿ</div>
+        <div class="steps" id="ruleSteps"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="akar" role="tabpanel">
+    <div class="section-head"><h2>Laboratorium bentuk akar</h2><p>Pecah bilangan di dalam akar menjadi faktor kuadrat sempurna dan faktor sisanya. Kamu juga dapat mencoba penjumlahan dan perkalian akar.</p></div>
+    <div class="sim-grid">
+      <aside class="control-card">
+        <h3>Pilih operasi</h3>
+        <div class="field"><label for="rootMode">Mode</label><select id="rootMode"><option value="simplify">Sederhanakan √a</option><option value="add">Jumlahkan √a + √b</option><option value="multiply">Kalikan √a × √b</option></select></div>
+        <div class="field"><label for="rootA">Nilai a</label><input id="rootA" type="number" min="1" max="500" value="72"></div>
+        <div class="field" id="rootBField" hidden><label for="rootB">Nilai b</label><input id="rootB" type="number" min="1" max="500" value="8"></div>
+        <div class="result-box"><div class="result-label">BENTUK PALING SEDERHANA</div><div class="result-main" id="rootResult">6√2</div></div>
+      </aside>
+      <div class="stage">
+        <h3 id="rootTitle">Mencari faktor kuadrat sempurna</h3>
+        <p class="helper" id="rootIntro">Cari kuadrat sempurna terbesar yang membagi 72.</p>
+        <div class="root-tree" id="rootTree"></div>
+        <div class="root-answer" id="rootEquation">√72 = √(36 × 2) = 6√2</div>
+        <p class="root-break" id="rootExplanation">Karena √36 = 6, faktor 6 dapat keluar dari tanda akar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="notasi" role="tabpanel">
+    <div class="section-head"><h2>Konverter notasi ilmiah</h2><p>Notasi ilmiah menulis bilangan sebagai a × 10ⁿ dengan 1 ≤ |a| &lt; 10. Amati perpindahan tanda desimalnya.</p></div>
+    <div class="sim-grid">
+      <aside class="control-card">
+        <h3>Masukkan bilangan</h3>
+        <div class="field"><label for="notationMode">Arah konversi</label><select id="notationMode"><option value="toSci">Bilangan biasa → notasi ilmiah</option><option value="toNormal">Notasi ilmiah → bilangan biasa</option></select></div>
+        <div id="normalInputWrap" class="field"><label for="normalInput">Bilangan biasa</label><input class="text-input" id="normalInput" inputmode="decimal" value="320000"></div>
+        <div id="sciInputWrap" hidden>
+          <div class="field"><label for="coefficientInput">Koefisien (a)</label><input id="coefficientInput" type="number" step="0.1" min="-9.99" max="9.99" value="3.2"></div>
+          <div class="field"><label for="sciExponent">Pangkat 10 (n)</label><input id="sciExponent" type="number" min="-12" max="12" value="5"></div>
+        </div>
+        <p class="helper">Gunakan titik atau koma sebagai tanda desimal.</p>
+      </aside>
+      <div class="stage">
+        <div class="result-label">HASIL KONVERSI</div>
+        <div class="notation-preview"><strong id="notationFrom">320.000</strong><div class="arrow">menjadi ↓</div><strong id="notationTo">3,2 × 10⁵</strong></div>
+        <h3 id="notationMove">Geser koma 5 tempat ke kiri</h3>
+        <p id="notationExplain" class="helper">Karena koma digeser ke kiri, pangkat 10 bernilai positif.</p>
+        <div class="place-track" id="digitTrack" aria-label="Jejak digit"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="kuis" role="tabpanel">
+    <div id="quizIntro" class="quiz-intro">
+      <div class="quiz-card"><div class="eyebrow">Tantangan akhir</div><h2>Siap menaklukkan 10 soal?</h2><p>Soal dan pilihan jawaban selalu diacak saat kuis dimulai ulang. Jawab satu per satu, baca pembahasannya, lalu lihat nilai akhirmu.</p><button id="startQuiz" class="btn primary">Mulai kuis <span aria-hidden="true">→</span></button></div>
+      <div class="quiz-art" aria-hidden="true"><div><div class="score-zero">10</div><small>soal acak</small></div></div>
+    </div>
+    <div id="quizPlay" class="quiz-play hidden">
+      <div class="quiz-card">
+        <div class="progress-meta"><span id="quizCount">Soal 1 dari 10</span><span id="quizScore">Skor 0</span></div>
+        <div class="progress"><div id="progressFill" class="progress-fill" style="width:10%"></div></div>
+        <p id="questionText" class="question"></p>
+        <div id="choices" class="choices"></div>
+        <div id="explanation" class="explanation" aria-live="polite"></div>
+        <div class="quiz-nav"><button id="nextQuestion" class="btn primary hidden">Soal berikutnya</button></div>
+      </div>
+    </div>
+    <div id="quizFinal" class="quiz-play hidden">
+      <div class="quiz-card final"><div class="score-ring"><strong id="finalScore">0</strong></div><h2 id="finalTitle">Bagus!</h2><p id="finalMessage"></p><button id="restartQuiz" class="btn primary">Ulangi dengan urutan baru</button></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap footer-row"><span>Eksplorasi matematika • Bilangan berpangkat & bentuk akar</span><div class="legend"><span><i class="dot"></i> konsep</span><span><i class="dot o"></i> proses</span><span><i class="dot b"></i> penalaran</span></div></div></footer>
+<script>
+(function(){
+  "use strict";
+  var supers={"-":"⁻","0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"};
+  function sup(n){return String(n).split("").map(function(c){return supers[c]||c}).join("");}
+  function fmt(n,max){if(!Number.isFinite(n))return "tidak terdefinisi";return new Intl.NumberFormat("id-ID",{maximumFractionDigits:max==null?8:max}).format(n);}
+  function clamp(v,min,max,fallback){v=Number(v);return Number.isFinite(v)?Math.max(min,Math.min(max,v)):fallback;}
+  function escapeHTML(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+  var tabs=[].slice.call(document.querySelectorAll(".tab-btn"));
+  function openTab(id){
+    tabs.forEach(function(b){var on=b.dataset.tab===id;b.classList.toggle("active",on);b.setAttribute("aria-selected",String(on));});
+    document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("active",p.id===id);});
+    document.querySelector(".tabs-shell").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  tabs.forEach(function(b){b.addEventListener("click",function(){openTab(b.dataset.tab);});});
+  document.querySelectorAll("[data-jump]").forEach(function(b){b.addEventListener("click",function(){openTab(b.dataset.jump);});});
+
+  var baseRange=document.getElementById("baseRange"),baseNum=document.getElementById("baseNum"),expRange=document.getElementById("expRange"),expNum=document.getElementById("expNum");
+  function updatePower(source){
+    var b=clamp(source==="range"?baseRange.value:baseNum.value,-8,10,2),e=clamp(source==="range"?expRange.value:expNum.value,-4,8,5);
+    b=Math.round(b);e=Math.round(e);baseRange.value=baseNum.value=b;expRange.value=expNum.value=e;
+    var invalid=b===0&&e<=0,res=invalid?NaN:Math.pow(b,e), formula=b+sup(e)+" = "+fmt(res);
+    document.getElementById("powerResult").textContent=fmt(res);document.getElementById("powerFormula").textContent=formula;
+    var line=document.getElementById("factorLine"),steps=document.getElementById("powerSteps");line.innerHTML="";steps.innerHTML="";
+    if(invalid){document.getElementById("powerHint").textContent="Nol berpangkat nol atau negatif tidak didefinisikan pada pembahasan ini.";steps.innerHTML='<div class="step"><div><strong>Tidak dapat dihitung</strong><span>Pilih bilangan pokok selain nol.</span></div></div>';return;}
+    if(e>0){
+      for(var i=0;i<e;i++){if(i){var op=document.createElement("span");op.className="operator";op.textContent="×";line.appendChild(op);}var f=document.createElement("span");f.className="factor";f.textContent=b;line.appendChild(f);}
+      document.getElementById("powerHint").textContent="Pangkat "+e+" berarti "+b+" dikalikan dengan dirinya sendiri sebanyak "+e+" faktor.";
+      steps.innerHTML='<div class="step"><div><strong>Tulis sebagai perkalian</strong><span>'+Array(e).fill(escapeHTML(b)).join(" × ")+'</span></div></div><div class="step"><div><strong>Hitung bertahap</strong><span>Hasil akhirnya adalah '+escapeHTML(fmt(res))+'.</span></div></div>';
+    }else if(e===0){
+      line.innerHTML='<span class="factor">1</span>';document.getElementById("powerHint").textContent="Setiap bilangan bukan nol berpangkat 0 bernilai 1.";
+      steps.innerHTML='<div class="step"><div><strong>Gunakan pola pembagian</strong><span>'+b+sup(1)+' ÷ '+b+sup(1)+' = '+b+sup(0)+' = 1.</span></div></div>';
+    }else{
+      var count=Math.abs(e),inner=Array(count).fill(b).join(" × ");line.innerHTML='<span class="operator">1 ÷</span><span class="factor" style="width:auto;padding:0 15px">'+escapeHTML(inner)+'</span>';
+      document.getElementById("powerHint").textContent="Pangkat negatif membalik bentuk menjadi pecahan: a⁻ⁿ = 1/aⁿ.";
+      steps.innerHTML='<div class="step"><div><strong>Ubah pangkat negatif</strong><span>'+b+sup(e)+' = 1/'+b+sup(count)+'</span></div></div><div class="step"><div><strong>Hitung penyebut</strong><span>1 ÷ '+fmt(Math.pow(b,count))+' = '+fmt(res)+'.</span></div></div>';
+    }
+  }
+  [baseRange,expRange].forEach(function(el){el.addEventListener("input",function(){updatePower("range");});});
+  [baseNum,expNum].forEach(function(el){el.addEventListener("input",function(){updatePower("number");});});updatePower("range");
+
+  var currentRule="multiply",ruleBase=document.getElementById("ruleBase"),ruleBaseB=document.getElementById("ruleBaseB"),ruleM=document.getElementById("ruleM"),ruleN=document.getElementById("ruleN");
+  function updateRule(){
+    var a=Math.round(clamp(ruleBase.value,1,10,2)),b=Math.round(clamp(ruleBaseB.value,1,10,3)),m=Math.round(clamp(ruleM.value,0,8,3)),n=Math.round(clamp(ruleN.value,0,8,2));ruleBase.value=a;ruleBaseB.value=b;ruleM.value=m;ruleN.value=n;
+    var title,formula,steps=[];
+    document.getElementById("baseBField").hidden=currentRule!=="product";document.getElementById("ruleNField").hidden=currentRule==="product";
+    if(currentRule==="multiply"){
+      title="Perkalian dengan pokok sama";formula="aᵐ × aⁿ = aᵐ⁺ⁿ";
+      steps=[["Periksa bilangan pokok",a+sup(m)+" dan "+a+sup(n)+" memiliki pokok yang sama, yaitu "+a+"."],["Jumlahkan pangkat",m+" + "+n+" = "+(m+n)+", sehingga menjadi "+a+sup(m+n)+"."],["Hitung hasil",a+sup(m)+" × "+a+sup(n)+" = "+fmt(Math.pow(a,m+n))+"."]];
+    }else if(currentRule==="divide"){
+      title="Pembagian dengan pokok sama";formula="aᵐ ÷ aⁿ = aᵐ⁻ⁿ";
+      steps=[["Periksa bilangan pokok",a+sup(m)+" dan "+a+sup(n)+" memiliki pokok yang sama."],["Kurangkan pangkat",m+" − "+n+" = "+(m-n)+", sehingga menjadi "+a+sup(m-n)+"."],["Hitung hasil",a+sup(m)+" ÷ "+a+sup(n)+" = "+fmt(Math.pow(a,m-n))+"."]];
+    }else if(currentRule==="power"){
+      title="Pangkat dari bilangan berpangkat";formula="(aᵐ)ⁿ = aᵐⁿ";
+      steps=[["Perhatikan susunannya","Pangkat "+n+" berada di luar kurung, jadi pangkat dikalikan."],["Kalikan pangkat",m+" × "+n+" = "+(m*n)+", sehingga menjadi "+a+sup(m*n)+"."],["Hitung hasil","("+a+sup(m)+")"+sup(n)+" = "+fmt(Math.pow(a,m*n))+"."]];
+    }else{
+      title="Pangkat pada hasil kali";formula="(ab)ⁿ = aⁿ × bⁿ";
+      steps=[["Sebarkan pangkat","Pangkat "+m+" berlaku untuk "+a+" dan "+b+"."],["Pangkatkan tiap faktor",a+sup(m)+" × "+b+sup(m)+" = "+fmt(Math.pow(a,m))+" × "+fmt(Math.pow(b,m))+"."],["Hitung hasil","("+a+" × "+b+")"+sup(m)+" = "+fmt(Math.pow(a*b,m))+"."]];
+    }
+    document.getElementById("ruleTitle").textContent=title;document.getElementById("ruleFormula").textContent=formula;
+    document.getElementById("ruleSteps").innerHTML=steps.map(function(s){return '<div class="step"><div><strong>'+escapeHTML(s[0])+'</strong><span>'+escapeHTML(s[1])+'</span></div></div>';}).join("");
+  }
+  document.querySelectorAll(".rule-btn").forEach(function(btn){btn.addEventListener("click",function(){currentRule=btn.dataset.rule;document.querySelectorAll(".rule-btn").forEach(function(x){x.classList.toggle("active",x===btn);});updateRule();});});
+  [ruleBase,ruleBaseB,ruleM,ruleN].forEach(function(x){x.addEventListener("input",updateRule);});updateRule();
+
+  function simplifyRoot(n){var outside=1,inside=n;for(var i=Math.floor(Math.sqrt(n));i>=2;i--){if(n%(i*i)===0){outside=i;inside=n/(i*i);break;}}return {outside:outside,inside:inside,text:inside===1?String(outside):(outside===1?"√"+inside:outside+"√"+inside)};}
+  var rootMode=document.getElementById("rootMode"),rootA=document.getElementById("rootA"),rootB=document.getElementById("rootB");
+  function updateRoot(){
+    var mode=rootMode.value,a=Math.round(clamp(rootA.value,1,500,72)),b=Math.round(clamp(rootB.value,1,500,8));rootA.value=a;rootB.value=b;document.getElementById("rootBField").hidden=mode==="simplify";
+    var sa=simplifyRoot(a),sb=simplifyRoot(b),result,title,intro,equation,explain,tree=[];
+    if(mode==="simplify"){
+      result=sa.text;title="Mencari faktor kuadrat sempurna";intro="Cari kuadrat sempurna terbesar yang membagi "+a+".";
+      var square=sa.outside*sa.outside;tree=["√"+a,"√("+square+" × "+sa.inside+")",sa.text];equation="√"+a+" = √("+square+" × "+sa.inside+") = "+sa.text;
+      explain=sa.outside===1?"Tidak ada faktor kuadrat sempurna selain 1, jadi bentuk ini sudah paling sederhana.":"Karena √"+square+" = "+sa.outside+", faktor "+sa.outside+" dapat keluar dari tanda akar.";
+    }else if(mode==="add"){
+      title="Menjumlahkan bentuk akar";intro="Sederhanakan kedua akar, lalu periksa apakah bagian akarnya sejenis.";
+      if(sa.inside===sb.inside){var coeff=sa.outside+sb.outside;result=sa.inside===1?String(coeff):(coeff+"√"+sa.inside);equation="√"+a+" + √"+b+" = "+sa.text+" + "+sb.text+" = "+result;explain="Bagian akar sama, yaitu √"+sa.inside+", sehingga koefisiennya dapat dijumlahkan.";}else{result=sa.text+" + "+sb.text;equation="√"+a+" + √"+b+" = "+result;explain="Bagian akar tidak sama, jadi keduanya tidak dapat digabungkan lagi.";}tree=["√"+a+" → "+sa.text,"√"+b+" → "+sb.text,result];
+    }else{
+      var product=a*b,sp=simplifyRoot(product);result=sp.text;title="Mengalikan bentuk akar";intro="Gunakan sifat √a × √b = √(a × b), lalu sederhanakan.";equation="√"+a+" × √"+b+" = √"+product+" = "+result;explain="Kalikan bilangan di dalam akar terlebih dahulu, kemudian keluarkan faktor kuadrat sempurnanya.";tree=["√"+a+" × √"+b,"√("+a+" × "+b+")",result];
+    }
+    document.getElementById("rootResult").textContent=result;document.getElementById("rootTitle").textContent=title;document.getElementById("rootIntro").textContent=intro;document.getElementById("rootEquation").textContent=equation;document.getElementById("rootExplanation").textContent=explain;
+    document.getElementById("rootTree").innerHTML=tree.map(function(t,i){return '<div class="tree-node '+(i===tree.length-1?'final':'')+'">'+escapeHTML(t)+'</div>';}).join("");
+  }
+  [rootMode,rootA,rootB].forEach(function(x){x.addEventListener("input",updateRoot);x.addEventListener("change",updateRoot);});updateRoot();
+
+  var notationMode=document.getElementById("notationMode"),normalInput=document.getElementById("normalInput"),coefficientInput=document.getElementById("coefficientInput"),sciExponent=document.getElementById("sciExponent");
+  function plainNumber(n){if(!Number.isFinite(n))return "—";if(Math.abs(n)>=1e15||Math.abs(n)>0&&Math.abs(n)<1e-9)return n.toExponential();var s=n.toFixed(12).replace(/\.0+$|(?:(\.\d*?[1-9]))0+$/,"$1");return s;}
+  function updateNotation(){
+    var mode=notationMode.value;document.getElementById("normalInputWrap").hidden=mode!=="toSci";document.getElementById("sciInputWrap").hidden=mode!=="toNormal";
+    var from,to,move,explain,digits="";
+    if(mode==="toSci"){
+      var raw=normalInput.value.trim().replace(/\s/g,"").replace(",","."),num=Number(raw);
+      if(!Number.isFinite(num)){from="Masukkan bilangan yang valid";to="—";move="Belum dapat dikonversi";explain="Gunakan angka dan satu tanda desimal.";}
+      else if(num===0){from="0";to="0 × 10⁰";move="Koma tidak perlu digeser";explain="Nol merupakan kasus khusus.";digits="0";}
+      else{var exp=Math.floor(Math.log10(Math.abs(num))),coef=num/Math.pow(10,exp);from=fmt(num,12);to=fmt(coef,10)+" × 10"+sup(exp);var dir=exp>=0?"kiri":"kanan";move="Geser koma "+Math.abs(exp)+" tempat ke "+dir;explain="Karena koma digeser ke "+dir+", pangkat 10 bernilai "+(exp>=0?"positif":"negatif")+".";digits=raw;}
+    }else{
+      var c=clamp(coefficientInput.value,-9.99,9.99,3.2),e=Math.round(clamp(sciExponent.value,-12,12,5));coefficientInput.value=c;sciExponent.value=e;var val=c*Math.pow(10,e);from=fmt(c,10)+" × 10"+sup(e);to=fmt(val,12);var dir2=e>=0?"kanan":"kiri";move="Geser koma "+Math.abs(e)+" tempat ke "+dir2;explain="Mengalikan dengan 10"+sup(e)+" memindahkan tanda desimal ke "+dir2+".";digits=plainNumber(val);
+    }
+    document.getElementById("notationFrom").textContent=from;document.getElementById("notationTo").textContent=to;document.getElementById("notationMove").textContent=move;document.getElementById("notationExplain").textContent=explain;
+    document.getElementById("digitTrack").innerHTML=digits.split("").slice(0,22).map(function(d){return '<span class="digit-cell '+(d==="."||d===","?'decimal':'')+'">'+(d==="."?",":escapeHTML(d))+'</span>';}).join("");
+  }
+  [notationMode,normalInput,coefficientInput,sciExponent].forEach(function(x){x.addEventListener("input",updateNotation);x.addEventListener("change",updateNotation);});updateNotation();
+
+  var questionBank=[
+    {q:"Nilai dari 2⁵ adalah …",choices:["32","10","16","25"],a:"32",why:"2⁵ = 2 × 2 × 2 × 2 × 2 = 32."},
+    {q:"Bentuk sederhana dari 3⁴ × 3² adalah …",choices:["3⁶","3⁸","9⁶","3²"],a:"3⁶",why:"Perkalian dengan pokok sama membuat pangkat dijumlahkan: 4 + 2 = 6."},
+    {q:"Hasil dari 5⁶ ÷ 5⁴ adalah …",choices:["25","5¹⁰","1","125"],a:"25",why:"Kurangkan pangkat: 5⁶ ÷ 5⁴ = 5² = 25."},
+    {q:"Nilai dari (2³)² adalah …",choices:["64","32","12","256"],a:"64",why:"Pangkat dikalikan: (2³)² = 2⁶ = 64."},
+    {q:"Bentuk sederhana dari √48 adalah …",choices:["4√3","3√4","2√12","8√6"],a:"4√3",why:"48 = 16 × 3, sehingga √48 = √16 × √3 = 4√3."},
+    {q:"Hasil dari √12 + √27 adalah …",choices:["5√3","√39","3√5","6√3"],a:"5√3",why:"√12 = 2√3 dan √27 = 3√3. Jadi jumlahnya 5√3."},
+    {q:"Hasil dari √6 × √24 adalah …",choices:["12","6√4","30","4√6"],a:"12",why:"√6 × √24 = √144 = 12."},
+    {q:"Bilangan 4.500.000 dalam notasi ilmiah adalah …",choices:["4,5 × 10⁶","45 × 10⁵","4,5 × 10⁵","0,45 × 10⁷"],a:"4,5 × 10⁶",why:"Koma digeser 6 tempat ke kiri sehingga diperoleh 4,5 × 10⁶. Koefisien harus antara 1 dan 10."},
+    {q:"Nilai biasa dari 7,2 × 10⁻³ adalah …",choices:["0,0072","0,072","7.200","0,00072"],a:"0,0072",why:"Pangkat −3 menggeser koma 3 tempat ke kiri: 7,2 menjadi 0,0072."},
+    {q:"Pernyataan yang benar untuk bilangan a ≠ 0 adalah …",choices:["a⁰ = 1","a⁰ = 0","a⁻¹ = −a","a² = 2a"],a:"a⁰ = 1",why:"Setiap bilangan bukan nol yang dipangkatkan nol bernilai 1."},
+    {q:"Nilai dari (−3)⁴ adalah …",choices:["81","−81","12","−12"],a:"81",why:"Ada empat faktor negatif. Setiap pasangan negatif menghasilkan positif, jadi (−3)⁴ = 81."},
+    {q:"Bentuk (2 × 5)³ setara dengan …",choices:["2³ × 5³","2³ × 5","2 × 5³","10⁶"],a:"2³ × 5³",why:"Pangkat hasil kali berlaku pada setiap faktor: (ab)ⁿ = aⁿ × bⁿ."}
+  ];
+  function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  var quiz=[],qi=0,score=0,answered=false;
+  function startQuiz(){quiz=shuffle(questionBank).slice(0,10).map(function(q){return {q:q.q,a:q.a,why:q.why,choices:shuffle(q.choices)};});qi=0;score=0;document.getElementById("quizIntro").classList.add("hidden");document.getElementById("quizFinal").classList.add("hidden");document.getElementById("quizPlay").classList.remove("hidden");renderQuestion();}
+  function renderQuestion(){answered=false;var q=quiz[qi];document.getElementById("quizCount").textContent="Soal "+(qi+1)+" dari "+quiz.length;document.getElementById("quizScore").textContent="Skor "+score;document.getElementById("progressFill").style.width=((qi+1)/quiz.length*100)+"%";document.getElementById("questionText").textContent=q.q;document.getElementById("explanation").className="explanation";document.getElementById("explanation").innerHTML="";document.getElementById("nextQuestion").classList.add("hidden");var box=document.getElementById("choices");box.innerHTML="";
+    q.choices.forEach(function(choice){var b=document.createElement("button");b.className="choice";b.textContent=choice;b.addEventListener("click",function(){answer(choice,b);});box.appendChild(b);});
+  }
+  function answer(choice,button){if(answered)return;answered=true;var q=quiz[qi],ok=choice===q.a;if(ok)score++;
+    document.querySelectorAll(".choice").forEach(function(b){b.disabled=true;if(b.textContent===q.a)b.classList.add("correct");});if(!ok)button.classList.add("wrong");
+    var ex=document.getElementById("explanation");ex.innerHTML="<strong>"+(ok?"Tepat!":"Belum tepat.")+"</strong> "+escapeHTML(q.why);ex.classList.add("show");document.getElementById("quizScore").textContent="Skor "+score;var next=document.getElementById("nextQuestion");next.textContent=qi===quiz.length-1?"Lihat nilai akhir":"Soal berikutnya";next.classList.remove("hidden");
+  }
+  function nextQuestion(){if(qi<quiz.length-1){qi++;renderQuestion();}else{document.getElementById("quizPlay").classList.add("hidden");document.getElementById("quizFinal").classList.remove("hidden");var value=Math.round(score/quiz.length*100);document.getElementById("finalScore").textContent=value;var title=value>=90?"Luar biasa!":value>=70?"Pemahamanmu kuat!":value>=50?"Terus bertumbuh!":"Ayo coba lagi!";document.getElementById("finalTitle").textContent=title;document.getElementById("finalMessage").textContent="Kamu menjawab "+score+" dari "+quiz.length+" soal dengan benar. Ulangi simulasi yang masih terasa sulit, lalu coba urutan soal baru.";}}
+  document.getElementById("startQuiz").addEventListener("click",startQuiz);document.getElementById("restartQuiz").addEventListener("click",startQuiz);document.getElementById("nextQuestion").addEventListener("click",nextQuestion);
+})();
+</script>
+</body>
+</html>

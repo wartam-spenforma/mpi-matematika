@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <title>Media Interaktif Segiempat dan Segitiga</title>
+  <style>
+    :root{
+      color-scheme:light dark;
+      --bg:#f5f8f6; --surface:#ffffff; --surface-2:#eaf4ee; --ink:#17332c; --muted:#527067;
+      --line:#c9ded5; --primary:#087e69; --primary-deep:#075c4f; --accent:#e6a91a; --accent-soft:#fff3c7;
+      --coral:#d85f4c; --blue:#2271b3; --shadow:0 12px 36px rgba(22,69,56,.11); --radius:20px;
+    }
+    @media (prefers-color-scheme:dark){
+      :root{--bg:#0e1815;--surface:#172520;--surface-2:#20342c;--ink:#edf8f3;--muted:#b8cec4;--line:#355348;--primary:#49c5a7;--primary-deep:#83dfc8;--accent:#f0bd3e;--accent-soft:#4c3d17;--coral:#ff8b79;--blue:#79b9ee;--shadow:0 12px 36px rgba(0,0,0,.28)}
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",sans-serif;line-height:1.5}
+    button,input{font:inherit} button{color:inherit} a{color:inherit}
+    .skip{position:fixed;left:12px;top:12px;z-index:99;background:var(--surface);padding:10px 14px;border-radius:8px;transform:translateY(-160%);transition:transform .15s}.skip:focus{transform:translateY(0)}
+    .page{width:min(1180px,calc(100% - 32px));margin:auto;padding-bottom:72px}
+    .topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid color-mix(in srgb,var(--line) 75%,transparent)}
+    .topbar-inner{width:min(1180px,calc(100% - 32px));margin:auto;display:flex;justify-content:space-between;align-items:center;min-height:62px;gap:16px}
+    .chapter{display:flex;align-items:center;gap:10px;font-family:"Nunito",sans-serif;font-weight:900;font-size:.94rem}.chapter-mark{width:30px;height:30px;border:2px solid var(--primary);transform:rotate(7deg);display:grid;place-items:center;color:var(--primary);border-radius:7px}
+    nav{display:flex;gap:5px}.nav-btn{border:0;background:transparent;padding:9px 13px;border-radius:10px;font-weight:700;cursor:pointer;color:var(--muted)}.nav-btn:hover,.nav-btn:focus-visible{background:var(--surface-2);color:var(--ink)}
+    .hero{display:grid;grid-template-columns:1.16fr .84fr;gap:44px;align-items:center;padding:62px 0 48px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--primary-deep);font-weight:700;margin:0 0 14px}.eyebrow:before{content:"";width:28px;height:3px;background:var(--accent);border-radius:4px}
+    h1{font-family:"Nunito",sans-serif;font-size:clamp(2.5rem,6vw,5.4rem);letter-spacing:-.055em;line-height:.94;margin:0;max-width:760px;font-weight:900}.hero p{font-size:clamp(1.08rem,2vw,1.3rem);max-width:630px;color:var(--muted);margin:24px 0 28px}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:10px}.tag{background:var(--surface);border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,.035)}
+    .hero-art{position:relative;min-height:330px;display:grid;place-items:center}.hero-art svg{width:100%;height:auto;overflow:visible}.sketch-line{fill:none;stroke:var(--ink);stroke-width:5;stroke-linejoin:round}.sketch-fill{fill:var(--accent-soft);stroke:var(--accent);stroke-width:5}.sketch-green{fill:var(--surface-2);stroke:var(--primary);stroke-width:5}.measure{stroke:var(--coral);stroke-width:3;stroke-dasharray:8 7}.measure-text{fill:var(--coral);font-weight:700;font-size:18px}
+    .section{padding:56px 0;scroll-margin-top:70px}.section-head{display:grid;grid-template-columns:110px 1fr;gap:24px;align-items:start;margin-bottom:28px}.section-no{font-family:"Nunito",sans-serif;font-size:4.2rem;font-weight:900;line-height:.8;color:var(--line);letter-spacing:-.07em}.section h2{font-family:"Nunito",sans-serif;font-size:clamp(2rem,4vw,3.4rem);line-height:1.05;letter-spacing:-.035em;margin:0 0 10px}.section-head p{margin:0;color:var(--muted);font-size:1.08rem;max-width:700px}
+    .sim-grid{display:grid;grid-template-columns:310px minmax(0,1fr);gap:22px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .shape-picker{border-radius:var(--radius);padding:14px}.shape-picker h3{font-family:"Nunito",sans-serif;margin:7px 8px 12px}.shape-list{display:grid;gap:7px}.shape-btn{border:1px solid transparent;background:transparent;border-radius:12px;padding:11px 12px;display:flex;gap:12px;align-items:center;cursor:pointer;text-align:left;font-weight:700}.shape-btn svg{width:35px;height:28px;flex:0 0 auto}.shape-btn:hover{background:var(--surface-2)}.shape-btn.active{background:var(--primary);color:#fff}.shape-btn.active svg *{stroke:#fff!important}
+    .lab{border-radius:var(--radius);overflow:hidden}.lab-top{display:grid;grid-template-columns:minmax(260px,.9fr) 1.1fr;min-height:420px}.canvas-wrap{background:var(--surface-2);padding:24px;display:grid;place-items:center;position:relative}.canvas-wrap:after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;opacity:.38}.canvas-wrap svg{position:relative;z-index:1;width:100%;max-width:420px;height:330px}.shape-main{fill:color-mix(in srgb,var(--accent) 25%,var(--surface));stroke:var(--primary-deep);stroke-width:4;stroke-linejoin:round;vector-effect:non-scaling-stroke}.dim-line{stroke:var(--coral);stroke-width:2.5;stroke-dasharray:6 5;vector-effect:non-scaling-stroke}.dim-text{fill:var(--coral);font-size:15px;font-weight:700}.right-mark{fill:none;stroke:var(--blue);stroke-width:2.5}.controls{padding:27px}.controls h3{font-family:"Nunito",sans-serif;font-size:1.65rem;margin:0}.formula{color:var(--muted);margin:4px 0 22px}.slider-row{margin:19px 0}.slider-label{display:flex;justify-content:space-between;gap:12px;font-weight:700;margin-bottom:7px}.slider-value{color:var(--primary-deep);font-family:"Nunito",sans-serif}.slider-row input{width:100%;accent-color:var(--primary);cursor:pointer}.result-strip{border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr}.metric{padding:22px 26px}.metric+.metric{border-left:1px solid var(--line)}.metric small{display:block;color:var(--muted);font-weight:700}.metric strong{font-family:"Nunito",sans-serif;font-size:clamp(1.65rem,4vw,2.4rem);letter-spacing:-.03em;color:var(--primary-deep)}.metric .work{font-size:.9rem;color:var(--muted);margin-top:2px}
+    .note{margin-top:17px;background:var(--accent-soft);border-radius:13px;padding:13px 15px;color:var(--ink);display:flex;gap:10px}.note strong{color:var(--primary-deep)}
+    .gallery-tabs{display:flex;gap:8px;margin:0 0 18px}.tab-btn{border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:10px;font-weight:700;cursor:pointer}.tab-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+    .gallery-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px}.shape-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.gallery-card{border:1px solid var(--line);background:var(--surface);border-radius:15px;padding:16px;text-align:left;cursor:pointer;min-height:130px;transition:transform .15s,border-color .15s}.gallery-card:hover{transform:translateY(-2px);border-color:var(--primary)}.gallery-card.active{outline:3px solid color-mix(in srgb,var(--primary) 30%,transparent);border-color:var(--primary)}.gallery-card svg{width:64px;height:48px;display:block;margin-bottom:9px}.gallery-card strong{font-family:"Nunito",sans-serif;display:block}.gallery-card span{font-size:.88rem;color:var(--muted)}
+    .fact-panel{border-radius:var(--radius);padding:28px;min-height:400px;position:sticky;top:84px}.fact-visual{height:150px;display:grid;place-items:center;background:var(--surface-2);border-radius:14px;margin-bottom:21px}.fact-visual svg{width:72%;height:120px}.fact-panel h3{font-family:"Nunito",sans-serif;font-size:1.8rem;margin:0 0 5px}.fact-kind{color:var(--primary-deep);font-weight:700;margin-bottom:18px}.fact-panel ul{padding-left:20px;margin:0}.fact-panel li{margin:9px 0}.fact-formula{margin-top:20px;padding-top:17px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:14px}.fact-formula small{color:var(--muted);display:block}.fact-formula b{font-size:1.1rem}
+    .quiz-shell{max-width:850px;margin:auto;border-radius:var(--radius);overflow:hidden}.quiz-intro{padding:34px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}.quiz-intro h3{font-family:"Nunito",sans-serif;font-size:1.8rem;margin:0 0 7px}.quiz-intro p{margin:0;color:var(--muted)}.primary-btn,.secondary-btn{border:0;border-radius:11px;padding:12px 18px;font-weight:800;cursor:pointer}.primary-btn{background:var(--primary);color:#fff}.primary-btn:hover{background:var(--primary-deep)}.secondary-btn{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+    .quiz-live{display:none}.quiz-live.show{display:block}.quiz-top{padding:18px 25px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px}.progress-track{height:8px;flex:1;background:var(--surface-2);border-radius:99px;overflow:hidden}.progress-fill{height:100%;background:var(--accent);width:10%;transition:width .25s}.progress-label{font-weight:700;white-space:nowrap;color:var(--muted)}.question-area{padding:30px}.question-area h3{font-family:"Nunito",sans-serif;font-size:1.55rem;line-height:1.3;margin:0 0 22px}.choices{display:grid;gap:10px}.choice{border:1px solid var(--line);background:var(--surface);padding:14px 16px;border-radius:12px;text-align:left;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:12px}.choice:before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto}.choice:hover:not(:disabled){border-color:var(--primary);background:var(--surface-2)}.choice.selected{border-color:var(--primary);background:var(--surface-2)}.choice.selected:before{border:5px solid var(--primary)}.choice.correct{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 15%,var(--surface))}.choice.wrong{border-color:var(--coral);background:color-mix(in srgb,var(--coral) 12%,var(--surface))}.choice:disabled{cursor:default}.quiz-actions{display:flex;justify-content:flex-end;margin-top:20px}.feedback{display:none;margin-top:20px;border-radius:13px;padding:15px 17px;background:var(--surface-2)}.feedback.show{display:block}.feedback.correct{border-left:5px solid var(--primary)}.feedback.wrong{border-left:5px solid var(--coral)}.feedback strong{display:block;margin-bottom:4px}.feedback p{margin:0;color:var(--muted)}
+    .result{display:none;padding:38px;text-align:center}.result.show{display:block}.score-ring{width:150px;height:150px;border-radius:50%;margin:0 auto 22px;display:grid;place-items:center;background:conic-gradient(var(--primary) var(--score-angle,0deg),var(--surface-2) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:13px;background:var(--surface);border-radius:50%}.score-ring span{position:relative;z-index:1;font-family:"Nunito",sans-serif;font-size:2.4rem;font-weight:900}.result h3{font-family:"Nunito",sans-serif;font-size:2rem;margin:0 0 8px}.result p{color:var(--muted);max-width:550px;margin:0 auto 22px}.answer-review{margin:30px 0;text-align:left;display:grid;gap:10px}.review-item{border:1px solid var(--line);border-radius:12px;padding:13px 15px}.review-item strong{display:block}.review-item span{color:var(--muted);font-size:.95rem}
+    footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);display:flex;justify-content:space-between;gap:20px;font-size:.94rem}.formula-key{font-family:"Nunito",sans-serif;color:var(--ink);font-weight:800}
+    :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    @media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:42px}.hero-art{min-height:240px}.hero-art svg{max-width:500px}.sim-grid{grid-template-columns:1fr}.shape-list{grid-template-columns:repeat(3,1fr)}.shape-picker{position:static}.shape-btn{justify-content:center;flex-direction:column;text-align:center}.lab-top{grid-template-columns:1fr}.canvas-wrap{min-height:330px}.gallery-layout{grid-template-columns:1fr}.fact-panel{position:static}.section-head{grid-template-columns:75px 1fr}.section-no{font-size:3.4rem}}
+    @media(max-width:600px){.page,.topbar-inner{width:min(100% - 22px,1180px)}nav .nav-btn{font-size:.86rem;padding:8px}.chapter span:last-child{display:none}.hero{gap:16px;padding:36px 0 26px}h1{font-size:3.15rem}.hero-art{min-height:210px}.section{padding:40px 0}.section-head{grid-template-columns:1fr;gap:8px}.section-no{font-size:2rem}.shape-list{grid-template-columns:repeat(2,1fr)}.shape-btn{padding:10px 5px}.canvas-wrap{padding:10px;min-height:270px}.canvas-wrap svg{height:260px}.controls{padding:20px}.result-strip{grid-template-columns:1fr}.metric+.metric{border-left:0;border-top:1px solid var(--line)}.shape-gallery{grid-template-columns:1fr 1fr}.gallery-card{min-height:120px;padding:13px}.quiz-intro{grid-template-columns:1fr;padding:25px}.quiz-intro .primary-btn{width:100%}.question-area{padding:22px 18px}.quiz-top{padding:15px 18px}.result{padding:28px 18px}.fact-formula{grid-template-columns:1fr}.gallery-tabs{width:100%}.tab-btn{flex:1}footer{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.gallery-card,.progress-fill{transition:none}}
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+<a class="skip" href="#konten">Lewati ke isi</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="chapter"><span class="chapter-mark" aria-hidden="true">7</span><span>Geometri • Kelas VII</span></div>
+    <nav aria-label="Navigasi bagian">
+      <button class="nav-btn" data-target="simulasi">Simulasi</button>
+      <button class="nav-btn" data-target="galeri">Galeri</button>
+      <button class="nav-btn" data-target="kuis">Kuis</button>
+    </nav>
+  </div>
+</header>
+<main id="konten" class="page">
+  <section class="hero" aria-labelledby="judul">
+    <div>
+      <p class="eyebrow">Segiempat &amp; Segitiga</p>
+      <h1 id="judul">Ubah ukuran.<br>Lihat rumus bekerja.</h1>
+      <p>Geser ukuran sisi, bandingkan sifat setiap bangun, lalu uji pemahamanmu lewat 10 soal yang selalu diacak.</p>
+      <div class="hero-tags" aria-label="Cakupan materi"><span class="tag">Sifat bangun</span><span class="tag">Keliling</span><span class="tag">Luas</span><span class="tag">Kuis acak</span></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 520 360" role="img">
+        <path class="sketch-fill" d="M65 70 L260 49 L285 210 L92 233 Z"/>
+        <path class="sketch-green" d="M305 125 L462 97 L428 255 L335 276 Z"/>
+        <path class="sketch-line" d="M128 287 L234 122 L335 287 Z"/>
+        <path class="measure" d="M112 307 L350 307"/><path class="measure" d="M109 298 L109 316 M351 298 L351 316"/>
+        <text x="215" y="336" class="measure-text">alas</text>
+        <circle cx="65" cy="70" r="6" fill="var(--coral)"/><circle cx="260" cy="49" r="6" fill="var(--coral)"/><circle cx="285" cy="210" r="6" fill="var(--coral)"/><circle cx="92" cy="233" r="6" fill="var(--coral)"/>
+      </svg>
+    </div>
+  </section>
+
+  <section id="simulasi" class="section" aria-labelledby="judul-simulasi">
+    <div class="section-head"><div class="section-no">01</div><div><h2 id="judul-simulasi">Laboratorium ukuran</h2><p>Pilih bangun, lalu gerakkan penggeser. Perhatikan bagaimana perubahan satu ukuran memengaruhi keliling dan luas.</p></div></div>
+    <div class="sim-grid">
+      <aside class="shape-picker panel" aria-label="Pilihan bangun simulasi">
+        <h3>Pilih bangun</h3>
+        <div class="shape-list" id="shapeList"></div>
+      </aside>
+      <div class="lab panel">
+        <div class="lab-top">
+          <div class="canvas-wrap"><svg id="shapeCanvas" viewBox="0 0 420 330" role="img" aria-labelledby="canvasTitle"><title id="canvasTitle">Gambar bangun yang sedang dipilih</title></svg></div>
+          <div class="controls">
+            <h3 id="simName">Persegi panjang</h3>
+            <p class="formula" id="simFormula"></p>
+            <div id="sliders"></div>
+            <div class="note"><span aria-hidden="true">↳</span><div id="simInsight"></div></div>
+          </div>
+        </div>
+        <div class="result-strip" aria-live="polite">
+          <div class="metric"><small>Keliling</small><strong id="perimeter">—</strong><div class="work" id="perimeterWork"></div></div>
+          <div class="metric"><small>Luas</small><strong id="area">—</strong><div class="work" id="areaWork"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="galeri" class="section" aria-labelledby="judul-galeri">
+    <div class="section-head"><div class="section-no">02</div><div><h2 id="judul-galeri">Galeri sifat bangun</h2><p>Jelajahi keluarga segiempat dan segitiga. Pilih satu kartu untuk membuka ciri, rumus, dan hubungan pentingnya.</p></div></div>
+    <div class="gallery-tabs" role="tablist" aria-label="Kategori bangun">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-kind="quad">Segiempat</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-kind="tri">Segitiga</button>
+    </div>
+    <div class="gallery-layout">
+      <div class="shape-gallery" id="galleryGrid" role="tabpanel"></div>
+      <article class="fact-panel panel" id="factPanel" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section id="kuis" class="section" aria-labelledby="judul-kuis">
+    <div class="section-head"><div class="section-no">03</div><div><h2 id="judul-kuis">Tantangan 10 soal</h2><p>Soal dan pilihan jawaban diacak setiap kali dimulai. Jawab satu per satu dan baca pembahasannya sebelum lanjut.</p></div></div>
+    <div class="quiz-shell panel">
+      <div class="quiz-intro" id="quizIntro">
+        <div><h3>Siap menguji pemahaman?</h3><p>Terdapat 10 soal tentang sifat, keliling, dan luas. Setiap jawaban benar bernilai 10.</p></div>
+        <button class="primary-btn" id="startQuiz">Mulai kuis</button>
+      </div>
+      <div class="quiz-live" id="quizLive">
+        <div class="quiz-top"><div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div><span class="progress-label" id="progressLabel">1 dari 10</span></div>
+        <div class="question-area">
+          <h3 id="questionText"></h3><div class="choices" id="choices"></div>
+          <div class="feedback" id="feedback"><strong id="feedbackTitle"></strong><p id="feedbackText"></p></div>
+          <div class="quiz-actions"><button class="primary-btn" id="checkAnswer" disabled>Periksa jawaban</button><button class="primary-btn" id="nextQuestion" hidden>Soal berikutnya</button></div>
+        </div>
+      </div>
+      <div class="result" id="quizResult">
+        <div class="score-ring" id="scoreRing"><span id="scoreText">0</span></div>
+        <h3 id="resultTitle">Hasil kuis</h3><p id="resultMessage"></p>
+        <button class="primary-btn" id="restartQuiz">Acak &amp; ulangi</button>
+        <div class="answer-review" id="answerReview"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="page"><span>Ringkasannya: <span class="formula-key">K = jumlah semua sisi</span></span><span><span class="formula-key">L</span> menyatakan luas daerah di dalam bangun.</span></footer>
+<script>
+(function(){
+  'use strict';
+  var svgNS='http://www.w3.org/2000/svg';
+  function el(tag,attrs,text){var n=document.createElementNS(svgNS,tag);Object.keys(attrs||{}).forEach(function(k){n.setAttribute(k,attrs[k])});if(text)n.textContent=text;return n}
+  function fmt(n){return Number.isInteger(n)?String(n):n.toFixed(1).replace('.',',')}
+  var iconSvg={
+    square:'<svg viewBox="0 0 40 32" aria-hidden="true"><rect x="8" y="4" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>',
+    rectangle:'<svg viewBox="0 0 40 32" aria-hidden="true"><rect x="4" y="7" width="32" height="19" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>',
+    parallelogram:'<svg viewBox="0 0 40 32" aria-hidden="true"><path d="M10 6h26l-7 20H3z" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>',
+    trapezoid:'<svg viewBox="0 0 40 32" aria-hidden="true"><path d="M12 6h16l8 20H4z" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>',
+    rhombus:'<svg viewBox="0 0 40 32" aria-hidden="true"><path d="M20 3l15 13-15 13L5 16z" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>',
+    triangle:'<svg viewBox="0 0 40 32" aria-hidden="true"><path d="M20 3l17 26H3z" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>'
+  };
+  var sims=[
+    {id:'square',name:'Persegi',formula:'K = 4 × sisi  •  L = sisi × sisi',dims:[['s','Panjang sisi',7,2,15]],calc:function(v){return{p:4*v.s,a:v.s*v.s,pw:'4 × '+v.s,aw:v.s+' × '+v.s}},insight:'Semua sisi sama panjang. Saat sisi menjadi 2 kali, luas menjadi 4 kali.'},
+    {id:'rectangle',name:'Persegi panjang',formula:'K = 2 × (panjang + lebar)  •  L = panjang × lebar',dims:[['p','Panjang',10,4,16],['l','Lebar',6,2,12]],calc:function(v){return{p:2*(v.p+v.l),a:v.p*v.l,pw:'2 × ('+v.p+' + '+v.l+')',aw:v.p+' × '+v.l}},insight:'Sisi yang berhadapan sama panjang dan sejajar. Keempat sudutnya siku-siku.'},
+    {id:'parallelogram',name:'Jajar genjang',formula:'K = 2 × (alas + sisi miring)  •  L = alas × tinggi',dims:[['a','Alas',10,4,16],['s','Sisi miring',6,3,10],['t','Tinggi',5,2,10]],calc:function(v){return{p:2*(v.a+v.s),a:v.a*v.t,pw:'2 × ('+v.a+' + '+v.s+')',aw:v.a+' × '+v.t}},insight:'Tinggi harus tegak lurus alas; bukan sisi miring. Luasnya sama dengan persegi panjang beralas dan tinggi sama.'},
+    {id:'trapezoid',name:'Trapesium sama kaki',formula:'K = jumlah semua sisi  •  L = ½ × (a + b) × tinggi',dims:[['a','Sisi sejajar atas',7,3,12],['b','Sisi sejajar bawah',13,8,18],['t','Tinggi',5,2,10]],calc:function(v){var leg=Math.sqrt(Math.pow((v.b-v.a)/2,2)+v.t*v.t);return{p:v.a+v.b+2*leg,a:.5*(v.a+v.b)*v.t,pw:v.a+' + '+v.b+' + 2 × '+fmt(leg),aw:'½ × ('+v.a+' + '+v.b+') × '+v.t}},insight:'Hanya satu pasang sisi yang sejajar. Pada trapesium sama kaki, kedua kaki sama panjang.'},
+    {id:'rhombus',name:'Belah ketupat',formula:'K = 4 × sisi  •  L = ½ × diagonal 1 × diagonal 2',dims:[['d1','Diagonal mendatar',12,4,18],['d2','Diagonal tegak',8,4,14]],calc:function(v){var s=Math.sqrt(Math.pow(v.d1/2,2)+Math.pow(v.d2/2,2));return{p:4*s,a:.5*v.d1*v.d2,pw:'4 × '+fmt(s),aw:'½ × '+v.d1+' × '+v.d2}},insight:'Diagonal saling tegak lurus dan membagi dua sama panjang. Keempat sisinya sama panjang.'},
+    {id:'triangle',name:'Segitiga sama kaki',formula:'K = jumlah ketiga sisi  •  L = ½ × alas × tinggi',dims:[['a','Alas',10,4,16],['t','Tinggi',7,3,13]],calc:function(v){var s=Math.sqrt(Math.pow(v.a/2,2)+v.t*v.t);return{p:v.a+2*s,a:.5*v.a*v.t,pw:v.a+' + 2 × '+fmt(s),aw:'½ × '+v.a+' × '+v.t}},insight:'Tinggi tegak lurus alas. Pada segitiga sama kaki, garis tinggi juga membagi alas menjadi dua sama panjang.'}
+  ];
+  var state={sim:1,values:{}};
+  sims.forEach(function(s){state.values[s.id]={};s.dims.forEach(function(d){state.values[s.id][d[0]]=d[2]})});
+  var list=document.getElementById('shapeList');
+  sims.forEach(function(s,i){var b=document.createElement('button');b.className='shape-btn'+(i===state.sim?' active':'');b.innerHTML=iconSvg[s.id]+'<span>'+s.name+'</span>';b.dataset.index=i;b.setAttribute('aria-pressed',i===state.sim?'true':'false');list.appendChild(b)});
+  list.addEventListener('click',function(e){var b=e.target.closest('.shape-btn');if(!b)return;state.sim=+b.dataset.index;Array.prototype.forEach.call(list.children,function(x){var on=x===b;x.classList.toggle('active',on);x.setAttribute('aria-pressed',on?'true':'false')});renderSim()});
+  function renderSim(){var s=sims[state.sim],v=state.values[s.id];document.getElementById('simName').textContent=s.name;document.getElementById('simFormula').textContent=s.formula;document.getElementById('simInsight').innerHTML='<strong>Amati:</strong> '+s.insight;var box=document.getElementById('sliders');box.innerHTML='';s.dims.forEach(function(d){var row=document.createElement('div');row.className='slider-row';row.innerHTML='<div class="slider-label"><label for="sl-'+d[0]+'">'+d[1]+'</label><span class="slider-value" id="val-'+d[0]+'">'+v[d[0]]+' cm</span></div><input id="sl-'+d[0]+'" type="range" min="'+d[3]+'" max="'+d[4]+'" value="'+v[d[0]]+'" data-key="'+d[0]+'" aria-valuetext="'+v[d[0]]+' sentimeter">';box.appendChild(row)});box.oninput=function(e){if(e.target.type!=='range')return;v[e.target.dataset.key]=+e.target.value;document.getElementById('val-'+e.target.dataset.key).textContent=e.target.value+' cm';e.target.setAttribute('aria-valuetext',e.target.value+' sentimeter');updateCalcAndShape()};updateCalcAndShape()}
+  function updateCalcAndShape(){var s=sims[state.sim],v=state.values[s.id],r=s.calc(v);document.getElementById('perimeter').textContent=fmt(r.p)+' cm';document.getElementById('area').textContent=fmt(r.a)+' cm²';document.getElementById('perimeterWork').textContent=r.pw+' = '+fmt(r.p);document.getElementById('areaWork').textContent=r.aw+' = '+fmt(r.a);drawShape(s.id,v);document.getElementById('canvasTitle').textContent='Gambar '+s.name+' dengan ukuran yang dipilih'}
+  function drawShape(id,v){var svg=document.getElementById('shapeCanvas');while(svg.lastChild&&svg.lastChild.tagName!=='title')svg.removeChild(svg.lastChild);var pts,labels=[];
+    if(id==='square'){pts='110,55 310,55 310,255 110,255';labels=[[210,42,v.s],[326,160,v.s]]}
+    if(id==='rectangle'){var w=120+v.p*10,h=60+v.l*10,x=(420-w)/2,y=(310-h)/2;pts=x+','+y+' '+(x+w)+','+y+' '+(x+w)+','+(y+h)+' '+x+','+(y+h);labels=[[210,y-12,v.p],[(x+w+18),y+h/2,v.l]]}
+    if(id==='parallelogram'){var w2=120+v.a*10,h2=70+v.t*12,off=55,x2=(420-w2)/2,y2=(310-h2)/2;pts=(x2+off)+','+y2+' '+(x2+w2)+','+y2+' '+(x2+w2-off)+','+(y2+h2)+' '+x2+','+(y2+h2);labels=[[210,y2+h2+25,v.a],[x2+w2-18,y2+h2/2,v.s]];svg.appendChild(el('line',{x1:x2+off,y1:y2,x2:x2+off,y2:y2+h2,class:'dim-line'}));svg.appendChild(el('text',{x:x2+off+8,y:y2+h2/2,class:'dim-text'},v.t+' cm'))}
+    if(id==='trapezoid'){var top=70+v.a*9,bot=120+v.b*9,ht=70+v.t*13,cx=210,yy=(310-ht)/2;pts=(cx-top/2)+','+yy+' '+(cx+top/2)+','+yy+' '+(cx+bot/2)+','+(yy+ht)+' '+(cx-bot/2)+','+(yy+ht);labels=[[210,yy-12,v.a],[210,yy+ht+25,v.b]];svg.appendChild(el('line',{x1:cx-top/2,y1:yy,x2:cx-top/2,y2:yy+ht,class:'dim-line'}));svg.appendChild(el('text',{x:cx-top/2+8,y:yy+ht/2,class:'dim-text'},v.t+' cm'))}
+    if(id==='rhombus'){var rw=100+v.d1*10,rh=80+v.d2*12;pts='210,'+(155-rh/2)+' '+(210+rw/2)+',155 210,'+(155+rh/2)+' '+(210-rw/2)+',155';svg.appendChild(el('line',{x1:210-rw/2,y1:155,x2:210+rw/2,y2:155,class:'dim-line'}));svg.appendChild(el('line',{x1:210,y1:155-rh/2,x2:210,y2:155+rh/2,class:'dim-line'}));labels=[[210,177,v.d1],[222,102,v.d2]]}
+    if(id==='triangle'){var tw=100+v.a*11,th=70+v.t*13,ty=270-th;pts='210,'+ty+' '+(210+tw/2)+',270 '+(210-tw/2)+',270';svg.appendChild(el('line',{x1:210,y1:ty,x2:210,y2:270,class:'dim-line'}));labels=[[210,294,v.a],[222,ty+th/2,v.t]]}
+    svg.appendChild(el('polygon',{points:pts,class:'shape-main'}));labels.forEach(function(l){svg.appendChild(el('text',{x:l[0],y:l[1],class:'dim-text','text-anchor':'middle'},l[2]+' cm'))})
+  }
+  renderSim();
+
+  var gallery={quad:[
+    {name:'Persegi',id:'square',kind:'Segiempat beraturan',props:['Empat sisi sama panjang','Empat sudut siku-siku (90°)','Diagonal sama panjang, saling tegak lurus, dan saling membagi dua','Memiliki 4 simetri lipat dan 4 simetri putar'],k:'4 × s',l:'s × s'},
+    {name:'Persegi panjang',id:'rectangle',kind:'Segiempat bersudut siku-siku',props:['Sisi berhadapan sama panjang dan sejajar','Empat sudut siku-siku (90°)','Diagonal sama panjang dan saling membagi dua','Memiliki 2 simetri lipat'],k:'2 × (p + l)',l:'p × l'},
+    {name:'Jajar genjang',id:'parallelogram',kind:'Segiempat dengan dua pasang sisi sejajar',props:['Sisi berhadapan sama panjang dan sejajar','Sudut berhadapan sama besar','Dua sudut berdekatan berjumlah 180°','Diagonal saling membagi dua'],k:'2 × (a + b)',l:'alas × tinggi'},
+    {name:'Trapesium',id:'trapezoid',kind:'Segiempat dengan sepasang sisi sejajar',props:['Tepat satu pasang sisi berhadapan sejajar','Dua sudut yang berdekatan pada satu kaki berjumlah 180°','Trapesium sama kaki memiliki kaki sama panjang','Garis tengah = ½ × jumlah sisi sejajar'],k:'jumlah 4 sisi',l:'½ × (a + b) × t'},
+    {name:'Belah ketupat',id:'rhombus',kind:'Jajar genjang dengan sisi sama panjang',props:['Empat sisi sama panjang','Sudut berhadapan sama besar','Diagonal saling tegak lurus dan membagi sudut','Diagonal saling membagi dua'],k:'4 × s',l:'½ × d₁ × d₂'},
+    {name:'Layang-layang',id:'kite',kind:'Segiempat dengan dua pasang sisi berdekatan sama panjang',props:['Dua pasang sisi berdekatan sama panjang','Sepasang sudut berhadapan sama besar','Diagonal saling tegak lurus','Salah satu diagonal membagi dua diagonal lainnya'],k:'2 × (a + b)',l:'½ × d₁ × d₂'}
+  ],tri:[
+    {name:'Segitiga sama sisi',id:'triEqual',kind:'Berdasarkan panjang sisi',props:['Ketiga sisi sama panjang','Ketiga sudut sama besar, masing-masing 60°','Memiliki 3 simetri lipat','Semua garis tinggi juga merupakan garis berat'],k:'3 × s',l:'½ × alas × tinggi'},
+    {name:'Segitiga sama kaki',id:'triIso',kind:'Berdasarkan panjang sisi',props:['Dua sisi sama panjang','Dua sudut alas sama besar','Memiliki 1 simetri lipat','Garis tinggi dari puncak membagi alas menjadi dua'],k:'a + 2s',l:'½ × alas × tinggi'},
+    {name:'Segitiga sembarang',id:'triScalene',kind:'Berdasarkan panjang sisi',props:['Ketiga sisi berbeda panjang','Ketiga sudut umumnya berbeda besar','Tidak memiliki simetri lipat','Tetap memiliki jumlah sudut 180°'],k:'a + b + c',l:'½ × alas × tinggi'},
+    {name:'Segitiga siku-siku',id:'triRight',kind:'Berdasarkan besar sudut',props:['Satu sudut tepat 90°','Dua sisi yang membentuk siku-siku dapat menjadi alas dan tinggi','Sisi di depan sudut siku-siku disebut hipotenusa','Berlaku teorema Pythagoras: c² = a² + b²'],k:'a + b + c',l:'½ × a × t'},
+    {name:'Segitiga lancip',id:'triAcute',kind:'Berdasarkan besar sudut',props:['Ketiga sudut kurang dari 90°','Semua titik potong garis tinggi berada di dalam segitiga','Jumlah ketiga sudut tetap 180°','Bisa berbentuk sama sisi, sama kaki, atau sembarang'],k:'a + b + c',l:'½ × alas × tinggi'},
+    {name:'Segitiga tumpul',id:'triObtuse',kind:'Berdasarkan besar sudut',props:['Satu sudut lebih dari 90°','Dua sudut lainnya pasti lancip','Titik potong garis tinggi berada di luar segitiga','Jumlah ketiga sudut tetap 180°'],k:'a + b + c',l:'½ × alas × tinggi'}
+  ]};
+  function gallerySvg(id){var shape='';if(id==='square')shape='<rect x="28" y="12" width="64" height="64"/>';else if(id==='rectangle')shape='<rect x="14" y="23" width="92" height="44"/>';else if(id==='parallelogram')shape='<path d="M32 15h82L92 73H10z"/>';else if(id==='trapezoid')shape='<path d="M36 15h48l27 58H9z"/>';else if(id==='rhombus')shape='<path d="M60 7l50 37-50 37L10 44z"/>';else if(id==='kite')shape='<path d="M60 5l41 32-41 48-23-48z"/>';else if(id==='triEqual')shape='<path d="M60 7l52 74H8z"/>';else if(id==='triIso')shape='<path d="M60 6l48 75H12z"/>';else if(id==='triScalene')shape='<path d="M80 8l32 73H7z"/>';else if(id==='triRight')shape='<path d="M20 10v70h92z"/>';else if(id==='triAcute')shape='<path d="M64 8l49 73H8z"/>';else shape='<path d="M20 16l94 65H7z"/>';return '<svg viewBox="0 0 120 90" aria-hidden="true"><g fill="color-mix(in srgb,var(--accent) 23%,var(--surface))" stroke="var(--primary-deep)" stroke-width="4" stroke-linejoin="round">'+shape+'</g></svg>'}
+  var currentKind='quad',currentGallery=0;
+  function renderGallery(){var grid=document.getElementById('galleryGrid'),items=gallery[currentKind];grid.innerHTML='';items.forEach(function(item,i){var b=document.createElement('button');b.className='gallery-card'+(i===currentGallery?' active':'');b.dataset.index=i;b.setAttribute('aria-pressed',i===currentGallery?'true':'false');b.innerHTML=gallerySvg(item.id)+'<strong>'+item.name+'</strong><span>'+item.kind+'</span>';grid.appendChild(b)});renderFact()}
+  function renderFact(){var d=gallery[currentKind][currentGallery],p=document.getElementById('factPanel');p.innerHTML='<div class="fact-visual">'+gallerySvg(d.id)+'</div><h3>'+d.name+'</h3><div class="fact-kind">'+d.kind+'</div><ul>'+d.props.map(function(x){return'<li>'+x+'</li>'}).join('')+'</ul><div class="fact-formula"><div><small>Keliling</small><b>K = '+d.k+'</b></div><div><small>Luas</small><b>L = '+d.l+'</b></div></div>'}
+  document.getElementById('galleryGrid').addEventListener('click',function(e){var c=e.target.closest('.gallery-card');if(!c)return;currentGallery=+c.dataset.index;renderGallery()});
+  Array.prototype.forEach.call(document.querySelectorAll('.tab-btn'),function(b){b.addEventListener('click',function(){currentKind=b.dataset.kind;currentGallery=0;document.querySelectorAll('.tab-btn').forEach(function(x){var on=x===b;x.classList.toggle('active',on);x.setAttribute('aria-selected',on?'true':'false')});renderGallery()})});renderGallery();
+
+  var bank=[
+    {q:'Sebuah persegi memiliki sisi 8 cm. Berapakah kelilingnya?',choices:['16 cm','24 cm','32 cm','64 cm'],answer:'32 cm',ex:'Keliling persegi = 4 × sisi = 4 × 8 = 32 cm.'},
+    {q:'Panjang persegi panjang 12 cm dan lebarnya 5 cm. Berapakah luasnya?',choices:['17 cm²','34 cm²','60 cm²','120 cm²'],answer:'60 cm²',ex:'Luas persegi panjang = panjang × lebar = 12 × 5 = 60 cm².'},
+    {q:'Jajar genjang beralas 14 cm dan tinggi 6 cm. Berapakah luasnya?',choices:['20 cm²','42 cm²','84 cm²','168 cm²'],answer:'84 cm²',ex:'Luas jajar genjang = alas × tinggi = 14 × 6 = 84 cm². Sisi miring tidak dipakai untuk menghitung luas.'},
+    {q:'Sisi sejajar trapesium panjangnya 8 cm dan 14 cm, dengan tinggi 5 cm. Berapakah luasnya?',choices:['44 cm²','50 cm²','55 cm²','110 cm²'],answer:'55 cm²',ex:'Luas = ½ × (8 + 14) × 5 = ½ × 22 × 5 = 55 cm².'},
+    {q:'Diagonal sebuah belah ketupat 10 cm dan 16 cm. Berapakah luasnya?',choices:['26 cm²','80 cm²','160 cm²','320 cm²'],answer:'80 cm²',ex:'Luas belah ketupat = ½ × d₁ × d₂ = ½ × 10 × 16 = 80 cm².'},
+    {q:'Segitiga beralas 18 cm dan tinggi 7 cm. Berapakah luasnya?',choices:['25 cm²','63 cm²','126 cm²','252 cm²'],answer:'63 cm²',ex:'Luas segitiga = ½ × alas × tinggi = ½ × 18 × 7 = 63 cm².'},
+    {q:'Pernyataan manakah yang benar tentang persegi panjang?',choices:['Semua sisinya harus sama panjang','Hanya memiliki satu pasang sisi sejajar','Diagonalnya sama panjang dan saling membagi dua','Tidak memiliki sudut siku-siku'],answer:'Diagonalnya sama panjang dan saling membagi dua',ex:'Pada persegi panjang, dua diagonal sama panjang dan berpotongan tepat di titik tengah masing-masing.'},
+    {q:'Bangun manakah yang memiliki tepat satu pasang sisi sejajar?',choices:['Persegi','Jajar genjang','Trapesium','Belah ketupat'],answer:'Trapesium',ex:'Trapesium memiliki tepat satu pasang sisi berhadapan yang sejajar.'},
+    {q:'Dua sudut sebuah segitiga adalah 45° dan 65°. Besar sudut ketiganya adalah…',choices:['60°','70°','80°','110°'],answer:'70°',ex:'Jumlah sudut segitiga 180°. Jadi sudut ketiga = 180° − 45° − 65° = 70°.'},
+    {q:'Ciri utama segitiga siku-siku adalah…',choices:['Ketiga sudutnya sama besar','Memiliki satu sudut 90°','Memiliki dua sisi yang selalu sama panjang','Memiliki satu sudut lebih dari 90°'],answer:'Memiliki satu sudut 90°',ex:'Segitiga siku-siku didefinisikan sebagai segitiga yang salah satu sudutnya tepat 90°.'}
+  ];
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+  var quiz=[],qi=0,score=0,selected=null,answered=false,history=[];
+  function startQuiz(){quiz=shuffle(bank.map(function(q){return{q:q.q,choices:shuffle(q.choices.slice()),answer:q.answer,ex:q.ex}}));qi=0;score=0;history=[];document.getElementById('quizIntro').style.display='none';document.getElementById('quizResult').classList.remove('show');document.getElementById('quizLive').classList.add('show');renderQuestion()}
+  function renderQuestion(){var q=quiz[qi];selected=null;answered=false;document.getElementById('questionText').textContent=q.q;var c=document.getElementById('choices');c.innerHTML='';q.choices.forEach(function(x){var b=document.createElement('button');b.className='choice';b.textContent=x;b.dataset.value=x;b.setAttribute('aria-pressed','false');c.appendChild(b)});document.getElementById('feedback').className='feedback';document.getElementById('checkAnswer').hidden=false;document.getElementById('checkAnswer').disabled=true;document.getElementById('nextQuestion').hidden=true;document.getElementById('nextQuestion').textContent=qi===quiz.length-1?'Lihat nilai':'Soal berikutnya';document.getElementById('progressLabel').textContent=(qi+1)+' dari '+quiz.length;document.getElementById('progressFill').style.width=((qi+1)/quiz.length*100)+'%'}
+  document.getElementById('choices').addEventListener('click',function(e){var b=e.target.closest('.choice');if(!b||answered)return;document.querySelectorAll('.choice').forEach(function(x){x.classList.remove('selected');x.setAttribute('aria-pressed','false')});b.classList.add('selected');b.setAttribute('aria-pressed','true');selected=b.dataset.value;document.getElementById('checkAnswer').disabled=false});
+  document.getElementById('checkAnswer').addEventListener('click',function(){if(!selected||answered)return;answered=true;var q=quiz[qi],ok=selected===q.answer;if(ok)score+=10;history.push({q:q.q,ok:ok,answer:q.answer});document.querySelectorAll('.choice').forEach(function(b){b.disabled=true;if(b.dataset.value===q.answer)b.classList.add('correct');else if(b.dataset.value===selected)b.classList.add('wrong')});var f=document.getElementById('feedback');f.className='feedback show '+(ok?'correct':'wrong');document.getElementById('feedbackTitle').textContent=ok?'Tepat!':'Belum tepat.';document.getElementById('feedbackText').textContent=q.ex;this.hidden=true;document.getElementById('nextQuestion').hidden=false});
+  document.getElementById('nextQuestion').addEventListener('click',function(){qi++;if(qi<quiz.length)renderQuestion();else showResult()});
+  function showResult(){document.getElementById('quizLive').classList.remove('show');var r=document.getElementById('quizResult');r.classList.add('show');document.getElementById('scoreText').textContent=score;document.getElementById('scoreRing').style.setProperty('--score-angle',(score/100*360)+'deg');var title,msg;if(score>=90){title='Luar biasa!';msg='Kamu sangat menguasai sifat, keliling, dan luas segiempat serta segitiga.'}else if(score>=70){title='Bagus!';msg='Pemahamanmu sudah kuat. Tinjau kembali pembahasan soal yang belum tepat.'}else{title='Terus berlatih!';msg='Coba eksplorasi simulasi dan galeri sekali lagi, lalu ulangi kuis dengan susunan baru.'}document.getElementById('resultTitle').textContent=title;document.getElementById('resultMessage').textContent='Nilaimu '+score+' dari 100. '+msg;document.getElementById('answerReview').innerHTML=history.map(function(h,i){return'<div class="review-item"><strong>'+(h.ok?'✓':'×')+' Soal '+(i+1)+'</strong><span>'+(!h.ok?'Jawaban benar: '+h.answer:'Jawabanmu benar')+'</span></div>'}).join('')}
+  document.getElementById('startQuiz').addEventListener('click',startQuiz);document.getElementById('restartQuiz').addEventListener('click',startQuiz);
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.addEventListener('click',function(){document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth'})})});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Matematika SMP</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #687481;
+      --line: #dce3e8;
+      --paper: #f6f8fa;
+      --white: #ffffff;
+      --blue: #1f6feb;
+      --blue-soft: #eaf2ff;
+      --green: #138a72;
+      --orange: #d97919;
+      --shadow: 0 10px 28px rgba(23, 33, 43, 0.07);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .header {
+      padding: 48px 24px 40px;
+      color: #fff;
+      background: #163a5f;
+    }
+
+    .header-inner, main {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #a9d0ff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.08;
+    }
+
+    .intro {
+      max-width: 650px;
+      margin: 14px 0 0;
+      color: #d9e8f7;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    main { padding: 28px 24px 56px; }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1 1 420px;
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      width: 18px;
+      height: 18px;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+
+    #search {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 16px 0 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      outline: 0;
+      background: var(--white);
+      color: var(--ink);
+      font: inherit;
+      box-shadow: var(--shadow);
+    }
+
+    #search:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-soft); }
+
+    .total {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .class-section { margin: 0 0 36px; }
+
+    .class-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+    }
+
+    .class-heading::after {
+      height: 1px;
+      flex: 1;
+      background: var(--line);
+      content: "";
+    }
+
+    .class-number {
+      display: inline-grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--blue);
+      font-size: 1rem;
+    }
+
+    .class-section:nth-of-type(2) .class-number { background: var(--green); }
+    .class-section:nth-of-type(3) .class-number { background: var(--orange); }
+
+    .materials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .material {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 72px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink);
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(23, 33, 43, 0.035);
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .material:hover, .material:focus-visible {
+      border-color: var(--blue);
+      box-shadow: 0 8px 20px rgba(31, 111, 235, 0.14);
+      outline: 0;
+      transform: translateY(-2px);
+    }
+
+    .material-title { font-weight: 700; line-height: 1.35; }
+    .material-arrow { color: var(--blue); font-size: 1.3rem; }
+
+    .empty {
+      display: none;
+      padding: 28px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      background: var(--white);
+    }
+
+    footer {
+      padding: 0 24px 28px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .header { padding: 36px 18px 32px; }
+      main { padding: 24px 18px 44px; }
+      .toolbar { align-items: stretch; flex-direction: column; gap: 10px; }
+      .total { font-size: 0.88rem; }
+      .materials { grid-template-columns: 1fr; }
+    }
+  </style>
+<link rel="stylesheet" href="akses-materi.css">
+<script src="akses-materi.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <p class="eyebrow">Media Pembelajaran Interaktif</p>
+      <h1>MPI Matematika SMP</h1>
+      <p class="intro">Pilih materi pembelajaran berdasarkan kelas. Setiap materi akan dibuka pada halaman tersendiri.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <label class="search-wrap" for="search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-4-4"></path>
+        </svg>
+        <input id="search" type="search" placeholder="Cari materi, misalnya peluang..." autocomplete="off">
+      </label>
+      <p class="total" id="total">24 materi tersedia</p>
+    </div>
+
+    <section class="class-section" data-class="7">
+      <h2 class="class-heading"><span class="class-number">7</span> Kelas 7</h2>
+      <div class="materials">
+        <a class="material" href="MPI-Aritmetika-Sosial-Kelas-7.html"><span class="material-title">Aritmetika Sosial</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Bilangan-Kelas-7.html"><span class="material-title">Bilangan</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Bentuk-Aljabar-Kelas-7.html"><span class="material-title">Bentuk Aljabar</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Garis-dan-Sudut-Kelas-7.html"><span class="material-title">Garis dan Sudut</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Perbandingan-Kelas-7.html"><span class="material-title">Perbandingan</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Peluang-Kelas-7.html"><span class="material-title">Peluang</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-PLSV-dan-PtLSV-Kelas-7.html"><span class="material-title">PLSV dan PtLSV</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Segiempat-dan-Segitiga-Kelas-7.html"><span class="material-title">Segiempat dan Segitiga</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Statistika-Kelas-7.html"><span class="material-title">Statistika</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+      </div>
+    </section>
+
+    <section class="class-section" data-class="8">
+      <h2 class="class-heading"><span class="class-number">8</span> Kelas 8</h2>
+      <div class="materials">
+        <a class="material" href="MPI-Bilangan-Berpangkat-Kelas-8.html"><span class="material-title">Bilangan Berpangkat</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Lingkaran-Kelas-8.html"><span class="material-title">Lingkaran</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Pola-Bilangan-Kelas-8.html"><span class="material-title">Pola Bilangan</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Relasi-dan-Fungsi-Kelas-8.html"><span class="material-title">Relasi dan Fungsi</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-SPLDV-Kelas-8.html"><span class="material-title">SPLDV</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Statistika-dan-Peluang-Kelas-8.html"><span class="material-title">Statistika dan Peluang</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Teorema-Pythagoras-Kelas-8.html"><span class="material-title">Teorema Pythagoras</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+      </div>
+    </section>
+
+    <section class="class-section" data-class="9">
+      <h2 class="class-heading"><span class="class-number">9</span> Kelas 9</h2>
+      <div class="materials">
+        <a class="material" href="MPI-Bangun-Ruang-Sisi-Datar-Kelas-9.html"><span class="material-title">Bangun Ruang Sisi Datar</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Bangun-Ruang-Sisi-Lengkung-Kelas-9.html"><span class="material-title">Bangun Ruang Sisi Lengkung</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Bilangan-Berpangkat-Kelas-9.html"><span class="material-title">Bilangan Berpangkat</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Faktor-Skala-Kelas-9.html"><span class="material-title">Faktor Skala</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Kesebangunan-dan-Kekongruenan-Kelas-9.html"><span class="material-title">Kesebangunan dan Kekongruenan</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Peluang-Kelas-9.html"><span class="material-title">Peluang</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Statistika-Kelas-9.html"><span class="material-title">Statistika</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+        <a class="material" href="MPI-Transformasi-Geometri-Kelas-9.html"><span class="material-title">Transformasi Geometri</span><span class="material-arrow" aria-hidden="true">&#8594;</span></a>
+      </div>
+    </section>
+
+    <p class="empty" id="empty">Materi yang dicari belum ditemukan.</p>
+  </main>
+
+  <footer>MPI Matematika SMP</footer>
+
+  <script>
+    const search = document.getElementById('search');
+    const total = document.getElementById('total');
+    const empty = document.getElementById('empty');
+    const sections = [...document.querySelectorAll('.class-section')];
+    const materials = [...document.querySelectorAll('.material')];
+
+    search.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+
+      sections.forEach((section) => {
+        let sectionVisible = 0;
+        section.querySelectorAll('.material').forEach((material) => {
+          const matches = material.textContent.toLowerCase().includes(query);
+          material.hidden = !matches;
+          if (matches) sectionVisible += 1;
+        });
+        section.hidden = sectionVisible === 0;
+        visible += sectionVisible;
+      });
+
+      total.textContent = `${visible} materi${visible === 1 ? '' : ' tersedia'}`;
+      empty.style.display = visible === 0 ? 'block' : 'none';
+    });
+
+    total.textContent = `${materials.length} materi tersedia`;
+  </script>
+</body>
+</html>
