@@ -1,5 +1,6 @@
 (function () {
   const accessKey = "mpiDataPeserta";
+  const recordedPrefix = "mpiRecorded:";
   const webAppUrl = "https://script.google.com/macros/s/AKfycbw_44gcSVfvAPRF2GpdXgh4pxMYzeOxsNqVfMOdwlpd7L0mTQamzsluJAS4dzDZ09sXrg/exec";
   const root = document.documentElement;
   root.classList.add("mpi-access-pending");
@@ -14,6 +15,41 @@
     } catch (error) {
       return null;
     }
+  }
+
+  function getSelectedMpi() {
+    if (!/^MPI-[^/]+\.html$/i.test(location.pathname.split("/").pop())) {
+      return "";
+    }
+    return document.title.replace(/^Media Interaktif\s*/i, "").trim();
+  }
+
+  function sendParticipantData(data) {
+    fetch(webAppUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data),
+      keepalive: true
+    }).catch(function () {
+      // Pencatatan tidak boleh menghalangi peserta membuka materi.
+    });
+  }
+
+  function recordSelectedMpi(participant) {
+    const mpi = getSelectedMpi();
+    const recordKey = recordedPrefix + location.pathname;
+    if (!mpi || sessionStorage.getItem(recordKey)) {
+      return;
+    }
+
+    sendParticipantData({
+      nama: participant.nama,
+      kelas: participant.kelas,
+      sekolah: participant.sekolah,
+      mpi: mpi
+    });
+    sessionStorage.setItem(recordKey, "1");
   }
 
   function showForm() {
@@ -53,27 +89,22 @@
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       const data = Object.fromEntries(new FormData(form));
-      data.halaman = document.title;
+      data.mpi = getSelectedMpi();
       sessionStorage.setItem(accessKey, JSON.stringify(data));
-
-      fetch(webAppUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(data),
-        keepalive: true
-      }).catch(function () {
-        // Form tetap dapat digunakan jika koneksi ke Google Sheets sedang gagal.
-      });
-
+      if (data.mpi) {
+        sendParticipantData(data);
+        sessionStorage.setItem(recordedPrefix + location.pathname, "1");
+      }
       overlay.remove();
     });
     document.getElementById("mpi-name").focus();
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    if (getParticipant()) {
+    const participant = getParticipant();
+    if (participant) {
       revealContent();
+      recordSelectedMpi(participant);
     } else {
       showForm();
     }

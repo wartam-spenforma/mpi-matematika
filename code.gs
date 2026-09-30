@@ -4,7 +4,7 @@
  */
 
 const SHEET_NAME = 'Data Peserta';
-const HEADERS = ['Timestamp', 'Nama', 'Kelas', 'Sekolah', 'Halaman'];
+const HEADERS = ['Timestamp', 'Nama', 'Kelas', 'Sekolah', 'MPI'];
 
 /**
  * Jalankan fungsi ini satu kali untuk membuat dan menyiapkan template sheet.
@@ -47,7 +47,7 @@ function setupTemplate() {
 /**
  * Menerima data JSON dari form website.
  * Format data yang diterima:
- * { nama: '...', kelas: '...', sekolah: '...', halaman: '...' }
+ * { nama: '...', kelas: '...', sekolah: '...', mpi: '...' }
  */
 function doPost(event) {
   try {
@@ -67,13 +67,13 @@ function doPost(event) {
     const nama = cleanValue(data.nama);
     const kelas = cleanValue(data.kelas);
     const sekolah = cleanValue(data.sekolah);
-    const halaman = cleanValue(data.halaman);
+    const mpi = cleanValue(data.mpi || data.halaman);
 
     if (!nama || !kelas || !sekolah) {
       return jsonResponse({ ok: false, error: 'Nama, kelas, dan sekolah wajib diisi.' });
     }
 
-    sheet.appendRow([new Date(), nama, kelas, sekolah, halaman]);
+    sheet.appendRow([new Date(), nama, kelas, sekolah, mpi]);
     return jsonResponse({ ok: true, message: 'Data berhasil disimpan.' });
   } catch (error) {
     return jsonResponse({ ok: false, error: error.message });
